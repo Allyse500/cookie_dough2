@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cookie Dough</title>
+    
+<style>
+    
+body {
+  background-image: url("fortuneCookie.jpg");
+  background-size: 1300px 700px;
+  /* background-size:contain; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: black;
+  margin: 0;
+  overflow-x: hidden;
+}
+    /* =================SCROLL BAR BEGIN========================== */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+ box-shadow: inset 0 0 5px grey; 
+ border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:rgb(255, 255, 255, 0.5); 
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(216, 216, 216, 0.5);
+  box-shadow: inset 0 0 5px grey;
+}
+/* ==================SCROLL BAR END========================= */
+#notes{
+    /* border: solid 1px rgb(0, 0, 0); */
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 2%;
+    resize: none;
+    padding: 2%;
+    }
+    
+    #recipeSubmit{
+    float: right;
+    margin-right: 25%;
+    margin-top:-44.5%;
+    border-radius: 25px;
+    border: 2px double white;
+    cursor: pointer;
+    background-color: rgb(107, 142, 35);
+    color: rgb(255, 255, 255);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    font-size: 105%;
+    height: 30px;
+    width: 68px;
+    }
+    
+    #noteSubmit:hover{
+    /* background-color: rgb(255, 255, 255); */
+    background-color: rgb(154, 205, 50);
+    }
+    
+    #noteTitle{
+    text-align: center;
+    }
+    
+    .logoutBtn{
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .8);
+    border: 2px double black;
+    }
+    
+    .logoutBtn:hover{
+    background-color: rgb(255, 255, 255);
+    }
+    
+    #logoutBtnForm{
+	margin-top: 5%;
+	}
+    .header{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 70%;
+    margin-left: 59%;
+    margin-top: 1%;
+    }
+    
+    #time, #noteTitle{
+    color: rgb(255, 255, 255);
+    }
+
+    #time{
+        margin-left: 55%;
+    }
+    
+    #notes{
+    background-color: rgba(255, 255, 255, .85);
+    }
+    
+ #options{
+ cursor: pointer;
+ border: 2px double rgb(255, 255, 255);
+ border-radius: 25px;
+ background-color: rgb(107, 142, 35);
+ color: rgb(255, 255, 255);
+ padding: 1%;
+ height: fit-content;
+ width: fit-content;
+ font-size: 90%;
+ text-align: center;
+ font-family: Arial, Helvetica, sans-serif;
+ }
+
+ #options:hover{
+ background-color: rgb(154, 205, 50);
+ }
+    
+ #optionsModal, #backgroundOptModal, #editAcctModal{
+  display: none;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+ }
+ 
+ #optionsContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 250px;
+ height: 150px;
+ border: 2px double white;
+ background-color: rgba(107, 142, 35, .95);
+ border-radius: 10px;
+ padding: 2%;
+ }
+ 
+ #optionsExit{
+  float: right;
+  color:white;
+  border:1px white solid;
+  padding-top:.5%;
+  padding-bottom:.5%;
+  padding-left: 3.5%;
+  padding-right: 3.5%;
+  font-family: sans-serif;
+  border-radius: 5px;
+  text-align: center;
+  font-size:95%;
+  width: fit-content;
+ }
+ 
+ #optionsExit:hover{
+ background-color:rgba(255, 255, 255, .45);
+ }
+ 
+ #optionsTitle{
+  font-size: 200%;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+  padding-top: 2%;
+  color:white;
+  font-family: georgia;
+  text-decoration: rgb(124, 69, 32) underline;  
+}
+
+#optionButtons {
+  font-size: 110%;
+  padding: 2%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+}
+
+.option{
+padding: 2%;
+border-radius: 10px;
+cursor:pointer;
+}
+
+.option:hover{
+background-color: rgba(255, 255, 255, .35);
+}
+
+#backgroundOptContainer, #editAcctContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 250px;
+ height: fit-content;
+ border: 2px double white;
+ background-color: rgba(107, 142, 35, .95);
+ border-radius: 10px;
+ padding-left: 2%;
+ padding-right: 2%;
+ padding-top: 2%;
+ padding-bottom: 2%;
+}
+
+#bgOptSaveBtn{
+	cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .8);
+    border: 2px double black;
+    margin-left:auto;
+    margin-right: auto;
+    display:block;
+    margin-top: 5%;
+}
+
+ #bgOptSaveBtn:hover{
+ background-color:rgb(255, 255, 255);
+ }
+ 
+.backgroundOptHeaderBtns{
+display: grid;
+grid-template-columns: 50% 50%;
+}
+
+#bgOptTitle, #eidtAcctTitle{
+  font-size: 150%;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+  color:white;
+  font-family: georgia;
+  text-decoration: rgb(124, 69, 32) underline; 
+  padding-bottom: 2%;
+}
+ 
+#bgPhotosTitle, #bgOptTextTitle{
+  font-size: 110%;
+  padding: 2%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+}
+
+#bpOptContent {
+ display:none;
+ font-family: Arial, Helvetica, sans-serif;
+ color: white;
+ margin-left: 20%;
+}
+
+#bgOptTextContent {
+display: none;
+}
+
+#cookie1Photo{
+height: 60px;
+width: 100px;
+background-image: url('fortuneCookie.jpg');
+background-size: 110px 62px;
+background-repeat: no-repeat;
+border: 1px solid black;
+}
+
+/* .photoContainer{
+    cursor: pointer;
+} */
+
+#cookie1InputTag, #cookie2InputTag{
+    cursor: pointer;
+}
+
+
+#cookie2Photo{
+height: 60px;
+width: 100px;
+background-image: url('servedCookies.jpg');
+background-size: 110px 62px;
+background-repeat: no-repeat;
+border: 1px solid black;
+}
+
+#uploadedPhoto{
+    margin-top: 1%;
+    margin-left: 15%;
+}
+
+.photoOptGrid{
+    display: grid;
+    grid-template-columns: 10% 50%;
+    grid-gap: 5%;
+    cursor: pointer;
+}
+
+#cookie1PhotoLabel, #cookie2PhotoLabel{
+    margin-left: 25%;
+}
+
+#uploadInputTag{
+    display:none;
+}
+
+#bgback, #editAcctBack{
+  color:white;
+  border:1px white solid;
+  padding-top:.5%;
+  padding-bottom:.5%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  font-family: sans-serif;
+  border-radius: 5px;
+  text-align: center;
+  font-size:95%;
+  width: fit-content;
+  /* margin-left: -10%; */
+ }
+ 
+ #bgexit, #editAcctExit{
+  color:white;
+  border:1px white solid;
+  padding-top:.5%;
+  padding-bottom:.5%;
+  padding-left: 3.5%;
+  padding-right: 3.5%;
+  font-family: sans-serif;
+  border-radius: 5px;
+  text-align: center;
+  font-size:95%;
+  width: fit-content;
+  margin-left: 85%;
+ }
+ 
+ #bgexit:hover, #bgback:hover, #editAcctBack:hover, #editAcctExit:hover{
+ background-color:rgba(255, 255, 255, .45);
+ }
+ 
+ .bgOptTextOptGrid{
+ display: grid;
+ grid-template-columns: 60% 30%;
+ }
+
+ .textColorGrid{
+     display: grid;
+     grid-template-columns: 60% 10% 20%;
+     grid-gap: 0 5%;
+ }
+ .textColorGrid2{
+     display: grid;
+     grid-template-columns: 30% 10% 20%;
+     grid-gap: 0 5%;
+ }
+ 
+ .promptText{
+ font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+ }
+ 
+ #headerColor, #bodyTextColor{
+ width: 100%;
+ margin-left: 5%;
+ margin-right: auto;
+ border-radius: 5px;
+ background-color: rgb(255, 255, 255);
+ cursor: pointer;
+ }
+ 
+ .editUsernamePasswordGrid{
+ display: grid;
+ grid-template-columns: 25% 50% 20%;
+ grid-gap: 10% 2%;
+ }
+ 
+ #editpasswordbtn, #editusernamebtn, #saveUsernameBtn, #savePasswordBtn, .textColorBtn{
+	cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .8);
+    border: 2px double black;
+}
+ 
+ 
+#editusernamebtn, #editpasswordbtn, .textColorBtn{
+    text-align: center;
+    font-family: arial;
+    font-size: 85%;
+    padding-top: 2%;
+    padding-bottom: 3%;
+}
+
+#saveUsernameBtn, #savePasswordBtn{
+display: none;
+}
+
+#editpasswordbtn:hover, #editusernamebtn:hover, #saveUsernameBtn:hover, #savePasswordBtn:hover, .textColorBtn:hover{
+    background-color: rgb(255, 255, 255);
+}
+
+.textColorBtn{
+    height:fit-content;
+    padding: 3%;
+}
+
+#editedusername{
+display:none;
+}
+
+.userInput{
+border-radius: 10px;
+}
+
+#editPassowrdForm{
+margin-top: 2%;
+}
+
+#newPasswordContainer{
+display: none;
+margin-left: 14%;
+}
+
+.inputSpace{
+margin-bottom: 2%; 
+}
+
+/*.editPasswordLabel{
+margin-left: 20px;
+}*/
+
+#oldPasswordLabel{
+margin-left: 17%;
+}
+
+#newPasswordLabel{
+margin-left: 15%;
+}
+
+#reEnteredNewPWDLabel{
+margin-left: 2%;
+}
+
+/*------Edit Account Username Lower Half----------------*/
+#uNeditStatusMsg{
+padding-top: 4%;
+padding-bottom: 4%;
+}
+
+#editUNLowerHalf{
+display: none;
+}
+
+/*-------Edit Account: Delete Account--------------*/
+#orNote{
+padding-top: 4%;
+padding-bottom: 4%;
+text-align: center;
+font-weight: bold;
+color: white;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+#deleteAcctGrid{
+display: grid;
+grid-template-columns: 10% 70%
+}
+
+#deleteAcctForm{
+display: grid;
+grid-template-columns: 60% 30%;
+grid-gap: 0 5%;
+}
+
+#deleteAcctBtn{
+cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .8);
+    border: 2px double black;
+    width: 80%;
+}
+
+#deleteAcctBtn:hover{
+background-color: black;
+color: white;
+border-color: white;
+}
+
+#deleteMsgAndConfirmSect{
+display: none;
+}
+
+@media only screen and (max-width: 800px) {
+    #recipeSubmit {
+      margin-top: -76.5%;
+    }
+  }
+
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body id="bodyID">
+<!--HEADER==================================================-->
+<div class="header">
+<div id="time"></div>
+<div id="options" onclick= "options()">Options</div>
+</div><!--end of class="header"-->
+
+<!--NOTES BODY===============================================-->
+<form action ="/submit_recipe" method ="POST">
+<h1 id="noteTitle"><%= name %>'s Recipes</h1>
+<textarea id = "notes" cols= "35" rows = "25" name="notes"><%= notes %></textarea><br>
+<button id="recipeSubmit">Save</button>
+</form>
+
+<!--OPTIONS MODAL============================================-->
+<div id="optionsModal">
+<div id="optionsContainer">
+
+  <div id="optionsExit" onclick ="closeOptionsPanel()">x</div><br>
+      <div id ="optionsTitle">Options</div>
+      
+      <div id ="optionButtons">
+      	<div id ="background" onclick="background()" class="option">Background</div>
+        <div id ="editAcct" onclick="editAcct()" class="option">Edit Account</div>
+        <form id="logoutBtnForm" action ="/logout" method="POST">
+    <button class = "logoutBtn">Logout</button>
+		</form>
+    
+      </div><!--optionButtons-->
+	</div><!--end of id="optionsContainer"-->
+</div><!--end of id="optionsModal"-->
+
+<!--BACKGROUND OPTIONS=======================================-->
+
+<div id="backgroundOptModal">
+<div id="backgroundOptContainer">
+
+<div class="backgroundOptHeaderBtns">
+<div id="bgback" onclick="bgback()">&larr;</div><div id="bgexit" onclick="bgexit()">x</div>
+</div><!--end of class="backgroundOptHeaderBtns"-->
+
+<div id="bgOptTitle">Background</div>
+
+ <form id ="bgoptform" enctype="multipart/form-data" action="/background" method ="POST">
+<!--Background Photo Option------------------------------------------------------------------>
+    <div id="bgPhotosTitle" onclick="bpOptContent()" class="option">Background Photos</div>
+    <div id="bpOptContent">
+        <div class="photoOptGrid">
+        <input type="checkbox" id="cookie1InputTag" name="cookie1" onclick="style1()" onmouseover="cookie1PhotoHiglight()" onmouseleave = "cookie1PhotoRemoveHiglight()" checked="true">
+        <div class ="photoContainer">
+        <div id="cookie1Photo" onmouseenter="cookie1PhotoHiglight()" onmouseleave = "cookie1PhotoRemoveHiglight()"></div>
+        <div id="cookie1PhotoLabel" onmouseenter="cookie1PhotoHiglight()" onmouseleave = "cookie1PhotoRemoveHiglight()">cookie1</div>
+        </div><!--end of cookie1 class ="photoContainer"-->
+        </div><!--end of cookie1 photoOptGrid-->
+        <br>
+
+        <div class="photoOptGrid">
+        <input type="checkbox" id="cookie2InputTag" name="cookie2" onclick="style2()" onmouseover="cookie2PhotoHiglight()" onmouseleave = "cookie2PhotoRemoveHiglight()">
+        <div class ="photoContainer">
+        <div id="cookie2Photo" onmouseenter="cookie2PhotoHiglight()" onmouseleave = "cookie2PhotoRemoveHiglight()"></div>
+        <div id="cookie2PhotoLabel" onmouseenter="cookie2PhotoHiglight()" onmouseleave = "cookie2PhotoRemoveHiglight()">cookie2</div>
+        </div><!--end of cookie2 class ="photoContainer"-->
+        </div><!--end of cookie2 class="photoOptGrid"-->
+        <br>
+        <input type="checkbox" id="uploadOpt" name="uploadOpt" onclick="uploadOpt0()"><label for="uploadOpt">Upload</label><br>
+        <input type="file" id="uploadInputTag" name="uploadInputTag" onchange="style3(this);">
+        <img id="uploadedPhoto" src="#" alt="your image">
+        <br>
+        </div><!--end of id="bpOptContent"-->
+<!--Text option-------------------------------------------------------------------------------->
+    <div id="bgOptTextTitle" class="option" onclick="bgOptTextContent()">Text</div>
+        <div id="bgOptTextContent">
+        <div class="textColorGrid">
+            <label for ="headerColor" class="promptText">Header(Title & Date)</label><input type="color" id="headerColor" value="#FFFFFF" name="headerColor"><div class="textColorBtn" onclick="changeTextColor1()">Submit</div>
+        </div>
+        <br>       
+        <div class="textColorGrid2">
+        <label for="bodyTextColor" class="promptText">Body Text</label><input type="color" id="bodyTextColor" name="bodyTextColor"><div class="textColorBtn" onclick="changeTextColor2()">Submit</div>
+        </div>
+        </div><!--end of id="bgOptTextContent" -->
+        <button id="bgOptSaveBtn" style="display:none;">Save</button>
+      </form>
+</div><!--end of id="backgroundOptContainer" -->
+</div><!--end of id="backgroundOptModal" -->
+
+<!--EDIT ACCOUNT INFO PROMPT BOX====================================-->
+
+<div id="editAcctModal">
+    <div id ="editAcctContainer">
+    
+    <div class="backgroundOptHeaderBtns">
+    <div id="editAcctBack" onclick="editAcctBack()">&larr;</div><div id="editAcctExit" onclick="editAcctExit()">x</div>
+    </div><!--end of class="backgroundOptHeaderBtns"-->
+    
+    <div id="eidtAcctTitle">Edit Account</div>
+    
+    <!--edit username section ----------------->
+    <form action="/editUsername" method="POST" >
+    <div class="editUsernamePasswordGrid">
+    <div>username: </div><div id="currentUserName"><%= name %></div><input id="editedusername" name="editedusername" class="userInput"><div id="editusernamebtn" onclick="editusername()">Edit</div><button id="saveUsernameBtn">Save</button>
+    </div><!--end of username upper half class="editUsernamePasswordGrid"-->
+    <div id="editUNLowerHalf">
+    <div id="uNeditStatusMsg">Please enter password to confirm.</div>
+    <div class="editUsernamePasswordGrid">
+    <div>password: </div><input id="currentPWEditUN" type="password" name="currentPWEditUN" class="userInput">
+    </div><!--end of username lower half class="editUsernamePasswordGrid"-->
+    </div><!--end of id="editUNLowerHalf" -->
+    </form>
+    
+    <!--edit passowrd section--------------->
+    <form id ="editPassowrdForm" action="/editPassword" method="POST">
+    <div class="editUsernamePasswordGrid">
+    <div>password: </div><div id="currentPassword">****</div><div id="editpasswordbtn" onclick="editpassword()">Edit</div><button id="savePasswordBtn">Save</button>
+    </div><!--end of password class="editUsernamePasswordGrid"-->
+    
+    <div id="newPasswordContainer">
+    
+    <label id ="oldPasswordLabel" for="oldPassword" class="editPasswordLabel">Old Password</label><br>
+    <input id="oldPassword" name="oldPassword" type="password" class="userInput inputSpace"><br>
+    <label id="newPasswordLabel" for="newPassword" class="editPasswordLabel">New Password</label><br>
+    <input id="newPassword" name="newPassword" type="password" class="userInput inputSpace"><br>
+    <label id="reEnteredNewPWDLabel" for="reEnteredNewPWD" class="editPasswordLabel">Confirm New Passowrd</label><br>
+    <input id="reEnteredNewPWD" name="reEnteredNewPWD" type="password" class="userInput inputSpace">
+    
+    <!--<div id="submissionStatusMsg"></div>-->
+    </div><!--end of id="newPasswordContainer"-->
+    
+    </form><!--end of id ="editPassowrdForm" -->
+    <div id="orNote">OR</div>
+    
+    <!--delete account section------------------------------------------->
+    <div id="deleteAcctSection">
+    <div id="deleteAcctGrid">
+    <input id="deleteAccountCheckBox" type="checkbox" onclick="deleteAcct()"><div>Delete Account</div>
+    </div><!--end of id="deleteAcctGrid" -->
+    <div id="deleteMsgAndConfirmSect">
+    <div>*This will delete all records of this user account. Please enter password to acknowledge this message and submit.</div>
+    <form id="deleteAcctForm" method="POST" action="/deleteAcct">
+    <input type="password" id="deleteAcctuserPW" name="deleteAcctuserPW" class="userInput inputSpace"><button id="deleteAcctBtn">Delete</button>
+    </form><!--end of id="deleteAcctForm"-->
+    </div><!--end of id="deleteMsgAndConfirmSect" -->
+    </div><!--end of id="deleteAcctSection" -->
+    
+    </div><!--end of id ="editAcctContainer"-->
+    </div><!--end of id="editAcctModal" -->
+
+<!--========================ALL JAVASCRIPT FUNCTIONS BELOW==============================-->
+ <!-- <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
+ <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
+</script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+<script>
+function time(){
+
+var x = new Date().toLocaleString();
+
+document.getElementById("time").innerHTML = x;
+  
+}//end of alarm()
+setInterval(time, 1000);//makes alarm() cycle every second
+setTimeout(time, 0);//makes alarm() execute immediately
+
+//OPTIONS MODAL FUNCTIONS===========================================
+
+//display options modal----------------
+function options(){
+document.getElementById("optionsModal").style.display ="block";
+}
+
+//close optoins modal------------------
+function closeOptionsPanel(){
+document.getElementById("optionsModal").style.display = "none";
+}
+
+//display background modal-------------
+function background(){
+document.getElementById("optionsModal").style.display = "none";
+document.getElementById("backgroundOptModal").style.display = "block";
+
+document.getElementById("bpOptContent").style.display ="none";//remove display of previously opened Background Option Photo Content Selection
+document.getElementById("bgOptTextContent").style.display="none";//remove display of previously opened Background Option Text Content Selection
+}
+
+//display edit account modal---------------
+function editAcct(){
+document.getElementById("optionsModal").style.display = "none";
+document.getElementById("editAcctModal").style.display = "block";
+}
+
+//BACKGROUND STYLE FUNCTIONS=======================================
+
+//close background modal---------------
+function bgexit(){
+document.getElementById("backgroundOptModal").style.display = "none";
+}
+
+//return to options modal from background modal--------------
+function bgback(){
+document.getElementById("optionsModal").style.display = "block";
+document.getElementById("backgroundOptModal").style.display = "none";
+}
+
+//toggle for background photos content option--------------
+function bpOptContent(){
+var optionDisplay = document.getElementById("bpOptContent").style.display;
+
+if(optionDisplay !== "block"){
+document.getElementById("bpOptContent").style.display = "block";
+document.getElementById("bgOptTextContent").style.display = "none";
+}
+else if (optionDisplay == "block"){
+document.getElementById("bpOptContent").style.display = "none";
+}
+else if (optionDisplay == "none"){
+document.getElementById("bpOptContent").style.display = "block";
+}
+}//end of bpOptContent()
+
+//toggle for background text option-------------------
+function bgOptTextContent(){
+var optionDisplay = document.getElementById("bgOptTextContent").style.display;
+
+if(optionDisplay !== "block"){
+document.getElementById("bgOptTextContent").style.display = "block";
+document.getElementById("bpOptContent").style.display = "none";
+}
+else if (optionDisplay == "block"){
+document.getElementById("bgOptTextContent").style.display = "none";
+}
+else if (optionDisplay == "none"){
+document.getElementById("bgOptTextContent").style.display = "block";
+}
+}//end of bgOptTextContent()
+
+//insert photo of choice--------------------------
+//cookie1 photo------------
+function style1() {
+var check1 = document.getElementById("cookie1InputTag").checked;
+var check2 = document.getElementById("cookie2InputTag").checked;
+var check3 = document.getElementById("uploadOpt").checked;
+
+if (check1 == true) {
+document.getElementById("bodyID").style.backgroundImage = "url('fortuneCookie.jpg')";
+document.getElementById("cookie2InputTag").checked = false;
+document.getElementById("uploadOpt").checked = false;
+document.getElementById("uploadInputTag").style.display = "none";
+document.getElementById("uploadInputTag").value = "";
+document.getElementById("uploadedPhoto").style.display = "none";
+document.getElementById("uploadedPhoto").src = "#";
+}
+else if((check1 == false && check2 == false && check3 == false) == true) {
+document.getElementById("bodyID").style.backgroundImage = "none";
+}
+
+}//end of style1()
+//cookie2 photo------------
+function style2() {
+var check1 = document.getElementById("cookie1InputTag").checked;
+var check2 = document.getElementById("cookie2InputTag").checked;
+var check3 = document.getElementById("uploadOpt").checked
+
+if (check2 == true) {
+document.getElementById("bodyID").style.backgroundImage = "url('servedCookies.jpg')";
+document.getElementById("cookie1InputTag").checked = false;
+document.getElementById("uploadOpt").checked = false;
+document.getElementById("uploadInputTag").style.display = "none";
+document.getElementById("uploadInputTag").value = "";
+document.getElementById("uploadedPhoto").style.display = "none";
+document.getElementById("uploadedPhoto").src = "#";
+}
+else if((check1 == false && check2 == false && check3 == false) == true) {
+document.getElementById("bodyID").style.backgroundImage = "none";
+}
+
+}//end of style2()
+
+//highlight photo and text on hover for cookie1 photo---------
+function cookie1PhotoHiglight(){
+    document.getElementById("cookie1PhotoLabel").style.color = "yellow";
+    document.getElementById("cookie1Photo").style.borderColor = "yellow";
+}
+
+//remove hightlight from photo and text on mouseleave of cookie1 photo-------
+function cookie1PhotoRemoveHiglight(){
+    document.getElementById("cookie1PhotoLabel").style.color = "white";
+    document.getElementById("cookie1Photo").style.borderColor = "black";
+}
+
+//highlight photo and text on hover for cookie2 photo-----------
+function cookie2PhotoHiglight(){
+    document.getElementById("cookie2PhotoLabel").style.color = "yellow";
+    document.getElementById("cookie2Photo").style.borderColor = "yellow";
+}
+
+//remove hightlight from photo and text on mouseleave of cookie2 photo-------
+function cookie2PhotoRemoveHiglight(){
+    document.getElementById("cookie2PhotoLabel").style.color = "white";
+    document.getElementById("cookie2Photo").style.borderColor = "black";
+}
+
+//open upload file option------------------
+function uploadOpt0(){
+    var check1 = document.getElementById("cookie1InputTag").checked;
+    var check2 = document.getElementById("cookie2InputTag").checked;
+    var check3 = document.getElementById("uploadOpt").checked
+    var uploadOpt = document.getElementById("uploadInputTag").style.display;
+if (uploadOpt !== "block"){
+    document.getElementById("uploadInputTag").style.display = "block";
+    document.getElementById("cookie1InputTag").checked = false;
+    document.getElementById("cookie2InputTag").checked = false;
+}
+else if (uploadOpt == "block"){
+    document.getElementById("uploadInputTag").style.display = "none";
+    document.getElementById("uploadInputTag").value = "";
+    document.getElementById("uploadedPhoto").style.display = "none";
+    document.getElementById("uploadedPhoto").src = "#";
+
+}
+else if (uploadOpt == "none"){
+    document.getElementById("uploadInputTag").style.display = "block";
+    document.getElementById("uploadedPhoto").style.display = "block";
+}
+
+if((check1 == false && check2 == false && check3 == false) == true) {
+document.getElementById("bodyID").style.backgroundImage = "none";
+}
+}//end of uploadOpt0
+
+//function to upload photo of uploaded image-----------
+function style3(input){
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#uploadedPhoto')
+                    .attr('src', e.target.result)
+                    .width(100)
+                    .height(60);
+                //insert photo to background
+                document.getElementById("bodyID").style.backgroundImage= "url('" + e.target.result + "')";
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }        
+}
+
+//change color of header (Title & Time)------------------
+function changeTextColor1(){
+var headerColor = document.getElementById("headerColor").value;
+
+document.getElementById("noteTitle").style.color = headerColor;
+document.getElementById("time").style.color = headerColor;
+
+}//end of changeTextColor1()
+
+//change color of page text-------------------
+function changeTextColor2(){
+var bodyTextColor = document.getElementById("bodyTextColor").value;
+
+document.getElementById("notes").style.color = bodyTextColor;
+}//end of changeTextColor2()
+
+//EDIT ACCOUNT MODAL FUNCTIONS====================================
+
+//Return to options modal from edit account modal--------------//
+function editAcctBack(){
+document.getElementById("optionsModal").style.display = "block";
+document.getElementById("editAcctModal").style.display = "none";
+
+document.getElementById("editedusername").style.display = "none";
+document.getElementById("editusernamebtn").style.display = "block";
+document.getElementById("currentUserName").style.display ="block";
+document.getElementById("saveUsernameBtn").style.display = "none";
+document.getElementById("editUNLowerHalf").style.display = "none";
+
+document.getElementById("newPasswordContainer").style.display ="none";
+document.getElementById("savePasswordBtn").style.display="none";
+document.getElementById("editpasswordbtn").style.display="block";
+
+document.getElementById("deleteAccountCheckBox").checked = false;
+document.getElementById("deleteMsgAndConfirmSect").style.display="none";
+}//end of editAcctBack()
+
+//close edit account modal-------------------
+function editAcctExit(){
+document.getElementById("editAcctModal").style.display = "none";
+
+document.getElementById("editedusername").style.display = "none";
+document.getElementById("editusernamebtn").style.display = "block";
+document.getElementById("currentUserName").style.display ="block";
+document.getElementById("saveUsernameBtn").style.display = "none";
+document.getElementById("editUNLowerHalf").style.display = "none";
+
+document.getElementById("newPasswordContainer").style.display ="none";
+document.getElementById("savePasswordBtn").style.display="none";
+document.getElementById("editpasswordbtn").style.display="block";
+
+document.getElementById("deleteAccountCheckBox").checked = false;
+document.getElementById("deleteMsgAndConfirmSect").style.display="none";
+}//editAcctExit()
+
+//display to edit username--------------------------
+function editusername(){
+var currentUserName = document.getElementById("currentUserName").innerText;
+
+document.getElementById("editusernamebtn").style.display = "none";
+document.getElementById("currentUserName").style.display ="none";
+document.getElementById("saveUsernameBtn").style.display = "block";
+document.getElementById("editedusername").style.display = "block";
+document.getElementById("editedusername").value = currentUserName;
+document.getElementById("currentPWEditUN").value = "";
+document.getElementById("editUNLowerHalf").style.display = "block";
+
+document.getElementById("newPasswordContainer").style.display ="none";
+document.getElementById("savePasswordBtn").style.display="none";
+document.getElementById("editpasswordbtn").style.display="block";
+
+document.getElementById("deleteAccountCheckBox").checked = false;
+document.getElementById("deleteMsgAndConfirmSect").style.display="none";
+
+}//end of editusername()
+
+//display to edit password---------------------------
+function editpassword(){
+document.getElementById("editpasswordbtn").style.display ="none";
+document.getElementById("savePasswordBtn").style.display ="block";
+document.getElementById("newPasswordContainer").style.display ="block";
+document.getElementById("oldPassword").value ="";
+document.getElementById("newPassword").value ="";
+document.getElementById("reEnteredNewPWD").value ="";
+
+document.getElementById("editedusername").style.display = "none";
+document.getElementById("editusernamebtn").style.display = "block";
+document.getElementById("currentUserName").style.display ="block";
+document.getElementById("saveUsernameBtn").style.display = "none";
+document.getElementById("editUNLowerHalf").style.display = "none";
+
+document.getElementById("deleteAccountCheckBox").checked = false;
+document.getElementById("deleteMsgAndConfirmSect").style.display="none";
+}//end of editpassword()
+
+function deleteAcct(){
+var check = document.getElementById("deleteAccountCheckBox").checked;
+
+if(check == true){
+document.getElementById("deleteMsgAndConfirmSect").style.display="block";
+document.getElementById("deleteAcctuserPW").value ="";
+
+document.getElementById("editpasswordbtn").style.display ="block";
+document.getElementById("savePasswordBtn").style.display ="none";
+document.getElementById("newPasswordContainer").style.display ="none";
+
+document.getElementById("editedusername").style.display = "none";
+document.getElementById("editusernamebtn").style.display = "block";
+document.getElementById("currentUserName").style.display ="block";
+document.getElementById("saveUsernameBtn").style.display = "none";
+document.getElementById("editUNLowerHalf").style.display = "none";
+}
+else{
+document.getElementById("deleteMsgAndConfirmSect").style.display="none";}
+}//end of deleteAcct()
+</script>
+</body>
+</html>

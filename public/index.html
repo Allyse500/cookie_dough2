@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Cookie Dough2</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- <script src="index.js"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #bodyID {
+    background-image: url('cookieDough.jpg');
+    /* background-size: 1300px 820px; */
+    background-size: cover;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    /* background-color: white; */
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+/* =================SCROLL BAR BEGIN========================== */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+ box-shadow: inset 0 0 5px grey; 
+ border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:rgb(199, 130, 2, 0.5); 
+  box-shadow: inset 0 0 5px rgb(199, 130, 2, 0.5);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(199, 130, 2, 0.7);
+  box-shadow: inset 0 0 5px rgb(199, 130, 2, 0.7);
+}
+/* ==================SCROLL BAR END========================= */
+/* ==================LOGIN & SIGN UP CONTAINERS=============== */
+/* #loginContainer{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    height: 200px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    display: none;
+    } */
+    
+    /* #signUpContainer{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    height: 200px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    display: none;
+    } */
+    
+    /* #loginTitle, #signUpTitle{
+    text-align: center;
+    font-size: 150%;
+    font-weight: bold;
+    margin-top: 1%;
+    } 
+    
+    #login, #signUp{
+    margin-left: 20%;
+    margin-top: 10%;
+    }
+    
+    #submitbtn, #submitbtn0{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 15px;
+    padding: 1%;
+    width: fit-content;
+    float: right;
+    margin-right: 2%;
+    margin-top: 7%;
+    cursor: pointer;
+    }
+    
+    #username,#password, #newUsername, #newPassword{
+    border-radius: 4px;
+    }
+    
+    #signupbtn {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 15px;
+    padding: 1%;
+    width: fit-content;
+    margin-top: -7%;
+    transform: translate(560%,16%);
+    cursor: pointer;
+    }
+    
+    #loginbtn {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 15px;
+    padding: 1%;
+    width: fit-content;
+    margin-top: -7%;
+    transform: translate(710%,16%);
+    cursor: pointer;
+    }
+    
+    #signUpTextResponce, #loginTextResponce{
+    text-align:center;
+    transform: translate(-10%,200%);
+    margin-bottom: -6%;
+    display: none;
+    }*/
+
+/* ===================NAVBAR=================================== */
+#navbar{
+margin: 0;
+height: 50px;
+background-color: rgb(255, 255, 255, .8);
+padding-top: 1%;
+}
+
+#headerGrid{
+    display: grid;
+    grid-template-columns: 20% 30% 50%;
+}
+
+#buttonsGrid{
+    display: grid;
+    grid-template-columns: 25% 25% 25%;
+    width: 70%;
+    height: 100px;
+    margin-left: 52.5%;
+}
+
+#searchLabel{
+    color:rgb(0, 0, 0);
+    font-size: 140%;
+    font-family: Arial, Helvetica, sans-serif; 
+    margin-top: 10%;
+}
+
+#searchBar{
+    margin-left: 40%;
+    display: grid;
+    grid-template-columns: 20% 50% 20%;
+    width: 400px;
+    height: 40px;
+}
+
+#searchButton{
+    cursor: pointer;
+}
+
+#homeTitle{
+    font-size: 200%;
+    font-family: Arial, Helvetica, sans-serif;
+    width: fit-content;
+}
+
+.homeButtons{
+    font-size: 125%;
+    font-family: Arial, Helvetica, sans-serif; 
+    border: 4px double white;
+    border-radius: 25px;
+    height: fit-content;
+    width: fit-content;
+    padding: 5%;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.homeButtons:hover{
+    background-color: rgb(60, 60, 60);
+}
+
+#aboutBtn{
+    transform: translateX(25%);
+}
+
+/*=========================CENTRAL PAGE TITLE=============================*/
+
+#centralPageTitle{
+font-size: 800%;
+color: rgb(88, 52, 23);
+font-weight: bold;
+font-style: italic;
+margin-top: 10%;
+margin-left: 18%;
+display: block;
+-webkit-text-stroke: 1px rgb(255, 255, 255);
+}
+
+/*=========================ABOUT PROMPT BOX===============================*/
+#aboutModal{
+  display: none;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#aboutContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 400px;
+ height: fit-content;
+ background-color: rgba(0, 0, 0, .5);
+ border: 5px double rgb(80, 38, 22);
+ border-radius:7px;
+ padding: .75%;
+}
+
+#aboutSecondaryContainer{
+background-color: rgba(145, 88, 41, 0.75);
+margin-left: auto;
+margin-right: auto;
+padding: 2%;
+}
+
+#aboutTitle{
+font-style: italic;
+font-weight: bold;
+font-size: 200%;
+font-family: Arial, Helvetica, sans-serif; 
+text-align: center;
+color: white;
+}
+
+ #aboutCloseButton{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 85%;
+	text-align: center;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 1px;
+    margin-left: 85%;
+  }
+
+#aboutCloseButton:hover {
+    background-color:rgb(60, 60, 60);
+  }
+  
+#aboutContents{
+padding-left: 5%;
+padding-right: 5%;
+margin-top: 5%;
+font-family: Arial, Helvetica, sans-serif;
+color: white;
+}
+
+/*=========================SIGN UP PROMPT BOX===============================*/
+#signupModal{
+  display: none;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#signupFormContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 400px;
+ height: fit-content;
+ background-color: rgba(0, 0, 0, .5);
+ border: 5px double rgb(80, 38, 22);
+ border-radius:7px;
+ padding: .75%;
+}
+
+#signupFormSecondaryContainer{
+background-color: rgba(145, 88, 41, 0.75);
+margin-left: auto;
+margin-right: auto;
+padding: 2%;
+}
+
+#signupFormTitle{
+font-style: italic;
+font-weight: bold;
+font-size: 200%;
+font-family: Arial, Helvetica, sans-serif; 
+text-align: center;
+color: white;
+}
+
+.formInput{
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 3%;
+}
+
+#signupBtnsGrid{
+display: grid;
+grid-template-columns: 30% 30%;
+grid-gap: 0% 5%;
+width: 200px;
+margin-left: 66%;
+}
+
+#signupSubmitBtn{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    /*margin-left: 85%;*/
+  }
+  
+ #signupCloseButton{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 85%;
+	text-align: center;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 1px;
+    /*margin-left: 85%;*/
+  }
+
+#signupSubmitBtn:hover, #signupCloseButton:hover {
+    background-color:rgb(60, 60, 60);
+  }
+  
+#signupInputContents{
+margin-left: 17.5%;
+margin-top: 5%;
+}
+
+.signupFormLabel{
+font-family: Arial, Helvetica, sans-serif;
+color: orange;
+font-weight: bold;  
+}
+
+#signupPasswordBlock{
+margin-left: .5%;
+}
+
+/*=========================LOGIN PROMPT BOX===============================*/
+#loginModal{
+  display: none;
+  /* position: relative; */
+  position: fixed; 
+  z-index: 1;
+  padding-top: 150px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#loginFormContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 400px;
+ height: fit-content;
+ background-color: rgba(0, 0, 0, .5);
+ border: 5px double rgb(80, 38, 22);
+ border-radius:7px;
+ padding: .75%;
+}
+
+#loginFormSecondaryContainer{
+background-color: rgba(145, 88, 41, 0.75);
+margin-left: auto;
+margin-right: auto;
+padding: 2%;
+}
+
+#loginFormTitle{
+font-style: italic;
+font-weight: bold;
+font-size: 200%;
+font-family: Arial, Helvetica, sans-serif; 
+text-align: center;
+color: white;
+}
+
+.formInput{
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 3%;
+}
+
+#loginBtnsGrid{
+display: grid;
+grid-template-columns: 30% 30%;
+grid-gap: 0% 5%;
+width: 200px;
+margin-left: 66%;
+}
+
+#loginSubmitBtn{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    /*margin-left: 85%;*/
+  }
+  
+ #loginCloseButton{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 85%;
+	text-align: center;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 1px;
+    /*margin-left: 85%;*/
+  }
+
+#loginSubmitBtn:hover, #loginCloseButton:hover {
+    background-color:rgb(60, 60, 60);
+  }
+  
+#loginInputContents{
+margin-left: 17.5%;
+margin-top: 5%;
+}
+
+.loginFormLabel{
+font-family: Arial, Helvetica, sans-serif;
+color: orange;
+font-weight: bold; 
+}
+
+#loginPasswordBlock{
+margin-left: .5%;
+}
+    </style>
+
+</head>
+
+<body id="bodyID">
+
+<!--=======================NAVBAR==================================================-->
+<div id="navbar">
+    <div id="headerGrid">
+        <div id="homeTitle">Home</div>
+        <div id="searchBar"><label id="searchLabel" for ="search">Search: </label><input id="search" type = "text" name="searchInput" placeholder ="Enter recipe/chef name"><button id="searchButton" name="searchButton">Search</button></div>
+        <div id="buttonsGrid">
+            <div id="aboutBtn" class="homeButtons" onclick="aboutPromptBox()">About</div>
+            <div id="signUpBtn" class="homeButtons" onclick="signupPromptBox()">Sign Up</div>
+            <div id="loginBtn" class="homeButtons" onclick="loginPromptBox()">Login</div>
+        </div><!--end of id="buttonsGrid"-->
+    </div><!--end of id="headerGrid"-->
+</div><!--end of id="navbar"-->
+
+<!--========================CENTRAL PAGE TITLE======================================-->
+<div id="centralPageTitle">
+    Cookie Dough
+</div>
+<!--=======================ABOUT===============================================-->
+<div id="aboutModal">
+    <div id="aboutContainer">
+        <div id="aboutSecondaryContainer">
+            <div id="aboutTitle">About</div>
+            <div id="aboutContents">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: orange; font-weight: bold; font-style: italic;">Cookie Dough</span> provides its users with the ability to search cookie recipes as well as save recipes of their own. This service is currently free to the public.<br><br> Enjoy!<br><br><span style="font-style: italic">-Admin (Allyse D. Johnson)</span>
+            </div>
+            <div id="aboutCloseButton" onclick="closeabout()">Close</div>
+        </div><!--end of id="aboutSecondaryContainer-->
+    </div><!--end of id="aboutContainer"-->
+</div><!--end of id="aboutModal"-->
+
+<!--========================SIGN UP PROMPT BOX===========================================-->        
+
+<div id="signupModal">
+    <div id="signupFormContainer">
+        <div id="signupFormSecondaryContainer">
+            <div id="signupFormTitle">Sign Up</div>
+            <form id="signupForm" action ="/sign_up" method="POST">
+                <div id="signupInputContents">
+                    <label for="newUsername" class="signupFormLabel">Username: </label>
+                    <input class="formInput" type="text" id="newUsername" name="newUsername"><br>
+                    <div id="signupPasswordBlock">
+                        <label for="newPassword" class="signupFormLabel">Password: </label>
+                        <input class="formInput" type="password" id="newPassword" name="newPassword">
+                    </div><!--end of id="signupPasswordBlock"-->
+                </div><!--end of id="signupInputContents" -->
+                <br>
+                <div id="signupBtnsGrid">
+                    <button id="signupSubmitBtn">Submit</button><div id="signupCloseButton" onclick="closesignup()">Close</div>
+                </div><!--end of id="signupBtnsGrid"-->
+            </form><!--end of id="signupForm"-->
+        </div><!--end of id="signupFormSecondaryContainer-->
+    </div><!--end of id="signupFormContainer"-->
+</div><!--end of id="signupModal"-->
+
+<!--========================LOGIN PROMPT BOX===========================================-->
+
+        <div id="loginModal">
+            <div id="loginFormContainer">
+                <div id="loginFormSecondaryContainer">
+                    <div id="loginFormTitle">Login</div>
+                    <form id="loginForm" action="/login" method="POST">
+                        <div id="loginInputContents">
+                            <label for="username" class="loginFormLabel">Username: </label>
+                            <input class="formInput" type="text" id="username" name="username"><br>
+                            <div id="loginPasswordBlock">
+                                <label for="password" class="loginFormLabel">Password: </label>
+                                <input class="formInput" type="password" id="password" name="password">
+                            </div><!--end of id="loginPasswordBlock"-->
+                        </div><!--end of id="loginInputContents" -->
+                        <br>
+                        <div id="loginBtnsGrid">
+                            <button id="loginSubmitBtn">Submit</button><div id="loginCloseButton" onclick="closelogin()">Close</div>
+                        </div><!--end of id="loginBtnsGrid"-->
+                    </form><!--end of id="loginForm"-->
+                </div><!--end of id="loginFormSecondaryContainer-->
+            </div><!--end of id="loginFormContainer"-->
+        </div><!--end of id="loginModal"-->
+
+<!--========================ALL JAVASCRIPT FUNCTIONS BELOW===========================================-->
+<script>
+        
+//==========================ABOUT PROMPT BOX====================================//
+//display about prompt box-------------------------------------------------------------
+function aboutPromptBox(){
+document.getElementById("aboutModal").style.display ="block";
+}//end of aboutPromptBox()
+
+//close about prompt box-------------------------------------------------------------
+function closeabout(){
+document.getElementById("aboutModal").style.display ="none";
+}//end of closeabout()
+//==========================SIGN UP PROMPT BOX===================================//
+//display signup prompt box-------------------------------------------------------------
+function signupPromptBox(){
+document.getElementById("signupModal").style.display ="block";
+document.getElementById("newUsername").value ="";
+document.getElementById("newPassword").value ="";
+}//end of signupPromptBox()
+
+//close signup prompt box-------------------------------------------------------------
+function closesignup(){
+document.getElementById("signupModal").style.display ="none";
+}//end of closesignup()
+
+//===========================LOGIN PROMPT BOX====================================//
+//display login prompt box-------------------------------------------------------------
+function loginPromptBox(){
+document.getElementById("loginModal").style.display ="block";
+document.getElementById("username").value ="";
+document.getElementById("password").value ="";
+}//end of loginPromptBox()
+
+//close login prompt box-------------------------------------------------------------
+function closelogin(){
+document.getElementById("loginModal").style.display ="none";
+}//end of closelogin()
+
+
+        // function signUpForm(){
+        // document.getElementById("loginModal").style.display ="none";
+        // document.getElementById("signUpModal").style.display ="block";
+        // }
+        
+        // function loginForm(){
+        // document.getElementById("loginModal").style.display ="block";
+        // document.getElementById("signUpModal").style.display ="none";
+        // }
+        
+        /*function signUpTextResponce(){
+        document.getElementById("signUpTextResponce").style.display ="block";
+        }
+        
+        function loginTextResponce(){
+        document.getElementById("loginTextResponce").style.display ="block";
+        }*/
+        </script>
+
+</body>
+</html>
