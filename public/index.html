@@ -3,17 +3,15 @@
 <head>
 
     <title>Cookie Dough2</title>
-    <link rel="stylesheet" href="index.css">
+    <!-- <link rel="stylesheet" href="index.css"> -->
     <!-- <script src="index.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #bodyID {
-    background-image: url('cookieDough.jpg');
-    /* background-size: 1300px 820px; */
-    background-size: cover;
+#bodyID {
+    background-image: url('../cookieDough.jpg');
+    background-size: 100vw 100vh;
     background-position: 0% 0%;
     background-repeat: no-repeat;
-    /* background-color: white; */
     margin: 0;
     overflow-x: hidden;
   }
@@ -42,117 +40,51 @@
   box-shadow: inset 0 0 5px rgb(199, 130, 2, 0.7);
 }
 /* ==================SCROLL BAR END========================= */
-/* ==================LOGIN & SIGN UP CONTAINERS=============== */
-/* #loginContainer{
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    height: 200px;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 15%;
-    display: none;
-    } */
-    
-    /* #signUpContainer{
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    height: 200px;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 15%;
-    display: none;
-    } */
-    
-    /* #loginTitle, #signUpTitle{
-    text-align: center;
-    font-size: 150%;
-    font-weight: bold;
-    margin-top: 1%;
-    } 
-    
-    #login, #signUp{
-    margin-left: 20%;
-    margin-top: 10%;
-    }
-    
-    #submitbtn, #submitbtn0{
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 15px;
-    padding: 1%;
-    width: fit-content;
-    float: right;
-    margin-right: 2%;
-    margin-top: 7%;
-    cursor: pointer;
-    }
-    
-    #username,#password, #newUsername, #newPassword{
-    border-radius: 4px;
-    }
-    
-    #signupbtn {
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 15px;
-    padding: 1%;
-    width: fit-content;
-    margin-top: -7%;
-    transform: translate(560%,16%);
-    cursor: pointer;
-    }
-    
-    #loginbtn {
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 15px;
-    padding: 1%;
-    width: fit-content;
-    margin-top: -7%;
-    transform: translate(710%,16%);
-    cursor: pointer;
-    }
-    
-    #signUpTextResponce, #loginTextResponce{
-    text-align:center;
-    transform: translate(-10%,200%);
-    margin-bottom: -6%;
-    display: none;
-    }*/
 
 /* ===================NAVBAR=================================== */
 #navbar{
 margin: 0;
-height: 50px;
+height: 8vh;
 background-color: rgb(255, 255, 255, .8);
-padding-top: 1%;
+padding-top: 2vh;
 }
 
 #headerGrid{
     display: grid;
-    grid-template-columns: 20% 30% 50%;
+    grid-template-columns: 20vw 45vw 35vw;
+    width: 100vw;
 }
 
 #buttonsGrid{
     display: grid;
-    grid-template-columns: 25% 25% 25%;
-    width: 70%;
-    height: 100px;
-    margin-left: 52.5%;
+    /* grid-template-columns: 25% 25% 25%; */
+    grid-template-columns: 8vw 8vw 8vw;
+    width: 100%;
+    /* height: 100px; */
+    height: 20vh;
+    margin-left: 31.5%;
+    margin-top: .5vh;
 }
 
 #searchLabel{
     color:rgb(0, 0, 0);
-    font-size: 140%;
+    /* font-size: 140%; */
+    font-size: 4vh;
     font-family: Arial, Helvetica, sans-serif; 
-    margin-top: 10%;
+    /* margin-top: 10%; */
+    margin-top: 1vh;
 }
 
 #searchBar{
-    margin-left: 40%;
+    /* margin-left: 30%; */
+    margin-left: 12vw;
     display: grid;
-    grid-template-columns: 20% 50% 20%;
-    width: 400px;
-    height: 40px;
+    /* grid-template-columns: 20% 50% 20%; */
+    grid-template-columns: 7vw 12vw 6vw;
+    /* width: 400px; */
+    width: 30vw;
+    /* height: 40px; */
+    height: 6vh;
 }
 
 #searchButton{
@@ -160,13 +92,15 @@ padding-top: 1%;
 }
 
 #homeTitle{
-    font-size: 200%;
+    /* font-size: 200%; */
+    font-size: 5vh;
     font-family: Arial, Helvetica, sans-serif;
     width: fit-content;
 }
 
 .homeButtons{
-    font-size: 125%;
+    /* font-size: 125%; */
+    font-size: 3.5vh;
     font-family: Arial, Helvetica, sans-serif; 
     border: 4px double white;
     border-radius: 25px;
@@ -176,27 +110,306 @@ padding-top: 1%;
     cursor: pointer;
     background-color: rgb(0, 0, 0);
     color: white;
+    margin-top: -1.2vh;
 }
 
 .homeButtons:hover{
     background-color: rgb(60, 60, 60);
 }
 
-#aboutBtn{
+/* #aboutBtn{
     transform: translateX(25%);
+} */
+
+.dropdown{
+  display:none;
+}
+
+@media only screen and (max-width: 1270px) {
+#headerGrid{
+    display: grid;
+    grid-template-columns: 15vw 45vw 35vw;
+    width: 100vw;
+}
+
+  #buttonsGrid {
+    display:none;
+  }
+
+  #searchBar{
+    /* margin-left: 30%; */
+    display: grid;
+    grid-template-columns: 15% 30% 15% 15%;
+    /* width: 600px;
+    height: 30px; */
+    width: 500px;
+    /* width: 75vw; */
+    /* height: 40px; */
+    height: 6vh;
+}
+  .dropbtn {
+    color: white;
+    /* font-size: 250%; */
+    font-size: 5vh;
+    width: fit-content;
+    font-family: Arial, Helvetica, sans-serif;
+    border: solid white 1px;
+    cursor: pointer;
+    background-color: black;
+    border-radius: 10px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: rgb(60, 60, 60);
+    color: white;
+  }
+  
+  .dropdown {
+    /* position: relative; */
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .navOpt{
+  padding: 4%;
+  text-align:center;
+  font-family: Arial, Helvetica, sans-serif;
+  background: black;
+  color: white;
+  cursor: pointer;
+  }
+  
+  .navOpt:hover{
+  background-color: rgb(60, 60, 60);
+  }
+  
+  
+  .show {display: block;}
 }
 
 /*=========================CENTRAL PAGE TITLE=============================*/
 
 #centralPageTitle{
-font-size: 800%;
+font-size: 25vh;
 color: rgb(88, 52, 23);
 font-weight: bold;
 font-style: italic;
 margin-top: 10%;
-margin-left: 18%;
+margin-left: 15vw;
 display: block;
 -webkit-text-stroke: 1px rgb(255, 255, 255);
+}
+
+/*=========================PUBLIC RECIPES PROMPT BOX===============================*/
+#publicRecipesModal{
+  display: block;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#publicRecipesListContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 400px;
+ height: fit-content;
+ background-color: rgba(0, 0, 0, .5);
+ border: 5px double rgb(80, 38, 22);
+ border-radius:7px;
+ padding: .75%;
+}
+
+#publicRecipesListSecondaryContainer{
+background-color: rgba(145, 88, 41, 0.75);
+margin-left: auto;
+margin-right: auto;
+padding: 2%;
+}
+
+#publicRecipesListTitle{
+font-style: italic;
+font-weight: bold;
+font-size: 200%;
+font-family: Arial, Helvetica, sans-serif; 
+text-align: center;
+color: orange;
+}
+
+ #publicRecipesCloseButton{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 85%;
+	text-align: center;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 1px;
+    margin-left: 84%;
+    width: 15%;
+  }
+
+#numLoggedPublicRecipesMsg{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: center;
+}
+
+#publicRecipesCloseButton:hover {
+    background-color:rgb(60, 60, 60);
+  }
+
+#publicRecipesInputContents{
+    border-radius: 10px;
+    height: fit-content;
+    max-height: 135px;
+    overflow-y: auto;
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: rgb(255, 255, 255, .2);
+}
+
+.recipeOpt{
+  text-align: center;
+  border-radius: 4px;
+  cursor:pointer;
+  font-family: Arial, Helvetica, sans-serif; 
+  margin-left:auto;
+  margin-right: auto;
+  display:block;
+  outline:none;
+}
+
+.recipeOpt:hover{
+  background-color: rgb(255, 255, 255, .5);
+  color: rgb(199, 130, 2);
+}
+
+.recipeOptBtn{
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  cursor:pointer;
+  padding: 2%;
+  width:100%;
+  font-size: 105%;
+}
+
+.recipeOptBtn:hover{
+  color: rgb(199, 130, 2);
+}
+
+.chefName{
+    text-align: right;
+}
+
+/*==========================RECIPE DOC 2======================================*/
+
+#documentModal{
+  display: block;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#documentGrid{
+    display: grid;
+    grid-template-columns: 45% 2%;
+    width: 900px;
+    margin-left: 33.5%;
+    height: fit-content;
+}  
+
+#document{
+height: 450px;
+width: 350px;
+background-color: rgba(255, 255, 255, .9);
+border-radius: 10px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+padding: 5%;
+box-shadow: 1px 1px 20px 1px grey inset;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+#documentContents{
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: normal;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.recipeDocLabel{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 120%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  color: green;
+}
+
+.recipeDocTitle{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 140%;
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+#closeRead{
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif; 
+  font-size: 85%;
+text-align: center;
+  border: white 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  width: fit-content;
+  height: fit-content;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#closeRead:hover{
+  background-color: rgb(88, 52, 23);
+}
+
+.docContents{
+  margin-bottom: 5%;
 }
 
 /*=========================ABOUT PROMPT BOX===============================*/
@@ -216,7 +429,8 @@ display: block;
 #aboutContainer{
  margin-left: auto;
  margin-right: auto;
- width: 400px;
+ width: 400x;
+ /* width: 35vw; */
  height: fit-content;
  background-color: rgba(0, 0, 0, .5);
  border: 5px double rgb(80, 38, 22);
@@ -245,6 +459,7 @@ color: white;
     color: white;
     font-family: Arial, Helvetica, sans-serif; 
     font-size: 85%;
+    /* font-size: 2.2vh; */
 	text-align: center;
     border: white 1px solid;
     border-radius: 5px;
@@ -303,13 +518,7 @@ font-weight: bold;
 font-size: 200%;
 font-family: Arial, Helvetica, sans-serif; 
 text-align: center;
-color: white;
-}
-
-.formInput{
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-bottom: 3%;
+color: orange;
 }
 
 #signupBtnsGrid{
@@ -326,8 +535,7 @@ margin-left: 66%;
     border: white 1px solid;
     border-radius: 5px;
     cursor: pointer;
-    /*margin-left: 85%;*/
-  }
+   }
   
  #signupCloseButton{
     background-color: rgb(0, 0, 0);
@@ -339,7 +547,6 @@ margin-left: 66%;
     border-radius: 5px;
     cursor: pointer;
     padding-top: 1px;
-    /*margin-left: 85%;*/
   }
 
 #signupSubmitBtn:hover, #signupCloseButton:hover {
@@ -347,24 +554,89 @@ margin-left: 66%;
   }
   
 #signupInputContents{
-margin-left: 17.5%;
+margin-left: 27.5%;
 margin-top: 5%;
 }
 
-.signupFormLabel{
-font-family: Arial, Helvetica, sans-serif;
-color: orange;
-font-weight: bold;  
+.userInput{
+  border-radius: 10px;
+  padding: 2px;
 }
 
-#signupPasswordBlock{
-margin-left: .5%;
+.inputSpace{
+  margin-bottom: 2%; 
+}
+
+/*=========================WELCOME PROMPT BOX===============================*/
+#welcomeModal{
+  display: block;
+  position: fixed; 
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#welcomeContainer{
+ margin-left: auto;
+ margin-right: auto;
+ width: 400px;
+ height: fit-content;
+ background-color: rgba(0, 0, 0, .5);
+ border: 5px double rgb(80, 38, 22);
+ border-radius:7px;
+ padding: .75%;
+}
+
+#welcomeSecondaryContainer{
+background-color: rgba(145, 88, 41, 0.75);
+margin-left: auto;
+margin-right: auto;
+padding: 2%;
+}
+
+#welcomeTitle{
+font-style: italic;
+font-weight: bold;
+font-size: 200%;
+font-family: Arial, Helvetica, sans-serif; 
+text-align: center;
+color: orange;
+}
+
+ #welcomeCloseButton{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 85%;
+	  text-align: center;
+    border: white 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 1px;
+    margin-left: 85%;
+  }
+
+#welcomeCloseButton:hover {
+    background-color:rgb(60, 60, 60);
+  }
+  
+#welcomeContents{
+padding-left: 5%;
+padding-right: 5%;
+margin-top: 5%;
+font-family: Arial, Helvetica, sans-serif;
+color: white;
+margin-bottom: 5%;
 }
 
 /*=========================LOGIN PROMPT BOX===============================*/
 #loginModal{
   display: none;
-  /* position: relative; */
   position: fixed; 
   z-index: 1;
   padding-top: 150px;
@@ -400,13 +672,7 @@ font-weight: bold;
 font-size: 200%;
 font-family: Arial, Helvetica, sans-serif; 
 text-align: center;
-color: white;
-}
-
-.formInput{
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-bottom: 3%;
+color: orange;
 }
 
 #loginBtnsGrid{
@@ -423,7 +689,6 @@ margin-left: 66%;
     border: white 1px solid;
     border-radius: 5px;
     cursor: pointer;
-    /*margin-left: 85%;*/
   }
   
  #loginCloseButton{
@@ -436,7 +701,6 @@ margin-left: 66%;
     border-radius: 5px;
     cursor: pointer;
     padding-top: 1px;
-    /*margin-left: 85%;*/
   }
 
 #loginSubmitBtn:hover, #loginCloseButton:hover {
@@ -444,19 +708,10 @@ margin-left: 66%;
   }
   
 #loginInputContents{
-margin-left: 17.5%;
+margin-left: 27.5%;
 margin-top: 5%;
 }
 
-.loginFormLabel{
-font-family: Arial, Helvetica, sans-serif;
-color: orange;
-font-weight: bold; 
-}
-
-#loginPasswordBlock{
-margin-left: .5%;
-}
     </style>
 
 </head>
@@ -467,15 +722,26 @@ margin-left: .5%;
 <div id="navbar">
     <div id="headerGrid">
         <div id="homeTitle">Home</div>
-        <div id="searchBar"><label id="searchLabel" for ="search">Search: </label><input id="search" type = "text" name="searchInput" placeholder ="Enter recipe/chef name"><button id="searchButton" name="searchButton">Search</button></div>
+        <form id="searchBar">
+            <label id="searchLabel" for ="search">Search: </label>
+            <input id="search" type = "text" name="searchInput" placeholder ="Enter recipe/chef name">
+            <button id="searchButton" name="searchButton">Search</button>
+            <div class="dropdown">
+                <div onclick="dropDownNav()" class="dropbtn">&equiv;</div>
+                <div id="myDropdown" class="dropdown-content">
+                    <div id="aboutBtnDD" class="navOpt" onclick="aboutPromptBox()">About</div>
+                    <div id="signUpBtnDD" class="navOpt" onclick="signupPromptBox()">Sign Up</div>
+                    <div id="loginBtnDD" class="navOpt" onclick="loginPromptBox()">Log In</div>
+                </div><!--end of id="myDropdown"-->
+            </div><!--end of class="dropdown"-->
+        </form><!--end of id="searchBar"-->
         <div id="buttonsGrid">
-            <div id="aboutBtn" class="homeButtons" onclick="aboutPromptBox()">About</div>
-            <div id="signUpBtn" class="homeButtons" onclick="signupPromptBox()">Sign Up</div>
-            <div id="loginBtn" class="homeButtons" onclick="loginPromptBox()">Login</div>
+          <div id="aboutBtn" class="homeButtons" onclick="aboutPromptBox()">About</div>
+          <div id="signUpBtn" class="homeButtons" onclick="signupPromptBox()">Sign Up</div>
+          <div id="loginBtn" class="homeButtons" onclick="loginPromptBox()">Log In</div>
         </div><!--end of id="buttonsGrid"-->
     </div><!--end of id="headerGrid"-->
 </div><!--end of id="navbar"-->
-
 <!--========================CENTRAL PAGE TITLE======================================-->
 <div id="centralPageTitle">
     Cookie Dough
@@ -486,7 +752,7 @@ margin-left: .5%;
         <div id="aboutSecondaryContainer">
             <div id="aboutTitle">About</div>
             <div id="aboutContents">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: orange; font-weight: bold; font-style: italic;">Cookie Dough</span> provides its users with the ability to search cookie recipes as well as save recipes of their own. This service is currently free to the public.<br><br> Enjoy!<br><br><span style="font-style: italic">-Admin (Allyse D. Johnson)</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: orange; font-weight: bold; font-style: italic;">Cookie Dough</span> provides its users with the ability to search recipes as well as save recipes of their own. This service is currently free to the public.<br><br> Enjoy!<br><br><span style="font-style: italic">-Admin (Allyse D. Johnson)</span>
             </div>
             <div id="aboutCloseButton" onclick="closeabout()">Close</div>
         </div><!--end of id="aboutSecondaryContainer-->
