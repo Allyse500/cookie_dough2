@@ -429,7 +429,7 @@ text-align: center;
 #aboutContainer{
  margin-left: auto;
  margin-right: auto;
- width: 400x;
+ width: 400px;
  /* width: 35vw; */
  height: fit-content;
  background-color: rgba(0, 0, 0, .5);
@@ -847,24 +847,25 @@ document.getElementById("loginModal").style.display ="none";
 }//end of closelogin()
 
 
-        // function signUpForm(){
-        // document.getElementById("loginModal").style.display ="none";
-        // document.getElementById("signUpModal").style.display ="block";
-        // }
-        
-        // function loginForm(){
-        // document.getElementById("loginModal").style.display ="block";
-        // document.getElementById("signUpModal").style.display ="none";
-        // }
-        
-        /*function signUpTextResponce(){
-        document.getElementById("signUpTextResponce").style.display ="block";
-        }
-        
-        function loginTextResponce(){
-        document.getElementById("loginTextResponce").style.display ="block";
-        }*/
-        </script>
+function dropDownNav() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+</script>
 
 </body>
 </html>
