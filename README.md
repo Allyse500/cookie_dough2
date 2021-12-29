@@ -81,6 +81,8 @@ Logout:
 To log out, you would need to first click the 'Optoins' button toward the top of the user's page then select the 'Logout' button.
 ###### Save Button
 This is the green button listed on the left of the time display. Click this button to save any updates you've made to your recipe note document. 
+#### Functions for Smaller Screen Size
+When the screen reaches 1270px, the three buttons listed on the far right of the home or user page are hidden and alternative buttons are displayed from a drop down button grouped with the display of the search bar. Aside from the physical look, the function of each button is the same as the former buttons they are titled after (About, Sign Up, Log In, Account, My Recipes, and Log Out).
 ## Credits
 I've searched many different pages for trouble shooting including my own background knowledge. However, below are the main sources I used to get started for what I did not know.
 
