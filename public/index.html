@@ -124,79 +124,6 @@ padding-top: 2vh;
 .dropdown{
   display:none;
 }
-
-@media only screen and (max-width: 1270px) {
-#headerGrid{
-    display: grid;
-    grid-template-columns: 15vw 45vw 35vw;
-    width: 100vw;
-}
-
-  #buttonsGrid {
-    display:none;
-  }
-
-  #searchBar{
-    /* margin-left: 30%; */
-    display: grid;
-    grid-template-columns: 15% 30% 15% 15%;
-    /* width: 600px;
-    height: 30px; */
-    width: 500px;
-    /* width: 75vw; */
-    /* height: 40px; */
-    height: 6vh;
-}
-  .dropbtn {
-    color: white;
-    /* font-size: 250%; */
-    font-size: 5vh;
-    width: fit-content;
-    font-family: Arial, Helvetica, sans-serif;
-    border: solid white 1px;
-    cursor: pointer;
-    background-color: black;
-    border-radius: 10px;
-    padding-left:10px;
-    padding-right:10px;
-  }
-  
-  .dropbtn:hover, .dropbtn:focus {
-    background-color: rgb(60, 60, 60);
-    color: white;
-  }
-  
-  .dropdown {
-    /* position: relative; */
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .navOpt{
-  padding: 4%;
-  text-align:center;
-  font-family: Arial, Helvetica, sans-serif;
-  background: black;
-  color: white;
-  cursor: pointer;
-  }
-  
-  .navOpt:hover{
-  background-color: rgb(60, 60, 60);
-  }
-  
-  
-  .show {display: block;}
-}
-
 /*=========================CENTRAL PAGE TITLE=============================*/
 
 #centralPageTitle{
@@ -710,6 +637,100 @@ margin-left: 66%;
 #loginInputContents{
 margin-left: 27.5%;
 margin-top: 5%;
+}
+
+/*=================SPECIFY CSS AT 1270 PX=============================*/
+@media only screen and (max-width: 1270px) {
+#headerGrid{
+    display: grid;
+    grid-template-columns: 15vw 45vw 35vw;
+    width: 100vw;
+}
+
+  #buttonsGrid {
+    display:none;
+  }
+
+  #searchBar{
+    /* margin-left: 30%; */
+    display: grid;
+    grid-template-columns: 15% 30% 15% 15%;
+    /* width: 600px;
+    height: 30px; */
+    width: 500px;
+    /* width: 75vw; */
+    /* height: 40px; */
+    height: 6vh;
+}
+  .dropbtn {
+    color: white;
+    /* font-size: 250%; */
+    font-size: 5vh;
+    width: fit-content;
+    font-family: Arial, Helvetica, sans-serif;
+    border: solid white 1px;
+    cursor: pointer;
+    background-color: black;
+    border-radius: 10px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: rgb(60, 60, 60);
+    color: white;
+  }
+  
+  .dropdown {
+    /* position: relative; */
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .navOpt{
+  padding: 4%;
+  text-align:center;
+  font-family: Arial, Helvetica, sans-serif;
+  background: black;
+  color: white;
+  cursor: pointer;
+  }
+  
+  .navOpt:hover{
+  background-color: rgb(60, 60, 60);
+  }
+  
+  
+  .show {display: block;}
+}
+
+/*=================SPECIFY CSS AT 800 PX=============================*/
+
+@media only screen and (max-width: 800px) {
+  #bodyID {
+    background-image: url('../cookieDough.jpg');
+    background-size: 200vw 200vh;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  #navbar{
+    margin: 0;
+    height: 8vh;
+    width: 200vw;
+    background-color: rgb(255, 255, 255, .8);
+    padding-top: 2vh;
+  }
 }
 
     </style>
