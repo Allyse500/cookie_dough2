@@ -84,7 +84,7 @@ This is the green button listed on the left of the time display. Click this butt
 #### Functions for Smaller Screen Size
 When the screen reaches 1270px, the three buttons listed on the far right of the home or user page are hidden and alternative buttons are displayed from a drop down button grouped with the display of the search bar. Aside from the physical look, the function of each button is the same as the former buttons they are titled after (About, Sign Up, Log In, Account, My Recipes, and Log Out).
 ## Credits
-I've searched many different pages for trouble shooting including my own background knowledge. However, below are the main sources I used to get started for what I did not know.
+I've searched many different pages for trouble shooting. Below are the main sources I used to get started for what I did not know.
 
 From previous projects, I initially used this video to help me get a better understanding for MongoDB and Express:
 https://www.youtube.com/watch?v=7CqJlxBYj-M&t=5752s
@@ -97,6 +97,6 @@ https://www.youtube.com/watch?v=TDe7DRYK8vU&t=453s
 https://www.youtube.com/watch?v=oYGhoHW7zqI&t=133s
 https://www.youtube.com/watch?v=-RCnNyD0L-s&t=1799s
 
-I used w3schools to find how to prepare a color picker, make a file upload prompt and to make a time display.
+I used w3schools to find how to prepare a color picker, make a file upload prompt, make a drop down button and to make a time display.
 ## License
 I do not approve of anyone taking the entirety of this code verbatum with its theme to prepare a public website. I do think it is fine, however, for other developers to use this code as a template to learn how to prepare similar apps (including for publishing).
