@@ -1,6 +1,6 @@
 # COOKIE DOUGH 2
 ## Introduction
-This is my third application using EJS specifically. It also includes MongoDB and Node.js. I prepared this project copying the work I've done in another project to help showcase some of what I had done. Unlike Cookie Dough, I have not yet installed message prompt boxes for this application, recipe list panels, enabled the search bar or prepared more detailed recipe prompts. However, in this application, I've started to prepare a way for users to choose their own background and change the color of their text. In this application one can still update their account information and save their notes but their recipes would all be listed on one document.
+This is my third application using EJS specifically. It also includes MongoDB and Node.js. I prepared this project copying the work I've done in another project to help showcase some of what I had done. Unlike Cookie Dough, I have not yet installed message prompt boxes for this application, recipe list panels, fully enabled the search bar (it will still query for public recipes) or prepared more detailed recipe prompts. However, in this application, I've started to prepare a way for users to choose their own background and change the color of their text. In this application one can still update their account information and save their notes but their recipes would all be listed on one document.
 ## Installation
 *For all downloads, get the latest version relative to your computer type as applicable
 1. Prepare a GitHub Account: github.com
