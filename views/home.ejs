@@ -139,7 +139,7 @@ display: block;
 
 /*=========================PUBLIC RECIPES PROMPT BOX===============================*/
 #publicRecipesModal{
-  display: block;
+  display: none;
   position: fixed; 
   z-index: 1;
   padding-top: 100px;
@@ -743,7 +743,7 @@ margin-top: 5%;
 <div id="navbar">
     <div id="headerGrid">
         <div id="homeTitle">Home</div>
-        <form id="searchBar">
+        <form id="searchBar" action="/publicSearch" method="POST">
             <label id="searchLabel" for ="search">Search: </label>
             <input id="search" type = "text" name="searchInput" placeholder ="Enter recipe/chef name">
             <button id="searchButton" name="searchButton">Search</button>
@@ -767,6 +767,29 @@ margin-top: 5%;
 <div id="centralPageTitle">
     Cookie Dough
 </div>
+
+<!-- ============================PUBLIC RECIPE PROMPT BOX================================= -->
+
+<div id="publicRecipesModal" style='display:<%=display%>;'>
+    <div id="publicRecipesListContainer">
+        <div id="publicRecipesListSecondaryContainer">
+            <div id="publicRecipesListTitle">Public Recipes</div>
+            <div id="publicRecipesList">
+                <div id="numLoggedPublicRecipesMsg">
+
+                        <span style='color:orange; font-weight:bold;'>0</span> recipes located. 
+                      </div>
+                <div id="publicRecipesInputContents">
+                           <!-- <form class='recipeOpt' action='includes/loadPublicRecipe.inc.php' method='POST'><input style='display:none;' id='recipeInputName' name ='publicRecipeInput' value='" . $value["publicRecipeID"] . "'><button name='loadRecipe' class='recipeOptBtn'>". $value["publicRecipesUserName"] . ": ". $value["publicRecipesTitle"] . "</button></form>"; -->
+            
+                </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
+                <br>
+                    <div id="publicRecipesCloseButton" onclick="closePublicRecipes()">Close</div>
+            </div><!--end of id="publicRecipesList"-->
+        </div><!--end of id="publicRecipesListSecondaryContainer-->
+    </div><!--end of id="publicRecipesListContainer"-->
+</div><!--end of id="publicRecipesModal"-->
+
 <!--=======================ABOUT===============================================-->
 <div id="aboutModal">
     <div id="aboutContainer">
@@ -830,7 +853,10 @@ margin-top: 5%;
 
 <!--========================ALL JAVASCRIPT FUNCTIONS BELOW===========================================-->
 <script>
-        
+//===============================PUBLIC RECIPES PROMPT BOX==================================
+function closePublicRecipes(){
+    document.getElementById("publicRecipesModal").style.display="none";
+}        
 //==========================ABOUT PROMPT BOX====================================//
 //display about prompt box-------------------------------------------------------------
 function aboutPromptBox(){

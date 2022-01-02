@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const recipesSchema = new Schema({
+const publicRecipesSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -10,19 +10,19 @@ const recipesSchema = new Schema({
         trim: true,
         minlength: 3
     },
-    recipesTitle: {
+    publicRecipesTitle: {
         type: String,
         required: true,
         unique: false,
         trim: false
     },
-    recipesIngredients:{
+    publicRecipesIngredients:{
         type: String,
         required: true,
         unique: false,
         trim: false
     },
-    recipesPreparation:{
+    publicRecipesPreparation:{
             type: String,
             required: true,
             unique: false,
@@ -37,6 +37,6 @@ const recipesSchema = new Schema({
 }
 );
 
-const Recipes = mongoose.model('Recipes', recipesSchema);
+const PublicRecipes = mongoose.model('PublicRecipes', publicRecipesSchema);
 
-module.exports = Recipes;
+module.exports = PublicRecipes;

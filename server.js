@@ -56,7 +56,7 @@ const isAuth = (req, res, next) => {
         next()
     }
     else{//direct to root route
-        res.redirect("/");
+        res.render("home.ejs");
         console.log("logged in: " + req.session.isAuth);
     }
 }
@@ -64,7 +64,34 @@ const isAuth = (req, res, next) => {
 //require the user model needed-----------
 let User = require('./models/user.model');//require the user model needed
 let Recipes = require('./models/recipes.model');//require the recipes model needed
+let PublicRecipes = require("./models/publicRecipes.model");//require the publicrecipes model needed
 const { Store } = require('express-session');
+
+//=========================PUBLIC RECIPE SEARCH=================================
+
+app.post("/publicSearch", async (req,res) =>{
+    const searchInput = req.body.searchInput;
+
+    let chef = await PublicRecipes.find({username: searchInput});//check public recipe collection for chef name
+    let recipe = await PublicRecipes.find({publicRecipesTitle: searchInput});//check public recipe collection for recipe name
+
+    if (recipe == searchInput){//if recipe already exists
+        console.log("recipe already exists: '" + searchInput + "', " + "'" + recipe + "'");
+        return res.render("home.ejs");//rediredirect to home page
+    }
+    else if(chef == searchInput){
+        console.log("chef exists: '" + chef + "'");
+        return res.render("home.ejs");//redirect to home page
+    }
+    else{//if chef name/recipe title does not yet exist in public recipe db note this
+
+        console.log("this chef/recipe not in public recipe DB. Search item submitted: '" + searchInput + "'");        
+        return res.render("home.ejs", {display: "block"});
+    }
+
+    //res.redirect("/");
+    // console.log("search item submitted: '" + searchInput + "'");
+})
 
 //===================SIGN UP FUNCTION===============================================
 app.post("/sign_up", async (req,res) => {
@@ -86,7 +113,7 @@ app.post("/sign_up", async (req,res) => {
         })
 
         await user.save();//save new user to DB
-        res.redirect('/');//redirect to root page***change to redirect to home/landing page
+        res.redirect("/");//redirect to root page***change to redirect to home/landing page
     }
 })
 //======================LOGIN FUNCTION========================================
@@ -234,10 +261,11 @@ app.post("/logout", (req,res)=>{
     res.redirect("/");
 })
 
-// app.get("/", (req,res) =>{
-//     //res.send("Hello from Root");
-//     res.redirect("/");
-// })
+app.get("/", (req,res) =>{
+    //res.send("Hello from Root");
+    // res.render("home.ejs");
+    res.render("home.ejs", {display: "none"});
+})
 
 //=====================WHAT TO DO WHEN '/USER' ROUTE IDENTIFIED====================
 app.get("/user", isAuth,  async (req,res)=>{
@@ -282,7 +310,7 @@ const isMatch = await bcrypt.compare(password, user.password);//compares input p
                     console.log("Error: " + err);
                 }});
             console.log("user deleted: " + user);
-            return res.redirect("/");//stay on notes page
+            return res.render("home.ejs");//stay on notes page
         }
         
 })
