@@ -548,20 +548,21 @@ margin-top: 5%;
   color: orange;
   }
   
-   #messageCloseButton, #messageCloseButton2{
+   #messageCloseButton{
       background-color: rgb(0, 0, 0);
       color: white;
       font-family: Arial, Helvetica, sans-serif; 
       font-size: 85%;
-        text-align: center;
+      text-align: center;
       border: white 1px solid;
       border-radius: 5px;
       cursor: pointer;
       padding-top: 1px;
       margin-left: 85%;
+      width: 57.5px;
     }
   
-  #messageCloseButton:hover, #messageCloseButton2:hover{
+  #messageCloseButton:hover{
       background-color:rgb(60, 60, 60);
     }
     
@@ -794,16 +795,16 @@ margin-top: 5%;
         <div id="publicRecipesListSecondaryContainer">
             <div id="publicRecipesListTitle">Public Recipes</div>
             <div id="publicRecipesList">
-                <div id="numLoggedPublicRecipesMsg">
-
-                        <span style='color:orange; font-weight:bold;'>0</span> recipes located. 
-                      </div>
-                <div id="publicRecipesInputContents">
-                           <!-- <form class='recipeOpt' action='includes/loadPublicRecipe.inc.php' method='POST'><input style='display:none;' id='recipeInputName' name ='publicRecipeInput' value='" . $value["publicRecipeID"] . "'><button name='loadRecipe' class='recipeOptBtn'>". $value["publicRecipesUserName"] . ": ". $value["publicRecipesTitle"] . "</button></form>"; -->
-            
-                </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
-                <br>
-                    <div id="publicRecipesCloseButton" onclick="closePublicRecipes()">Close</div>
+              <div id="numLoggedPublicRecipesMsg">
+                <span style='color:orange; font-weight:bold;'>0</span> recipes located. 
+              </div>
+              <div id="publicRecipesInputContents">
+                <!-- <form class='recipeOpt' action='includes/loadPublicRecipe.inc.php' method='POST'><input style='display:none;' id='recipeInputName' name ='publicRecipeInput' value='" . $value["publicRecipeID"] . "'><button name='loadRecipe' class='recipeOptBtn'>". $value["publicRecipesUserName"] . ": ". $value["publicRecipesTitle"] . "</button></form>"; -->
+              </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
+              <br>
+              <form action="/closeMsg" method="POST">
+                <button id="publicRecipesCloseButton">Close</button>
+              </form>
             </div><!--end of id="publicRecipesList"-->
         </div><!--end of id="publicRecipesListSecondaryContainer-->
     </div><!--end of id="publicRecipesListContainer"-->
@@ -881,7 +882,9 @@ margin-top: 5%;
       <div id="messageContents">
         <%=messageContents%>
       </div><!--end of id="messageContents"-->
-      <div id='messageCloseButton' onclick='closeMessage()'>Ok</div>
+      <form action="/closeMsg" method="POST">
+        <button id='messageCloseButton'>Ok</button>
+      </form>
     </div><!--end of id="messageSecondaryContainer-->
   </div><!--end of id="messageContainer"-->
 </div><!--end of id="messageModal"-->

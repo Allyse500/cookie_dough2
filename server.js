@@ -145,6 +145,11 @@ app.post("/login", async (req,res)=>{
     res.redirect("/user");
 })
 
+//==============================CLOSE MESSAGE PROMPTS========================================
+app.post("/closeMsg", (req,res)=>{
+    return res.redirect("/");
+})
+
 //==============================SUBMIT RECIPE NOTES TO DATABASE==============================
 app.post("/submit_recipe",async (req,res)=>{
 
@@ -265,9 +270,9 @@ app.post("/logout", (req,res)=>{
     res.redirect("/");
 })
 
+//==========================LANDING PAGE ROUTE ("/")================================
 app.get("/", (req,res) =>{
-    //res.send("Hello from Root");
-    // res.render("home.ejs");
+    //display home page with all modals hidden and message fields cleared
     res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"none"});
 })
 
