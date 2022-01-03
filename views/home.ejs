@@ -507,72 +507,72 @@ margin-top: 5%;
   margin-bottom: 2%; 
 }
 
-/*=========================WELCOME PROMPT BOX===============================*/
-#welcomeModal{
-  display: block;
-  position: fixed; 
-  z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-#welcomeContainer{
- margin-left: auto;
- margin-right: auto;
- width: 400px;
- height: fit-content;
- background-color: rgba(0, 0, 0, .5);
- border: 5px double rgb(80, 38, 22);
- border-radius:7px;
- padding: .75%;
-}
-
-#welcomeSecondaryContainer{
-background-color: rgba(145, 88, 41, 0.75);
-margin-left: auto;
-margin-right: auto;
-padding: 2%;
-}
-
-#welcomeTitle{
-font-style: italic;
-font-weight: bold;
-font-size: 200%;
-font-family: Arial, Helvetica, sans-serif; 
-text-align: center;
-color: orange;
-}
-
- #welcomeCloseButton{
-    background-color: rgb(0, 0, 0);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif; 
-    font-size: 85%;
-	  text-align: center;
-    border: white 1px solid;
-    border-radius: 5px;
-    cursor: pointer;
-    padding-top: 1px;
-    margin-left: 85%;
-  }
-
-#welcomeCloseButton:hover {
-    background-color:rgb(60, 60, 60);
+/*=========================MESSAGE PROMPT BOX===============================*/
+#messageModal{
+    display: none;
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
   }
   
-#welcomeContents{
-padding-left: 5%;
-padding-right: 5%;
-margin-top: 5%;
-font-family: Arial, Helvetica, sans-serif;
-color: white;
-margin-bottom: 5%;
-}
+  #messageContainer{
+   margin-left: auto;
+   margin-right: auto;
+   width: 400px;
+   height: fit-content;
+   background-color: rgba(0, 0, 0, .5);
+   border: 5px double rgb(80, 38, 22);
+   border-radius:7px;
+   padding: .75%;
+  }
+  
+  #messageSecondaryContainer{
+  background-color: rgba(145, 88, 41, 0.75);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2%;
+  }
+  
+  #messageTitle{
+  font-style: italic;
+  font-weight: bold;
+  font-size: 200%;
+  font-family: Arial, Helvetica, sans-serif; 
+  text-align: center;
+  color: orange;
+  }
+  
+   #messageCloseButton, #messageCloseButton2{
+      background-color: rgb(0, 0, 0);
+      color: white;
+      font-family: Arial, Helvetica, sans-serif; 
+      font-size: 85%;
+        text-align: center;
+      border: white 1px solid;
+      border-radius: 5px;
+      cursor: pointer;
+      padding-top: 1px;
+      margin-left: 85%;
+    }
+  
+  #messageCloseButton:hover, #messageCloseButton2:hover{
+      background-color:rgb(60, 60, 60);
+    }
+    
+  #messageContents{
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 5%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  margin-bottom: 5%;
+  }
 
 /*=========================LOGIN PROMPT BOX===============================*/
 #loginModal{
@@ -848,27 +848,44 @@ margin-top: 5%;
 
 <!--========================LOGIN PROMPT BOX===========================================-->
 
-        <div id="loginModal">
-            <div id="loginFormContainer">
-                <div id="loginFormSecondaryContainer">
-                    <div id="loginFormTitle">Login</div>
-                    <form id="loginForm" action="/login" method="POST">
-                        <div id="loginInputContents">
-                            <label for="username" class="loginFormLabel">Username: </label>
-                            <input class="formInput" type="text" id="username" name="username"><br>
-                            <div id="loginPasswordBlock">
-                                <label for="password" class="loginFormLabel">Password: </label>
-                                <input class="formInput" type="password" id="password" name="password">
-                            </div><!--end of id="loginPasswordBlock"-->
-                        </div><!--end of id="loginInputContents" -->
-                        <br>
-                        <div id="loginBtnsGrid">
-                            <button id="loginSubmitBtn">Submit</button><div id="loginCloseButton" onclick="closelogin()">Close</div>
-                        </div><!--end of id="loginBtnsGrid"-->
-                    </form><!--end of id="loginForm"-->
-                </div><!--end of id="loginFormSecondaryContainer-->
-            </div><!--end of id="loginFormContainer"-->
-        </div><!--end of id="loginModal"-->
+<div id="loginModal">
+  <div id="loginFormContainer">
+    <div id="loginFormSecondaryContainer">
+      <div id="loginFormTitle">Login</div>
+      <form id="loginForm" action="/login" method="POST">
+        <div id="loginInputContents">
+          <label for="username" class="loginFormLabel">Username: </label>
+          <input class="formInput" type="text" id="username" name="username"><br>
+          <div id="loginPasswordBlock">
+            <label for="password" class="loginFormLabel">Password: </label>
+            <input class="formInput" type="password" id="password" name="password">
+          </div><!--end of id="loginPasswordBlock"-->
+        </div><!--end of id="loginInputContents" -->
+        <br>
+        <div id="loginBtnsGrid">
+          <button id="loginSubmitBtn">Submit</button><div id="loginCloseButton" onclick="closelogin()">Close</div>
+        </div><!--end of id="loginBtnsGrid"-->
+      </form><!--end of id="loginForm"-->
+    </div><!--end of id="loginFormSecondaryContainer-->
+  </div><!--end of id="loginFormContainer"-->
+</div><!--end of id="loginModal"-->
+
+<!--=======================MESSAGE PROMPT BOX===============================================-->
+        
+<div id="messageModal" style='display:<%=display2%>;'>
+  <div id="messageContainer">
+    <div id="messageSecondaryContainer">
+      <div id="messageTitle">
+        <%=messageTitle%>
+      </div><!--end of id="messageTitle"-->
+      <div id="messageContents">
+        <%=messageContents%>
+      </div><!--end of id="messageContents"-->
+      <div id='messageCloseButton' onclick='closeMessage()'>Ok</div>
+    </div><!--end of id="messageSecondaryContainer-->
+  </div><!--end of id="messageContainer"-->
+</div><!--end of id="messageModal"-->
+        
 
 <!--========================ALL JAVASCRIPT FUNCTIONS BELOW===========================================-->
 <script>
@@ -912,6 +929,13 @@ function closelogin(){
 document.getElementById("loginModal").style.display ="none";
 }//end of closelogin()
 
+//==========================MESSAGE PROMPT BOX====================================//
+//close message prompt box-------------------------------------------------------------
+function closeMessage(){
+    document.getElementById("messageModal").style.display ="none";
+}//end of closeMessage()
+
+//========================NAV BAR ALT DROP DOWN BTNS===============================//
 
 function dropDownNav() {
   document.getElementById("myDropdown").classList.toggle("show");

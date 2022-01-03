@@ -86,7 +86,7 @@ app.post("/publicSearch", async (req,res) =>{
     else{//if chef name/recipe title does not yet exist in public recipe db note this
 
         console.log("this chef/recipe not in public recipe DB. Search item submitted: '" + searchInput + "'");        
-        return res.render("home.ejs", {display: "block"});
+        return res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"block"});
     }
 
     //res.redirect("/");
@@ -102,7 +102,8 @@ app.post("/sign_up", async (req,res) => {
 
     if (user){//if username already exists
         console.log("user already exists.");
-        return res.redirect("/");//rediredirect to home page
+        //return res.redirect("/");//rediredirect to home page
+        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again.", display:"none"})
     }
     else{//if username does not yet exist, prepare new user
 
@@ -264,7 +265,7 @@ app.post("/logout", (req,res)=>{
 app.get("/", (req,res) =>{
     //res.send("Hello from Root");
     // res.render("home.ejs");
-    res.render("home.ejs", {display: "none"});
+    res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"none"});
 })
 
 //=====================WHAT TO DO WHEN '/USER' ROUTE IDENTIFIED====================
