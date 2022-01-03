@@ -102,8 +102,8 @@ app.post("/sign_up", async (req,res) => {
 
     if (user){//if username already exists
         console.log("user already exists.");
-        //return res.redirect("/");//rediredirect to home page
-        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again.", display:"none"})
+        //redirect to home page and display error message
+        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again to sign up or log in.", display:"none"})
     }
     else{//if username does not yet exist, prepare new user
 
@@ -114,7 +114,8 @@ app.post("/sign_up", async (req,res) => {
         })
 
         await user.save();//save new user to DB
-        res.redirect("/");//redirect to root page***change to redirect to home/landing page
+        //redirect to home page and display welcome message
+        res.render("home.ejs", {messageTitle:"Welcome!", display2:"block", messageContents: "Please log in to access your account.", display:"none"})
     }
 })
 //======================LOGIN FUNCTION========================================
@@ -128,14 +129,16 @@ app.post("/login", async (req,res)=>{
 
     if (!user){//if the user does not exsist, return to the home page
         console.log("not a user");
-        return res.redirect("/");
+        //redirect to home page and display error message
+        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
     }
 
     const isMatch = await bcrypt.compare(password, user.password);//compares input password with hashed password
 
     if(!isMatch){//if the password doesn't match, return user to home page
         console.log("not matched");
-        return res.redirect("/");
+        //redirect to home page and display error message
+        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
     }
     req.session.isAuth = true;
     req.session.username = username;
