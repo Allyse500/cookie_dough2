@@ -126,6 +126,7 @@ app.post("/publicSearch2", async (req,res) =>{
                 documentModalDisplay: "none",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
+                num:"",
                 recipes: [],
                 recipesTitle: "",
                 //-------------NEW RECIPE PROMPT BOX---------------
@@ -234,6 +235,7 @@ if(userRecipes ==""){
                 documentModalDisplay: "none",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "block",
+                num:"0",
                 recipes: [],
                 recipesTitle: "",
                 //-------------NEW RECIPE PROMPT BOX---------------
@@ -409,6 +411,7 @@ var sessionuser = req.session.username;//session user's name
      documentModalDisplay: "none",
      //-------------MY RECIPES PROMPT BOX---------------
      myRecipesModalDisplay: "none",
+     num:"",
      recipes: [],
      recipesTitle: "",
      //-------------NEW RECIPE PROMPT BOX---------------
