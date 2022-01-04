@@ -1387,7 +1387,7 @@ background-color: orange;
                 </div><!--end of id="myRecipesInputContents", empty array of recipes -->
                 <br>
                 <div id="myRecipesBtnsGrid">
-                    <div id="newRecipe" name="newRecipe" onclick="newRecipe()">New</div><div id="myRecipesCloseButton" onclick="closemyRecipes()">Close</div>
+                    <div id="newRecipe" name="newRecipe" onclick="newRecipe()">New</div><form action="/closeMsg2" method="POST"><button id="myRecipesCloseButton">Close</button></form>
                 </div><!-- end of id="myRecipesBtnsGrid" -->
             </div><!--end of id="myRecipesList"-->
         </div><!--end of id="myRecipesListSecondaryContainer-->
@@ -1652,12 +1652,6 @@ function deleteAcct(){
     document.getElementById("deleteMsgAndConfirmSect").style.display="none";
     }
 }//end of deleteAcct()
-
-//==========================MY RECIPES PROMPT BOX===================================//
-//close myRecipes prompt box-------------------------------------------------------------
-function closemyRecipes(){
-    document.getElementById("myRecipesModal").style.display ="none";
-}//end of closemyRecipes()
 
 //========================NEW RECIPE PROMPT BOX===========================================//      
 //display new recipe form--------------------------------------------------------------------

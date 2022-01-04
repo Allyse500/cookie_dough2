@@ -211,6 +211,55 @@ app.post("/closeMsg2", (req,res)=>{
     return res.redirect("/user");
 })
 
+//==============================USER PAGE====================================================
+app.post("/getRecipeList", async (req,res)=>{
+
+var sessionuser = req.session.username;
+let userRecipes = await Recipes.find({username: sessionuser});
+console.log("userRecipes variable: " + userRecipes);
+if(userRecipes ==""){
+    return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email:"", 
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "block",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "none",      
+                messageTitle:"", 
+                messageContents: "", 
+                msgbtn:""
+                });
+
+}
+else{
+    return res.redirect("/user");
+}
+
+})
 //==============================SUBMIT RECIPE NOTES TO DATABASE==============================
 app.post("/submit_recipe",async (req,res)=>{
 
