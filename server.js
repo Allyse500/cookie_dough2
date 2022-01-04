@@ -68,7 +68,7 @@ let PublicRecipes = require("./models/publicRecipes.model");//require the public
 const { Store } = require('express-session');
 
 //=========================PUBLIC RECIPE SEARCH=================================
-
+//-------------------------HOME PAGE-----------------------------------
 app.post("/publicSearch", async (req,res) =>{
     const searchInput = req.body.searchInput;
 
@@ -89,8 +89,65 @@ app.post("/publicSearch", async (req,res) =>{
         return res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"block"});
     }
 
-    //res.redirect("/");
-    // console.log("search item submitted: '" + searchInput + "'");
+})
+//---------------------------USER PAGE-------------------------------------//
+app.post("/publicSearch2", async (req,res) =>{
+    const searchInput = req.body.searchInput;
+
+    let chef = await PublicRecipes.find({username: searchInput});//check public recipe collection for chef name
+    let recipe = await PublicRecipes.find({publicRecipesTitle: searchInput});//check public recipe collection for recipe name
+
+    if (recipe == searchInput){//if recipe already exists
+        console.log("recipe already exists: '" + searchInput + "', " + "'" + recipe + "'");
+        return res.render("user.ejs");//rediredirect to user page
+    }
+    else if(chef == searchInput){
+        console.log("chef exists: '" + chef + "'");
+        return res.render("user.ejs");//redirect to user page
+    }
+    else{//if chef name/recipe title does not yet exist in public recipe db note this
+
+        console.log("this chef/recipe not in public recipe DB. Search item submitted: '" + searchInput + "'");        
+        //return res.render("user.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"block"});
+        var sessionuser = req.session.username;
+        return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email:"", 
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "block",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "none",      
+                messageTitle:"", 
+                messageContents: "", 
+                msgbtn:""
+                });
+
+    }
+
 })
 
 //===================SIGN UP FUNCTION===============================================
@@ -148,6 +205,10 @@ app.post("/login", async (req,res)=>{
 //==============================CLOSE MESSAGE PROMPTS========================================
 app.post("/closeMsg", (req,res)=>{
     return res.redirect("/");
+})
+
+app.post("/closeMsg2", (req,res)=>{
+    return res.redirect("/user");
 })
 
 //==============================SUBMIT RECIPE NOTES TO DATABASE==============================
@@ -282,18 +343,53 @@ app.get("/user", isAuth,  async (req,res)=>{
 var sessionuser = req.session.username;//session user's name
 
     console.log(sessionuser);
-let recipeNotes = await Recipes.findOne({username: sessionuser});//check user collection for username
 
-if (recipeNotes){//if notes already exist for user, load to page
-        console.log("notes already exist: " + recipeNotes.notes);
-        console.log("session username: " + sessionuser);
-        //call back notes submitted to database-------------
-        res.render("user.ejs", {notes: recipeNotes.notes, name: sessionuser});//, photo: photovariable
+    res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+     name: sessionuser,
+     email:"", 
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+     publicRecipesModalDisplay: "none",
+     chef: "", 
+     publicRecipesTitle: "", 
+     publicRecipesIngredients: "", 
+     publicRecipesPreparation: "",
+     //-----------------RECIPE DOC 2--------------------
+     //chef: "", 
+     documentModalDisplay: "none",
+     //-------------MY RECIPES PROMPT BOX---------------
+     myRecipesModalDisplay: "none",
+     recipes: [],
+     recipesTitle: "",
+     //-------------NEW RECIPE PROMPT BOX---------------
+     tempTitle: "", 
+     tempIng: "", 
+     tempPrep: "", 
+     //--------------RECIPE PROMPT BOX------------------
+     recipeModalDisplay: "none",
+     recipesTitle: "", 
+     recipesIngredients: "", 
+     recipesPreparation:"",  
+     //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+     recipesTitle0:"",
+     //---------------MESSAGE PROMPT BOX-----------------
+     messageModalDisplay: "none",      
+     messageTitle:"", 
+     messageContents: "", 
+     msgbtn:""});
+// let recipeNotes = await Recipes.findOne({username: sessionuser});//check user collection for username
 
-    }
-else{//if notes do not yet exist for user, render empty notes document
-        res.render("user.ejs", {notes: "", name: sessionuser});//, photo: photovariable
-    }
+// if (recipeNotes){//if notes already exist for user, load to page
+//         console.log("notes already exist: " + recipeNotes.notes);
+//         console.log("session username: " + sessionuser);
+//         //call back notes submitted to database-------------
+//         res.render("user.ejs", {notes: recipeNotes.notes, name: sessionuser});//, photo: photovariable
+
+//     }
+// else{//if notes do not yet exist for user, render empty notes document
+//         res.render("user.ejs", {notes: "", name: sessionuser});//, photo: photovariable
+//     }
     
 })
 

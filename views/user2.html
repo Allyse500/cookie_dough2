@@ -21,7 +21,7 @@ $tempPrep = $_SESSION["temporaryPreparation"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 #bodyID {
-    background-image: url('fortuneCookie.jpg');
+    background-image: url('../public/fortuneCookie.jpg');
     background-size: 100vw 100vh;
     background-position: 0% 0%;
     background-repeat: no-repeat;
@@ -1185,7 +1185,7 @@ background-color: orange;
   
   @media only screen and (max-width: 800px) {
     #bodyID {
-      background-image: url('fortuneCookie.jpg');
+      background-image: url('../public/fortuneCookie.jpg');
       background-size: 200vw 200vh;
       background-position: 0% 0%;
       background-repeat: no-repeat;
@@ -1242,15 +1242,15 @@ background-color: orange;
                 <div onclick="dropDownNav()" class="dropbtn">&equiv;</div>
                 <div id="myDropdown" class="dropdown-content">
                     <div id="accountBtnDD" class="navOpt" onclick="accountPromptBox()">Account</div>
-                    <form id="myRecipesFormDD" class="navOpt" action="/getRecipeList" method="POST"><button class="navDropBtn" name="myRecipesBtn">My Recipes</button></form>
-                    <form id="logoutFormDD" class="navOpt" action="/logout" method="POST"><button class="navDropBtn" name="logoutBtn">Log Out</button></form>
+                    <form id="myRecipesFormDD" class="navOpt" action="includes/getRecipeList.inc.php" method="POST"><button class="navDropBtn" name="myRecipesBtn">My Recipes</button></form>
+                    <form id="logoutFormDD" class="navOpt" action="includes/logout.inc.php" method="POST"><button class="navDropBtn" name="logoutBtn">Log Out</button></form>
                 </div><!--end of id="myDropdown"-->
             </div><!--end of class="dropdown"-->
         </div><!--end of id="upperNavGrid"-->
         <div id="buttonsGrid">
           <div id="accountBtn" class="homeButtons" onclick="accountPromptBox()">Account</div>
-          <form id="myRecipesForm" class="homeButtons" action="/getRecipeList" method="POST"><button id="myRecipesBtn" name="myRecipesBtn">My Recipes</button></form>
-          <form id="logoutForm" action="/logout" method="POST"><button name="logoutBtn" class="homeButtons">Log Out</button></form>
+          <form id="myRecipesForm" class="homeButtons" action="includes/getRecipeList.inc.php" method="POST"><button id="myRecipesBtn" name="myRecipesBtn">My Recipes</button></form>
+          <form id="logoutForm" action="includes/logout.inc.php" method="POST"><button name="logoutBtn" class="homeButtons">Log Out</button></form>
         </div><!--end of id="buttonsGrid"-->
     </div><!--end of id="headerGrid"-->
 </div><!--end of id="navbar"-->
@@ -1262,7 +1262,7 @@ background-color: orange;
 
 <!--========================PUBLIC RECIPES PROMPT BOX===========================================-->       
 
-<div id="publicRecipesModal" style='display:<%=publicRecipesModalDisplay%>;'>
+<div id="publicRecipesModal" style='display:<%=display%>;'>
     <div id="publicRecipesListContainer">
         <div id="publicRecipesListSecondaryContainer">
             <div id="publicRecipesListTitle">Public Recipes</div>
@@ -1284,7 +1284,7 @@ background-color: orange;
 
 <!--==========================RECIPE DOC 2======================================-->
 
-<div id="documentModal" style='display:<%=documentModalDisplay%>;'>
+<div id="documentModal">
     <div id="documentGrid">
         <div id="document">
             <div id="documentContents">
@@ -1371,7 +1371,7 @@ background-color: orange;
 
 <!--========================MY RECIPES PROMPT BOX===========================================-->       
 
-<div id="myRecipesModal" style='display:<%=myRecipesModalDisplay%>;'>
+<div id="myRecipesModal">
     <div id="myRecipesListContainer">
         <div id="myRecipesListSecondaryContainer">
             <div id="myRecipesListTitle">My Recipes</div>
@@ -1424,7 +1424,7 @@ background-color: orange;
 
 <!--========================RECIPE PROMPT BOX===========================================-->       
 
-<div id="recipeModal" style='display:<%=recipeModalDisplay%>;'>
+<div id="recipeModal">
     <div id="recipeContainer">
         <div id="recipeSecondaryContainer">
             <form id="editRecipeForm" action="editRecipe.inc.php" method="POST">
@@ -1468,7 +1468,7 @@ background-color: orange;
 
 <!--=======================MESSAGE PROMPT BOX===============================================-->
 
-<div id="messageModal" style='display:<%=messageModalDisplay%>;'>
+<div id="messageModal">
     <div id="messageContainer">
         <div id="messageSecondaryContainer">
             <div id="messageTitle">
