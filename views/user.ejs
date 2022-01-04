@@ -1400,7 +1400,7 @@ background-color: orange;
 <div id="newRecipeModal">
     <div id="newRecipeContainer">
         <div id="newRecipeSecondaryContainer">
-            <form id="newRecipeForm" action="/newRecipe" method ="POST">
+            <form id="newRecipeForm" method ="POST">
                 <div id="newRecipeHeaderGrid">
                     <div id="newRecipeModalBackBtn" onclick="newRecipeModalBackBtn()">&larr;</div><div id="newRecipeFormTitle">New Recipe</div>
                 </div><!--end of id="newRecipeHeaderGrid"-->
@@ -1415,7 +1415,7 @@ background-color: orange;
                 </textarea>
                 <br>
                 <div id="newRecipeBtnsGrid">
-                    <div><input type="checkbox" id="makePublic" name="makePublic"><label for="makePublic" class="publicCheckBoxLabel">public</label></div><button id="saveNewRecipe" class="newRecipeBtn" name="saveNewRecipe">Save</button><button id="newRecipeCancelButton" name ="newRecipeCancelButton" class="newRecipeBtn newRecipeBtnDiv">Cancel</button>
+                    <div><input type="checkbox" id="makePublic" name="makePublic"><label for="makePublic" class="publicCheckBoxLabel">public</label></div><button id="saveNewRecipe" class="newRecipeBtn" name="saveNewRecipe" formaction="/newRecipe">Save</button><button id="newRecipeCancelButton" name ="newRecipeCancelButton" class="newRecipeBtn newRecipeBtnDiv" formaction="/closeMsg2">Cancel</button>
                 </div><!-- end of id="newRecipeBtnsGrid" -->
             </form><!-- end of id="newRecipeForm" -->
         </div><!--end of id="newRecipeSecondaryContainer-->
