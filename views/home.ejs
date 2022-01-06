@@ -448,18 +448,6 @@ text-align: center;
 color: orange;
 }
 
-.formInput{
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-bottom: 3%;
-}
-
-.signupFormLabel{
-font-family: Arial, Helvetica, sans-serif;
-color: orange;
-font-weight: bold;  
-}
-
 #signupBtnsGrid{
 display: grid;
 grid-template-columns: 30% 30%;
@@ -493,8 +481,7 @@ margin-left: 66%;
   }
   
 #signupInputContents{
-/* margin-left: 27.5%; */
-margin-left: 15.5%;
+margin-left: 27.5%;
 margin-top: 5%;
 }
 
@@ -573,6 +560,7 @@ margin-top: 5%;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   margin-bottom: 5%;
+  text-align: center;
   }
 
 /*=========================LOGIN PROMPT BOX===============================*/
@@ -751,6 +739,27 @@ margin-top: 5%;
     background-color: rgb(255, 255, 255, .8);
     padding-top: 2vh;
   }
+  /* .dropdown-content {
+        position: absolute;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-left: -16.5vw;
+    } */
+}
+
+/*=================SPECIFY CSS AT 500 PX=============================*/
+
+@media only screen and (max-width: 500px) {
+  .dropdown-content {
+        position: absolute;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-left: 0;
+    }
 }
 
     </style>
@@ -826,26 +835,25 @@ margin-top: 5%;
 <!--========================SIGN UP PROMPT BOX===========================================-->        
 
 <div id="signupModal">
-    <div id="signupFormContainer">
-        <div id="signupFormSecondaryContainer">
-            <div id="signupFormTitle">Sign Up</div>
-            <form id="signupForm" action ="/sign_up" method="POST">
-                <div id="signupInputContents">
-                    <label for="newUsername" class="signupFormLabel">Username: </label>
-                    <input class="formInput" type="text" id="newUsername" name="newUsername"><br>
-                    <div id="signupPasswordBlock">
-                        <label for="newPassword" class="signupFormLabel">Password: </label>
-                        <input class="formInput" type="password" id="newPassword" name="newPassword">
-                    </div><!--end of id="signupPasswordBlock"-->
-                </div><!--end of id="signupInputContents" -->
-                <br>
-                <div id="signupBtnsGrid">
-                    <button id="signupSubmitBtn">Submit</button><div id="signupCloseButton" onclick="closesignup()">Close</div>
-                </div><!--end of id="signupBtnsGrid"-->
-            </form><!--end of id="signupForm"-->
-        </div><!--end of id="signupFormSecondaryContainer-->
-    </div><!--end of id="signupFormContainer"-->
+  <div id="signupFormContainer">
+      <div id="signupFormSecondaryContainer">
+          <div id="signupFormTitle">Sign Up</div>
+          <form id="signupForm" action ="/sign_up" method="POST">
+              <div id="signupInputContents">
+                <input class="userInput inputSpace" type="text" id="newUsername" name="newUsername" placeholder ="Username..."><br>
+                <input class="userInput inputSpace" type="email" id="newUserEmail" name="newUserEmail" placeholder ="Email..."><br>
+                <input class="userInput inputSpace" type="password" id="newPassword" name="newPassword" placeholder="Password..."><br>
+                <input class="userInput inputSpace" type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password...">
+              </div><!--end of id="signupInputContents" -->
+              <br>
+              <div id="signupBtnsGrid">
+                  <button id="signupSubmitBtn" name = "submitSignUp">Submit</button><div id="signupCloseButton" onclick="closesignup()">Close</div>
+              </div><!--end of id="signupBtnsGrid"-->
+          </form><!--end of id="signupForm"-->
+      </div><!--end of id="signupFormSecondaryContainer-->
+  </div><!--end of id="signupFormContainer"-->
 </div><!--end of id="signupModal"-->
+
 
 <!--========================LOGIN PROMPT BOX===========================================-->
 

@@ -154,27 +154,66 @@ app.post("/publicSearch2", async (req,res) =>{
 //===================SIGN UP FUNCTION===============================================
 app.post("/sign_up", async (req,res) => {
     const username = req.body.newUsername;//username inserted to form
+    const email = req.body.newUserEmail;//email inserted to form
     const password = req.body.newPassword;//password inserted to form
+    const pwdConfirm =req.body.confirmNewPassword;//password confirm field
 
     let user = await User.findOne({username: username});//check user collection for username
+
+    // function usernameInvalid(username) {
+    //     let pattern = /[a-z0-9]/i;
+    //     let valid = pattern.test(username);
+    //     if(valid == true){
+    //         var result = true;
+    //     }
+    //     else{
+    //         var result = false;
+    //     }
+    //     return result;
+    // }
+    // usernameInvalid(username);
 
     if (user){//if username already exists
         console.log("user already exists.");
         //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again to sign up or log in.", display:"none"})
+        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again to sign up or log in.", display:"none"});
     }
-    else{//if username does not yet exist, prepare new user
-
-        const hashedPW = await bcrypt.hash(password, 10);//hash password with salt of 10 times encryption
+    // else{//if username does not yet exist
+        //if any fields are empty
+        if(username == "" || email == "" || password == "" || pwdConfirm == ""){
+            //redirect to home page and display error message
+            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Please fill in all fields.", display:"none"});
+        }
+        //if username invalid
+        var simplifiedUsername = username.replace(/[a-z\d]/ig, "");
+        if (/[a-z\d]/i.test(username) == false || /[\s]/.test(username) == true || simplifiedUsername !== ""){
+            //redirect to home page and display error message
+            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", display:"none"});
+        }
+        var simplifiedEmail = email.replace(/[a-z@.]/ig, "");
+        if (/[a-z\d]/i.test(email) == false || simplifiedEmail !== "" || /.com/.test(email) == false|| /[\s]/.test(email) == true){
+            //redirect to home page and display error message
+            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Email invalid. Please try again.", display:"none"});
+        }
+        //if passwords don't match
+        if (password !== pwdConfirm){
+        return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", display:"none"});
+        }
+        
+        //else{
+            const hashedPW = await bcrypt.hash(password, 10);//hash password with salt of 10 times encryption
         user = new User({
             username,
+            email,
             password: hashedPW
         })
 
         await user.save();//save new user to DB
         //redirect to home page and display welcome message
         res.render("home.ejs", {messageTitle:"Welcome!", display2:"block", messageContents: "Please log in to access your account.", display:"none"})
-    }
+        //}
+        
+    //}
 })
 //======================LOGIN FUNCTION========================================
 app.post("/login", async (req,res)=>{
