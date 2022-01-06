@@ -183,9 +183,13 @@ app.post("/sign_up", async (req,res) => {
             //redirect to home page and display error message
             return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", display:"none"});
         }
-        var simplifiedEmail = email.replace(/[a-z@.]/ig, "");
-        if (/[a-z\d]/i.test(email) == false || simplifiedEmail !== "" || /.com/.test(email) == false|| /[\s]/.test(email) == true){
+        var simplifiedEmail = email.replace(/[a-z\d@.]/ig, "");
+        if (/[a-z\d]/i.test(email) == false || simplifiedEmail !== "" || /com/.test(email) == false|| /[\s]/.test(email) == true){
             //redirect to home page and display error message
+            var charOnum = /[a-z\d]/i.test(email);
+            var com = /com/.test(email);
+            var spaces = /[\s]/.test(email);
+            console.log("characters/numbers: " + charOnum + "; simplifiedEmail: " + simplifiedEmail + "; com: " + com + "; spaces: " + spaces);
             return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Email invalid. Please try again.", display:"none"});
         }
         //if passwords don't match
@@ -265,11 +269,46 @@ app.post("/login", async (req,res)=>{
 
 //==============================CLOSE MESSAGE PROMPTS========================================
 app.post("/closeMsg", (req,res)=>{
-    return res.redirect("/");
+    return res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"none"});
 })
 
 app.post("/closeMsg2", (req,res)=>{
-    return res.redirect("/user");
+    return res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+     name: sessionuser,
+     email: userEmail,
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+     publicRecipesModalDisplay: "none",
+     chef: "", 
+     publicRecipesTitle: "", 
+     publicRecipesIngredients: "", 
+     publicRecipesPreparation: "",
+     //-----------------RECIPE DOC 2--------------------
+     //chef: "", 
+     documentModalDisplay: "none",
+     //-------------MY RECIPES PROMPT BOX---------------
+     myRecipesModalDisplay: "none",
+     num:"",
+     recipes: [],
+     recipesTitle: "",
+     //-------------NEW RECIPE PROMPT BOX---------------
+     tempTitle: "", 
+     tempIng: "", 
+     tempPrep: "", 
+     //--------------RECIPE PROMPT BOX------------------
+     recipeModalDisplay: "none",
+     recipesTitle: "", 
+     recipesIngredients: "", 
+     recipesPreparation:"",  
+     //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+     recipesTitle0:"",
+     //---------------MESSAGE PROMPT BOX-----------------
+     messageModalDisplay: "none",      
+     messageTitle:"", 
+     messageContents: "", 
+     msgbtn:""});
+    }
 })
 
 //==============================USER PAGE====================================================
@@ -365,6 +404,7 @@ app.post("/editUsername", async (req,res)=>{
     var sessionuser = req.session.username;
     var editedUserName = req.body.editedusername;
     var currentPW = req.body.currentPWEditUN;
+    var userEmail = req.session.userEmail;
 
     console.log(sessionuser);//current username
 
@@ -372,7 +412,44 @@ app.post("/editUsername", async (req,res)=>{
     let newUsername = await User.find({username: editedUserName});//find, if available, proposed new username in database
 
     console.log("specific user: " + specificUser);//check which user was located
-    
+    if (newUsername !==""){
+        console.log("This username already taken in database: " + newUsername);//display attempted username if it was already taken in the users collection
+        res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+     name: sessionuser,
+     email: userEmail,
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+     publicRecipesModalDisplay: "none",
+     chef: "", 
+     publicRecipesTitle: "", 
+     publicRecipesIngredients: "", 
+     publicRecipesPreparation: "",
+     //-----------------RECIPE DOC 2--------------------
+     //chef: "", 
+     documentModalDisplay: "none",
+     //-------------MY RECIPES PROMPT BOX---------------
+     myRecipesModalDisplay: "none",
+     num:"",
+     recipes: [],
+     recipesTitle: "",
+     //-------------NEW RECIPE PROMPT BOX---------------
+     tempTitle: "", 
+     tempIng: "", 
+     tempPrep: "", 
+     //--------------RECIPE PROMPT BOX------------------
+     recipeModalDisplay: "none",
+     recipesTitle: "", 
+     recipesIngredients: "", 
+     recipesPreparation:"",  
+     //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+     recipesTitle0:"",
+     //---------------MESSAGE PROMPT BOX-----------------
+     messageModalDisplay: "block",      
+     messageTitle:"Error...", 
+     messageContents: "Username already taken. Please try again.", 
+     msgbtn:"returnAccountPromptBox()"});
+    }
     const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
 
     if(!isMatch){//if the password doesn't match, return user to user page**insert flash error here**
@@ -381,8 +458,6 @@ app.post("/editUsername", async (req,res)=>{
     }
 
     else{
-
-        console.log("This username already taken in database: " + newUsername);//display attempted username if it was already taken in the users collection
 
         if (newUsername ==""){//if new entered username does not yet exist in user collection, update username in user and notes collections (because all usernames from notes collections are inherited from users collection)
             console.log("new username not yet used in user database");

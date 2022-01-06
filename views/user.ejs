@@ -1079,6 +1079,7 @@ background-color: orange;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   margin-bottom: 5%;
+  text-align: center;
   }
 
 /*=================SPECIFY CSS AT 1270 PX=============================*/
@@ -1483,7 +1484,8 @@ background-color: orange;
             <div id="messageContents">
                 <%=messageContents%>
             </div>
-            <%=msgbtn%>
+            <div id='messageCloseButton' onclick='<%=msgbtn%>'>Ok</div>
+            
         </div><!--end of id="messageSecondaryContainer-->
     </div><!--end of id="messageContainer"-->
 </div><!--end of id="messageModal"-->
@@ -1689,6 +1691,12 @@ function canceldrc(){
 function closeMessage(){
     document.getElementById("messageModal").style.display ="none";
 }//end of closeMessage()
+
+//re-display account prompt box-------------------------------------------------------------
+function returnAccountPromptBox(){
+    document.getElementById("accountModal").style.display ="block";
+    document.getElementById("messageModal").style.display ="none";
+}//end of returnAccountPromptBox()
 
 function returnToNewRecipePrompt(){
     document.getElementById("messageModal").style.display ="none";
