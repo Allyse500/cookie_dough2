@@ -108,13 +108,18 @@ app.post("/publicSearch2", async (req,res) =>{
     else{//if chef name/recipe title does not yet exist in public recipe db note this
 
         console.log("this chef/recipe not in public recipe DB. Search item submitted: '" + searchInput + "'");        
-        //return res.render("user.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"block"});
-        var sessionuser = req.session.username;
+        //declare session variables
+        var sessionuser = req.session.username;//session user's name
+        var userEmail = req.session.userEmail;//session user's email
+        var userPW = req.session.userPassword;//session user's password
+        var userHiddenPW = userPW.replace(/./g,"*");//encrypt user's password
+        var userID = req.session.userID;//session user's ID
         return res.render("user.ejs", 
                 {
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
-                email:"", 
+                email: userEmail,
+    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "block",
                 chef: "", 
@@ -233,6 +238,9 @@ app.post("/login", async (req,res)=>{
         req.session.isAuth = true;
         req.session.username = user.username;
         req.session.userID = user._id;
+        req.session.userEmail = user.email;
+        req.session.userPassword = user.password;
+
         console.log("userID from username: " + user._id);
         res.redirect("/user");
     }
@@ -246,7 +254,10 @@ app.post("/login", async (req,res)=>{
         }
         req.session.isAuth = true;
         req.session.username = email.username;
+        req.session.userEmail = email.email;
+        req.session.userPassword = email.password;
         req.session.userID = email._id;
+        
         console.log("userID from user email: " + email._id);
         res.redirect("/user");
     }
@@ -264,7 +275,10 @@ app.post("/closeMsg2", (req,res)=>{
 //==============================USER PAGE====================================================
 app.post("/getRecipeList", async (req,res)=>{
 
-var sessionuser = req.session.username;
+var sessionuser = req.session.username;//session user's name
+var userEmail = req.session.userEmail;//session user's email
+var userID = req.session.userID;//session user's ID
+
 let userRecipes = await Recipes.find({username: sessionuser});
 console.log("userRecipes variable: " + userRecipes);
 if(userRecipes ==""){
@@ -272,7 +286,8 @@ if(userRecipes ==""){
                 {
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
-                email:"", 
+                email: userEmail,
+    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "none",
                 chef: "", 
@@ -345,7 +360,7 @@ else{//if notes do not yet exist, prepare notes document
 
 //======================UPDATE ACCT INFORMATION===================================
 //======================UPDATE USERNAME===========================================
-app.post("/editUsername", async (req,res)=>{//this froze the DB**,did update username in notes collection, include update for sessionuser's name
+app.post("/editUsername", async (req,res)=>{
 
     var sessionuser = req.session.username;
     var editedUserName = req.body.editedusername;
@@ -389,6 +404,52 @@ app.post("/editUsername", async (req,res)=>{//this froze the DB**,did update use
 
 });
     
+//======================UPDATE EMAIL===========================================
+app.post("/editEmail", async (req,res)=>{
+    var sessionuser = req.session.username;
+    var userEmail = req.session.userEmail;
+    var editedEmail = req.body.editedEmail;
+    var currentPW = req.body.currentPWEditEM;
+
+    console.log(userEmail);//current user email
+
+    let specificUser = await User.find({email: userEmail});//find current user in database
+    let newEmail = await User.find({email: editedEmail});//find, if available, proposed new username in database
+
+    console.log("specific user: " + specificUser);//check which user was located
+    
+    const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
+
+    if(!isMatch){//if the password doesn't match, return user to user page**insert flash error here**
+        console.log("Password does not match for user update");
+        return res.redirect("/user");
+    }
+
+    else{
+
+        if (newEmail ==""){//if new entered username does not yet exist in user collection, update username in user and notes collections (because all usernames from notes collections are inherited from users collection)
+            console.log("new username not yet used in user database");
+            //take the current user email from users collections and update it to the new entered email-------------
+            let specificUserUpdate = await User.findOneAndUpdate({email: userEmail}, { email: editedEmail });//update user email in users collection
+            //redefine email in session variable
+            req.session.userEmail = editedEmail;
+            //reload session to contain new username
+            req.session.reload(function(err) {
+                console.log(err);
+              })
+            console.log("updated email: " + req.session.userEmail);
+            return res.redirect('/user');//stay on user page
+        }
+        else{
+            console.log("This user email already taken in database: " + newEmail);//display attempted username if it was already taken in the users collection
+            return res.redirect('/user');//stay on user page
+        }
+        
+    }
+
+});
+
+
 //================UPDATE PASSWORD======================================
 app.post("/editPassword", async (req,res)=>{
     const username = req.session.username;//name of user for current session
@@ -441,6 +502,8 @@ app.get("/", (req,res) =>{
 app.get("/user", isAuth,  async (req,res)=>{
 
 var sessionuser = req.session.username;//session user's name
+var userEmail = req.session.userEmail;//session user's email
+var userID = req.session.userID;//session user's ID
 
     console.log(sessionuser);
 
@@ -448,7 +511,7 @@ var sessionuser = req.session.username;//session user's name
     {
     //-----------------USER INFO-----------------------
      name: sessionuser,
-     email:"", 
+     email: userEmail,
     //----------PUBLIC RECIPES PROMPT BOX---------------
      publicRecipesModalDisplay: "none",
      chef: "", 
@@ -479,18 +542,6 @@ var sessionuser = req.session.username;//session user's name
      messageTitle:"", 
      messageContents: "", 
      msgbtn:""});
-// let recipeNotes = await Recipes.findOne({username: sessionuser});//check user collection for username
-
-// if (recipeNotes){//if notes already exist for user, load to page
-//         console.log("notes already exist: " + recipeNotes.notes);
-//         console.log("session username: " + sessionuser);
-//         //call back notes submitted to database-------------
-//         res.render("user.ejs", {notes: recipeNotes.notes, name: sessionuser});//, photo: photovariable
-
-//     }
-// else{//if notes do not yet exist for user, render empty notes document
-//         res.render("user.ejs", {notes: "", name: sessionuser});//, photo: photovariable
-//     }
     
 })
 
