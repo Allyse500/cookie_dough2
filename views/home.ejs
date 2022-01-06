@@ -604,12 +604,6 @@ text-align: center;
 color: orange;
 }
 
-.loginFormLabel{
-font-family: Arial, Helvetica, sans-serif;
-color: orange;
-font-weight: bold; 
-}
-
 #loginBtnsGrid{
 display: grid;
 grid-template-columns: 30% 30%;
@@ -643,7 +637,7 @@ margin-left: 66%;
   }
   
 #loginInputContents{
-margin-left: 15.5%;
+margin-left: 27.5%;
 margin-top: 5%;
 }
 
@@ -859,23 +853,19 @@ margin-top: 5%;
 
 <div id="loginModal">
   <div id="loginFormContainer">
-    <div id="loginFormSecondaryContainer">
-      <div id="loginFormTitle">Login</div>
-      <form id="loginForm" action="/login" method="POST">
-        <div id="loginInputContents">
-          <label for="username" class="loginFormLabel">Username: </label>
-          <input class="formInput" type="text" id="username" name="username"><br>
-          <div id="loginPasswordBlock">
-            <label for="password" class="loginFormLabel">Password: </label>
-            <input class="formInput" type="password" id="password" name="password">
-          </div><!--end of id="loginPasswordBlock"-->
-        </div><!--end of id="loginInputContents" -->
-        <br>
-        <div id="loginBtnsGrid">
-          <button id="loginSubmitBtn">Submit</button><div id="loginCloseButton" onclick="closelogin()">Close</div>
-        </div><!--end of id="loginBtnsGrid"-->
-      </form><!--end of id="loginForm"-->
-    </div><!--end of id="loginFormSecondaryContainer-->
+      <div id="loginFormSecondaryContainer">
+          <div id="loginFormTitle">Login</div>
+          <form id="loginForm" action="/login" method="POST">
+              <div id="loginInputContents">
+                  <input class="userInput inputSpace" type="text" id="username" name="username" placeholder ="Email or Username..."><br>
+                  <input class="userInput inputSpace" type="password" id="password" name="password" placeholder="Password...">
+              </div><!--end of id="loginInputContents" -->
+              <br>
+              <div id="loginBtnsGrid">
+                  <button id="loginSubmitBtn" name="loginSubmit">Submit</button><div id="loginCloseButton" onclick="closelogin()">Close</div>
+              </div><!--end of id="loginBtnsGrid"-->
+          </form><!--end of id="loginForm"-->
+      </div><!--end of id="loginFormSecondaryContainer-->
   </div><!--end of id="loginFormContainer"-->
 </div><!--end of id="loginModal"-->
 

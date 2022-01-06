@@ -159,21 +159,9 @@ app.post("/sign_up", async (req,res) => {
     const pwdConfirm =req.body.confirmNewPassword;//password confirm field
 
     let user = await User.findOne({username: username});//check user collection for username
+    let userEmail = await User.findOne({email: email});
 
-    // function usernameInvalid(username) {
-    //     let pattern = /[a-z0-9]/i;
-    //     let valid = pattern.test(username);
-    //     if(valid == true){
-    //         var result = true;
-    //     }
-    //     else{
-    //         var result = false;
-    //     }
-    //     return result;
-    // }
-    // usernameInvalid(username);
-
-    if (user){//if username already exists
+    if (user || userEmail){//if username or email already exist
         console.log("user already exists.");
         //redirect to home page and display error message
         return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again to sign up or log in.", display:"none"});
@@ -221,25 +209,47 @@ app.post("/login", async (req,res)=>{
     const password = req.body.password;//password inserted to form
 
     let user = await User.findOne({username: username});//check user collection for username
+    let email = await User.findOne({email: username});//check user collection for email
 
-    //console.log("located user for login: " + user);
+    //if any fields are empty
+    if(username == "" || password == ""){
+        //redirect to home page and display error message
+        return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Please fill in all fields.", display:"none"});  
+    }
 
-    if (!user){//if the user does not exsist, return to the home page
+    if (!user && !email){//if the user does not exsist, return to the home page
         console.log("not a user");
         //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+        return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
     }
+    if(user){
+        const isMatch = await bcrypt.compare(password, user.password);//compares input password with hashed password
 
-    const isMatch = await bcrypt.compare(password, user.password);//compares input password with hashed password
-
-    if(!isMatch){//if the password doesn't match, return user to home page
-        console.log("not matched");
-        //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+        if(!isMatch){//if the password doesn't match, return user to home page
+            console.log("not matched");
+            //redirect to home page and display error message
+            return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+        }
+        req.session.isAuth = true;
+        req.session.username = user.username;
+        req.session.userID = user._id;
+        console.log("userID from username: " + user._id);
+        res.redirect("/user");
     }
-    req.session.isAuth = true;
-    req.session.username = username;
-    res.redirect("/user");
+    if(email){
+        const isMatch = await bcrypt.compare(password, email.password);//compares input password with hashed password
+
+        if(!isMatch){//if the password doesn't match, return user to home page
+            console.log("not matched");
+            //redirect to home page and display error message
+            return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+        }
+        req.session.isAuth = true;
+        req.session.username = email.username;
+        req.session.userID = email._id;
+        console.log("userID from user email: " + email._id);
+        res.redirect("/user");
+    }
 })
 
 //==============================CLOSE MESSAGE PROMPTS========================================
