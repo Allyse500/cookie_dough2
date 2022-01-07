@@ -77,16 +77,37 @@ app.post("/publicSearch", async (req,res) =>{
 
     if (recipe == searchInput){//if recipe already exists
         console.log("recipe already exists: '" + searchInput + "', " + "'" + recipe + "'");
-        return res.render("home.ejs");//rediredirect to home page
+        return res.render("home.ejs", //redirect to home page
+                {messageTitle:"", 
+                display2:"none", 
+                messageContents: "", 
+                display:"none",
+                homeMsgFunc: "",
+                loginAlt:"none"    
+            });
     }
     else if(chef == searchInput){
         console.log("chef exists: '" + chef + "'");
-        return res.render("home.ejs");//redirect to home page
+        return res.render("home.ejs", //redirect to home page
+                {messageTitle:"", 
+                display2:"none", 
+                messageContents: "", 
+                display:"none",
+                homeMsgFunc: "",
+                loginAlt:"none"    
+            });
     }
     else{//if chef name/recipe title does not yet exist in public recipe db note this
 
         console.log("this chef/recipe not in public recipe DB. Search item submitted: '" + searchInput + "'");        
-        return res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"block"});
+        return res.render("home.ejs", 
+                {messageTitle:"", 
+                display2:"none", 
+                messageContents: "", 
+                display:"block",
+                homeMsgFunc: "",
+                loginAlt:"none"    
+            });
     }
 
 })
@@ -111,8 +132,6 @@ app.post("/publicSearch2", async (req,res) =>{
         //declare session variables
         var sessionuser = req.session.username;//session user's name
         var userEmail = req.session.userEmail;//session user's email
-        var userPW = req.session.userPassword;//session user's password
-        var userHiddenPW = userPW.replace(/./g,"*");//encrypt user's password
         var userID = req.session.userID;//session user's ID
         return res.render("user.ejs", 
                 {
@@ -169,48 +188,82 @@ app.post("/sign_up", async (req,res) => {
     if (user || userEmail){//if username or email already exist
         console.log("user already exists.");
         //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Error...", display2:"block", messageContents: "Username already taken. Please try again to sign up or log in.", display:"none"});
+        return res.render("home.ejs", 
+                {messageTitle:"Sign Up Error...", 
+                display2:"grid", 
+                messageContents: "Username already taken. Please try again to sign up or ", 
+                display:"none",
+                homeMsgFunc: "backToSignUpPrompt()",
+                loginAlt:"inline-block"    
+            });
     }
-    // else{//if username does not yet exist
-        //if any fields are empty
-        if(username == "" || email == "" || password == "" || pwdConfirm == ""){
-            //redirect to home page and display error message
-            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Please fill in all fields.", display:"none"});
-        }
-        //if username invalid
-        var simplifiedUsername = username.replace(/[a-z\d]/ig, "");
-        if (/[a-z\d]/i.test(username) == false || /[\s]/.test(username) == true || simplifiedUsername !== ""){
-            //redirect to home page and display error message
-            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", display:"none"});
-        }
-        var simplifiedEmail = email.replace(/[a-z\d@.]/ig, "");
-        if (/[a-z\d]/i.test(email) == false || simplifiedEmail !== "" || /com/.test(email) == false|| /[\s]/.test(email) == true){
-            //redirect to home page and display error message
-            var charOnum = /[a-z\d]/i.test(email);
-            var com = /com/.test(email);
-            var spaces = /[\s]/.test(email);
-            console.log("characters/numbers: " + charOnum + "; simplifiedEmail: " + simplifiedEmail + "; com: " + com + "; spaces: " + spaces);
-            return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "Email invalid. Please try again.", display:"none"});
-        }
-        //if passwords don't match
-        if (password !== pwdConfirm){
-        return res.render("home.ejs", {messageTitle:"Sign Up Error...", display2:"block", messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", display:"none"});
-        }
-        
-        //else{
-            const hashedPW = await bcrypt.hash(password, 10);//hash password with salt of 10 times encryption
-        user = new User({
-            username,
-            email,
-            password: hashedPW
-        })
 
-        await user.save();//save new user to DB
-        //redirect to home page and display welcome message
-        res.render("home.ejs", {messageTitle:"Welcome!", display2:"block", messageContents: "Please log in to access your account.", display:"none"})
-        //}
+    if(username == "" || email == "" || password == "" || pwdConfirm == ""){
+        //redirect to home page and display error message
+        return res.render("home.ejs", 
+                {messageTitle:"Sign Up Error...", 
+                display2:"block", 
+                messageContents: "Please fill in all fields.", 
+                display:"none",
+                homeMsgFunc: "backToSignUpPrompt()",
+                loginAlt:"none"    
+            });  
+    }
+    //if username invalid
+    var simplifiedUsername = username.replace(/[a-z\d]/ig, "");
+    if (/[a-z\d]/i.test(username) == false || /[\s]/.test(username) == true || simplifiedUsername !== ""){
+        //redirect to home page and display error message
+        return res.render("home.ejs", 
+                {messageTitle:"Sign Up Error...", 
+                display2:"block", 
+                messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", 
+                display:"none",
+                homeMsgFunc: "backToSignUpPrompt()",
+                loginAlt:"none"    
+            });  
+    }
+    var simplifiedEmail = email.replace(/[a-z\d@.]/ig, "");
+    if (/[a-z\d]/i.test(email) == false || simplifiedEmail !== "" || /com/.test(email) == false|| /[\s]/.test(email) == true){
+        //redirect to home page and display error message
+        return res.render("home.ejs", 
+                {messageTitle:"Sign Up Error...", 
+                display2:"block", 
+                messageContents: "Email invalid. Please try again.", 
+                display:"none",
+                homeMsgFunc: "backToSignUpPrompt()",
+                loginAlt:"none"    
+            });      
+    }
+    //if passwords don't match
+    if (password !== pwdConfirm){
+        return res.render("home.ejs", 
+                {messageTitle:"Sign Up Error...", 
+                display2:"block", 
+                messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", 
+                display:"none",
+                homeMsgFunc: "backToSignUpPrompt()",
+                loginAlt:"none"    
+            });
+    }
         
-    //}
+    const hashedPW = await bcrypt.hash(password, 10);//hash password with salt of 10 times encryption
+    user = new User({
+        username,
+        email,
+        password: hashedPW
+    })
+
+    await user.save();//save new user to DB
+    //redirect to home page and display welcome message
+    res.render("home.ejs", 
+    {messageTitle:"Welcome!", 
+    display2:"block", 
+    messageContents: "Please log in to access your account.", 
+    display:"none",
+    homeMsgFunc: "closeMsgPrompt()",
+    loginAlt:"none"    
+});
+
 })
 //======================LOGIN FUNCTION========================================
 app.post("/login", async (req,res)=>{
@@ -222,14 +275,28 @@ app.post("/login", async (req,res)=>{
 
     //if any fields are empty
     if(username == "" || password == ""){
-        //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Please fill in all fields.", display:"none"});  
+        //redirect to home page and display error message  
+        return res.render("home.ejs", 
+                {messageTitle:"Login Error...", 
+                display2:"block", 
+                messageContents: "Please fill in all fields.", 
+                display:"none",
+                homeMsgFunc: "backToLoginPrompt()",
+                loginAlt:"none"    
+            }); 
     }
 
     if (!user && !email){//if the user does not exsist, return to the home page
         console.log("not a user");
         //redirect to home page and display error message
-        return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+        return res.render("home.ejs", 
+                {messageTitle:"Login Error...", 
+                display2:"block", 
+                messageContents: "Wrong username or password. Please try again.", 
+                display:"none",
+                homeMsgFunc: "backToLoginPrompt()",
+                loginAlt:"none"    
+            }); 
     }
     if(user){
         const isMatch = await bcrypt.compare(password, user.password);//compares input password with hashed password
@@ -237,7 +304,14 @@ app.post("/login", async (req,res)=>{
         if(!isMatch){//if the password doesn't match, return user to home page
             console.log("not matched");
             //redirect to home page and display error message
-            return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+            return res.render("home.ejs", 
+                    {messageTitle:"Login Error...", 
+                    display2:"block", 
+                    messageContents: "Wrong username or password. Please try again.", 
+                    display:"none",
+                    homeMsgFunc: "backToLoginPrompt()",
+                    loginAlt:"none"    
+                });        
         }
         req.session.isAuth = true;
         req.session.username = user.username;
@@ -254,7 +328,14 @@ app.post("/login", async (req,res)=>{
         if(!isMatch){//if the password doesn't match, return user to home page
             console.log("not matched");
             //redirect to home page and display error message
-            return res.render("home.ejs", {messageTitle:"Login Error...", display2:"block", messageContents: "Wrong username or password. Please try again.", display:"none"});
+            return res.render("home.ejs", 
+                    {messageTitle:"Login Error...", 
+                    display2:"block", 
+                    messageContents: "Wrong username or password. Please try again.", 
+                    display:"none",
+                    homeMsgFunc: "backToLoginPrompt()",
+                    loginAlt:"none"    
+                });
         }
         req.session.isAuth = true;
         req.session.username = email.username;
@@ -269,7 +350,14 @@ app.post("/login", async (req,res)=>{
 
 //==============================CLOSE MESSAGE PROMPTS========================================
 app.post("/closeMsg", (req,res)=>{
-    return res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"none"});
+    return res.render("home.ejs", 
+            {messageTitle:"", 
+            display2:"none", 
+            messageContents: "", 
+            display:"none",
+            homeMsgFunc: "",
+            loginAlt:"none"    
+        });
 })
 
 app.post("/closeMsg2", (req,res)=>{
@@ -308,8 +396,8 @@ app.post("/closeMsg2", (req,res)=>{
      messageTitle:"", 
      messageContents: "", 
      msgbtn:""});
-    }
-})
+    
+});
 
 //==============================USER PAGE====================================================
 app.post("/getRecipeList", async (req,res)=>{
@@ -570,7 +658,14 @@ app.post("/logout", (req,res)=>{
 //==========================LANDING PAGE ROUTE ("/")================================
 app.get("/", (req,res) =>{
     //display home page with all modals hidden and message fields cleared
-    res.render("home.ejs", {messageTitle:"", display2:"none", messageContents: "", display:"none"});
+    res.render("home.ejs", 
+    {messageTitle:"", 
+    display2:"none", 
+    messageContents: "", 
+    display:"none",
+    homeMsgFunc: "",
+    loginAlt:"none"    
+});
 })
 
 //=====================WHAT TO DO WHEN '/USER' ROUTE IDENTIFIED====================

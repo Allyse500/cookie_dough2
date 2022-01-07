@@ -548,6 +548,25 @@ margin-top: 5%;
       margin-left: 85%;
       width: 57.5px;
     }
+
+    #altLogInBtn{
+      background-color: orange;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif; 
+      font-size: 85%;
+      text-align: center;
+      border: white 1px solid;
+      border-radius: 5px;
+      cursor: pointer;
+      padding-top: 1px;
+      width: 57.5px;
+      height: fit-content;
+    }
+
+    #altLogInBtn:hover{
+      background-color:rgb(253, 194, 83);
+    }
+
   
   #messageCloseButton:hover{
       background-color:rgb(60, 60, 60);
@@ -878,11 +897,9 @@ margin-top: 5%;
         <%=messageTitle%>
       </div><!--end of id="messageTitle"-->
       <div id="messageContents">
-        <%=messageContents%>
+        <%=messageContents%><button id="altLogInBtn" style="display:<%=loginAlt%>;" onclick="loginAlt()">Log In</button>.
       </div><!--end of id="messageContents"-->
-      <form action="/closeMsg" method="POST">
-        <button id='messageCloseButton'>Ok</button>
-      </form>
+      <button id='messageCloseButton' onclick="<%=homeMsgFunc%>">Ok</button>
     </div><!--end of id="messageSecondaryContainer-->
   </div><!--end of id="messageContainer"-->
 </div><!--end of id="messageModal"-->
@@ -926,6 +943,28 @@ function closelogin(){
 document.getElementById("loginModal").style.display ="none";
 }//end of closelogin()
 
+//========================MESSAGE PROMPT BOX====================================//
+//close message modal, re-display sign up prompt
+function backToSignUpPrompt(){
+  document.getElementById("messageModal").style.display="none";
+  document.getElementById("signupModal").style.display="block";
+}//end of backToSignUpPrompt()
+
+//close message modal, re-display log in prompt
+function backToLoginPrompt(){
+  document.getElementById("messageModal").style.display="none";
+  document.getElementById("signupModal").style.display="block";
+}//end of backToLoginPrompt()
+
+//close message modal
+function closeMsgPrompt(){
+  document.getElementById("messageModal").style.display="none";
+}
+//close message modal, open login modal
+function loginAlt(){
+  document.getElementById("messageModal").style.display="none";
+  document.getElementById("loginModal").style.display ="block";
+}
 //========================NAV BAR ALT DROP DOWN BTNS===============================//
 
 function dropDownNav() {
