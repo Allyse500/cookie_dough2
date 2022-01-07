@@ -81,6 +81,7 @@ app.post("/publicSearch", async (req,res) =>{
                 {messageTitle:"", 
                 display2:"none", 
                 messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -92,6 +93,7 @@ app.post("/publicSearch", async (req,res) =>{
                 {messageTitle:"", 
                 display2:"none", 
                 messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -104,6 +106,7 @@ app.post("/publicSearch", async (req,res) =>{
                 {messageTitle:"", 
                 display2:"none", 
                 messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
                 display:"block",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -168,6 +171,7 @@ app.post("/publicSearch2", async (req,res) =>{
                 messageModalDisplay: "none",      
                 messageTitle:"", 
                 messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
                 msgbtn:""
                 });
 
@@ -192,6 +196,7 @@ app.post("/sign_up", async (req,res) => {
                 {messageTitle:"Sign Up Error...", 
                 display2:"grid", 
                 messageContents: "Username already taken. Please try again to sign up or ", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"inline-block"    
@@ -204,6 +209,7 @@ app.post("/sign_up", async (req,res) => {
                 {messageTitle:"Sign Up Error...", 
                 display2:"block", 
                 messageContents: "Please fill in all fields.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -217,6 +223,7 @@ app.post("/sign_up", async (req,res) => {
                 {messageTitle:"Sign Up Error...", 
                 display2:"block", 
                 messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -229,6 +236,7 @@ app.post("/sign_up", async (req,res) => {
                 {messageTitle:"Sign Up Error...", 
                 display2:"block", 
                 messageContents: "Email invalid. Please try again.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -240,6 +248,7 @@ app.post("/sign_up", async (req,res) => {
                 {messageTitle:"Sign Up Error...", 
                 display2:"block", 
                 messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -259,6 +268,7 @@ app.post("/sign_up", async (req,res) => {
     {messageTitle:"Welcome!", 
     display2:"block", 
     messageContents: "Please log in to access your account.", 
+    userMsgContVarialbeDisplay:"none",
     display:"none",
     homeMsgFunc: "closeMsgPrompt()",
     loginAlt:"none"    
@@ -280,6 +290,7 @@ app.post("/login", async (req,res)=>{
                 {messageTitle:"Login Error...", 
                 display2:"block", 
                 messageContents: "Please fill in all fields.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToLoginPrompt()",
                 loginAlt:"none"    
@@ -293,6 +304,7 @@ app.post("/login", async (req,res)=>{
                 {messageTitle:"Login Error...", 
                 display2:"block", 
                 messageContents: "Wrong username or password. Please try again.", 
+                userMsgContVarialbeDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToLoginPrompt()",
                 loginAlt:"none"    
@@ -308,6 +320,7 @@ app.post("/login", async (req,res)=>{
                     {messageTitle:"Login Error...", 
                     display2:"block", 
                     messageContents: "Wrong username or password. Please try again.", 
+                    userMsgContVarialbeDisplay:"none",
                     display:"none",
                     homeMsgFunc: "backToLoginPrompt()",
                     loginAlt:"none"    
@@ -332,6 +345,7 @@ app.post("/login", async (req,res)=>{
                     {messageTitle:"Login Error...", 
                     display2:"block", 
                     messageContents: "Wrong username or password. Please try again.", 
+                    userMsgContVarialbeDisplay:"none",
                     display:"none",
                     homeMsgFunc: "backToLoginPrompt()",
                     loginAlt:"none"    
@@ -354,6 +368,7 @@ app.post("/closeMsg", (req,res)=>{
             {messageTitle:"", 
             display2:"none", 
             messageContents: "", 
+            userMsgContVarialbeDisplay:"none",
             display:"none",
             homeMsgFunc: "",
             loginAlt:"none"    
@@ -395,6 +410,7 @@ app.post("/closeMsg2", (req,res)=>{
      messageModalDisplay: "none",      
      messageTitle:"", 
      messageContents: "", 
+     userMsgContVarialbeDisplay:"none",
      msgbtn:""});
     
 });
@@ -444,6 +460,7 @@ if(userRecipes ==""){
                 messageModalDisplay: "none",      
                 messageTitle:"", 
                 messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
                 msgbtn:""
                 });
 
@@ -495,75 +512,322 @@ app.post("/editUsername", async (req,res)=>{
     var userEmail = req.session.userEmail;
 
     console.log(sessionuser);//current username
+    //if any fields are empty, note this
+    if(editedUserName =="" || currentPW ==""){
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Please fill in all fields.", 
+         userMsgContVarialbeDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"});
+    }
 
+    //if username invalid
+    var simplifiedUsername = editedUserName.replace(/[a-z\d]/ig, "");
+    if (/[a-z\d]/i.test(editedUserName) == false || /[\s]/.test(editedUserName) == true || simplifiedUsername !== ""){
+        //redirect to user page and display error message
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", 
+         userMsgContVarialbeDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"});
+    }
+    //search for current and pursued username
     let specificUser = await User.find({username: sessionuser});//find current user in database
     let newUsername = await User.find({username: editedUserName});//find, if available, proposed new username in database
-
-    console.log("specific user: " + specificUser);//check which user was located
-    if (newUsername !==""){
-        console.log("This username already taken in database: " + newUsername);//display attempted username if it was already taken in the users collection
-        res.render("user.ejs", 
-    {
-    //-----------------USER INFO-----------------------
-     name: sessionuser,
-     email: userEmail,
-    //----------PUBLIC RECIPES PROMPT BOX---------------
-     publicRecipesModalDisplay: "none",
-     chef: "", 
-     publicRecipesTitle: "", 
-     publicRecipesIngredients: "", 
-     publicRecipesPreparation: "",
-     //-----------------RECIPE DOC 2--------------------
-     //chef: "", 
-     documentModalDisplay: "none",
-     //-------------MY RECIPES PROMPT BOX---------------
-     myRecipesModalDisplay: "none",
-     num:"",
-     recipes: [],
-     recipesTitle: "",
-     //-------------NEW RECIPE PROMPT BOX---------------
-     tempTitle: "", 
-     tempIng: "", 
-     tempPrep: "", 
-     //--------------RECIPE PROMPT BOX------------------
-     recipeModalDisplay: "none",
-     recipesTitle: "", 
-     recipesIngredients: "", 
-     recipesPreparation:"",  
-     //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
-     recipesTitle0:"",
-     //---------------MESSAGE PROMPT BOX-----------------
-     messageModalDisplay: "block",      
-     messageTitle:"Error...", 
-     messageContents: "Username already taken. Please try again.", 
-     msgbtn:"returnAccountPromptBox()"});
-    }
     const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
-
-    if(!isMatch){//if the password doesn't match, return user to user page**insert flash error here**
-        console.log("Password does not match for user update");
-        return res.redirect("/user");
-    }
-
-    else{
-
-        if (newUsername ==""){//if new entered username does not yet exist in user collection, update username in user and notes collections (because all usernames from notes collections are inherited from users collection)
-            console.log("new username not yet used in user database");
-            //take the current username from users and notes collections and update it to the new entered username-------------
+    console.log("specific user: " + specificUser);//check which user was located
+    console.log("isMatch variable: " + isMatch);//check for password match
+    //if user already exists and pursued username not the same as current username
+    if (newUsername !==""){
+        let pattern = new RegExp(specificUser.username, "ig");
+        let sameName = pattern.test(newUsername.username);
+        if (sameName == true){
+            console.log("Submitting same/similar username: " + newUsername);//display attempted username if it was already taken in the users collection
             
-            let specificUserNotes = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in notes collection
+            //if the password doesn't match, return user to user page
+            if(!isMatch){
+                console.log("Password does not match for user update");
+                return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Password incorrect. Please try again.", 
+                userMsgContVarialbeDisplay:"none",
+                msgbtn:"returnAccountPromptBox()"
+                });
+            }
+            
+            //take the current username from users and notes collections and update it to the new entered username-------------        
+            let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in notes collection
             let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
-
+    
             req.session.username = editedUserName;
             //reload session to contain new username
             req.session.reload(function(err) {
                 console.log(err);
-              })
-
+                })
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: editedUserName,
+             email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Updated username to ", 
+             userMsgContVarialbeDisplay:"inline-block",
+             msgbtn:"closeMessage()"
+            });  
         }
-
-        return res.redirect('/user');//stay on user page
+        else{
+            console.log("This username already taken in database: " + newUsername);//display attempted username if it was already taken in the users collection
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+            name: sessionuser,
+            email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+            publicRecipesModalDisplay: "none",
+            chef: "", 
+            publicRecipesTitle: "", 
+            publicRecipesIngredients: "", 
+            publicRecipesPreparation: "",
+            //-----------------RECIPE DOC 2--------------------
+            //chef: "", 
+            documentModalDisplay: "none",
+            //-------------MY RECIPES PROMPT BOX---------------
+            myRecipesModalDisplay: "none",
+            num:"",
+            recipes: [],
+            recipesTitle: "",
+            //-------------NEW RECIPE PROMPT BOX---------------
+            tempTitle: "", 
+            tempIng: "", 
+            tempPrep: "", 
+            //--------------RECIPE PROMPT BOX------------------
+            recipeModalDisplay: "none",
+            recipesTitle: "", 
+            recipesIngredients: "", 
+            recipesPreparation:"",  
+            //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+            recipesTitle0:"",
+            //---------------MESSAGE PROMPT BOX-----------------
+            messageModalDisplay: "block",      
+            messageTitle:"Error...", 
+            messageContents: "Username already taken. Please try again.", 
+            userMsgContVarialbeDisplay:"none",
+            msgbtn:"returnAccountPromptBox()"});
+        }
     }
+
+    // const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
+    // console.log("isMatch variable: " + isMatch);
+    //if the password doesn't match, return user to user page
+    if(!isMatch){
+        console.log("Password does not match for user update");
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Password incorrect. Please try again.", 
+         userMsgContVarialbeDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"
+        });
+    }
+   
+    console.log("new username not yet used in user database");
+    //take the current username from users and notes collections and update it to the new entered username-------------
+            
+    let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in notes collection
+    let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
+
+    req.session.username = editedUserName;
+    //reload session to contain new username
+    req.session.reload(function(err) {
+        console.log(err);
+        })
+    return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: editedUserName,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Success!", 
+         messageContents: "Updated username to ", 
+         userMsgContVarialbeDisplay:"inline-block",
+         msgbtn:"closeMessage()"
+        });
 
 });
     
@@ -662,6 +926,7 @@ app.get("/", (req,res) =>{
     {messageTitle:"", 
     display2:"none", 
     messageContents: "", 
+    userMsgContVarialbeDisplay:"none",
     display:"none",
     homeMsgFunc: "",
     loginAlt:"none"    
@@ -711,6 +976,7 @@ var userID = req.session.userID;//session user's ID
      messageModalDisplay: "none",      
      messageTitle:"", 
      messageContents: "", 
+     userMsgContVarialbeDisplay:"none",
      msgbtn:""});
     
 })
