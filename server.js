@@ -1129,7 +1129,6 @@ app.post("/editEmail", async (req,res)=>{
     //if new email does not exist...
     if(!isMatch){//if the password doesn't match, return user to user page
         console.log("Password does not match for user update");
-        console.log("Password does not match for user update");
         return res.render("user.ejs", 
         {
         //-----------------USER INFO-----------------------
@@ -1225,33 +1224,187 @@ app.post("/editEmail", async (req,res)=>{
 
 //================UPDATE PASSWORD======================================
 app.post("/editPassword", async (req,res)=>{
-    const username = req.session.username;//name of user for current session
+    const sessionuser = req.session.username;//name of user for current session
+    const userEmail = req.session.userEmail;
     const oldPW = req.body.oldPassword;//what the user entered to be the current DB passowrd for their acct
     const newPW = req.body.newPassword;//what the user entered for new passoword
     const confirmNewPW = req.body.reEnteredNewPWD;//what the user re-entered for new passoword
 
-    let user = await User.findOne({username: username});//check user collection for username
-
+    let user = await User.findOne({username: sessionuser});//check user collection for username
+    if(oldPW =="" || newPW =="" || confirmNewPW ==""){
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Please fill in all fields.", 
+         userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"
+        }); 
+    }//end of if(oldPW =="" || newPW =="" || confirmNewPW =="")
     const isMatch = await bcrypt.compare(oldPW, user.password);//compares input password with hashed password
 
     if(!isMatch){//if the password doesn't match, do not submit, stay on user page
         console.log("not matched");
-        return res.redirect("/user");
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+        name: sessionuser,
+        email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+        publicRecipesModalDisplay: "none",
+        chef: "", 
+        publicRecipesTitle: "", 
+        publicRecipesIngredients: "", 
+        publicRecipesPreparation: "",
+        //-----------------RECIPE DOC 2--------------------
+        //chef: "", 
+        documentModalDisplay: "none",
+        //-------------MY RECIPES PROMPT BOX---------------
+        myRecipesModalDisplay: "none",
+        num:"",
+        recipes: [],
+        recipesTitle: "",
+        //-------------NEW RECIPE PROMPT BOX---------------
+        tempTitle: "", 
+        tempIng: "", 
+        tempPrep: "", 
+        //--------------RECIPE PROMPT BOX------------------
+        recipeModalDisplay: "none",
+        recipesTitle: "", 
+        recipesIngredients: "", 
+        recipesPreparation:"",  
+        //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+        recipesTitle0:"",
+        //---------------MESSAGE PROMPT BOX-----------------
+        messageModalDisplay: "block",      
+        messageTitle:"Error...", 
+        messageContents: "Password incorrect. Please try again.", 
+        userMsgContVarialbeDisplay:"none",
+        nameMsgDisplay:"none",
+        emailMsgDisplay:"none",
+        msgbtn:"returnAccountPromptBox()"
+        });
     }
     else if (isMatch){//if the password does match, check for matching re-entered passwords
         if(newPW === confirmNewPW){//if re-entered passwords do match, submit new password to DB
             const hashedPW = await bcrypt.hash(confirmNewPW, 10);//hash password with salt of 10 times encryption
             user.password = hashedPW;
             await user.save();//save updated password to DB 
-            return res.redirect("/user");//stay on notes page
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: sessionuser,
+             email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Password updated", 
+             userMsgContVarialbeDisplay:"none",
+             nameMsgDisplay:"none",
+             emailMsgDisplay:"none",
+             msgbtn:"closeMessage()"
+            });
         }
         else{
             console.log("not matched");
-            return res.redirect("/user");//stay on notes page
-        }
-    }
-    
-})
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+            name: sessionuser,
+            email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+            publicRecipesModalDisplay: "none",
+            chef: "", 
+            publicRecipesTitle: "", 
+            publicRecipesIngredients: "", 
+            publicRecipesPreparation: "",
+            //-----------------RECIPE DOC 2--------------------
+            //chef: "", 
+            documentModalDisplay: "none",
+            //-------------MY RECIPES PROMPT BOX---------------
+            myRecipesModalDisplay: "none",
+            num:"",
+            recipes: [],
+            recipesTitle: "",
+            //-------------NEW RECIPE PROMPT BOX---------------
+            tempTitle: "", 
+            tempIng: "", 
+            tempPrep: "", 
+            //--------------RECIPE PROMPT BOX------------------
+            recipeModalDisplay: "none",
+            recipesTitle: "", 
+            recipesIngredients: "", 
+            recipesPreparation:"",  
+            //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+            recipesTitle0:"",
+            //---------------MESSAGE PROMPT BOX-----------------
+            messageModalDisplay: "block",      
+            messageTitle:"Error...", 
+            messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", 
+            userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
+            msgbtn:"returnAccountPromptBox()"
+            });
+        }//end of else statement
+    }//end of else if (isMatch) 
+})//app.post("/editPassword",...)
 
 //===============LOGOUT FUNCTION========================================
 app.post("/logout", (req,res)=>{
