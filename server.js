@@ -82,6 +82,8 @@ app.post("/publicSearch", async (req,res) =>{
                 display2:"none", 
                 messageContents: "", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -94,6 +96,8 @@ app.post("/publicSearch", async (req,res) =>{
                 display2:"none", 
                 messageContents: "", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -107,6 +111,8 @@ app.post("/publicSearch", async (req,res) =>{
                 display2:"none", 
                 messageContents: "", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"block",
                 homeMsgFunc: "",
                 loginAlt:"none"    
@@ -172,6 +178,8 @@ app.post("/publicSearch2", async (req,res) =>{
                 messageTitle:"", 
                 messageContents: "", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 msgbtn:""
                 });
 
@@ -197,6 +205,8 @@ app.post("/sign_up", async (req,res) => {
                 display2:"grid", 
                 messageContents: "Username already taken. Please try again to sign up or ", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"inline-block"    
@@ -210,6 +220,8 @@ app.post("/sign_up", async (req,res) => {
                 display2:"block", 
                 messageContents: "Please fill in all fields.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -224,6 +236,8 @@ app.post("/sign_up", async (req,res) => {
                 display2:"block", 
                 messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -237,6 +251,8 @@ app.post("/sign_up", async (req,res) => {
                 display2:"block", 
                 messageContents: "Email invalid. Please try again.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -249,6 +265,8 @@ app.post("/sign_up", async (req,res) => {
                 display2:"block", 
                 messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToSignUpPrompt()",
                 loginAlt:"none"    
@@ -269,6 +287,8 @@ app.post("/sign_up", async (req,res) => {
     display2:"block", 
     messageContents: "Please log in to access your account.", 
     userMsgContVarialbeDisplay:"none",
+    nameMsgDisplay:"none",
+    emailMsgDisplay:"none",
     display:"none",
     homeMsgFunc: "closeMsgPrompt()",
     loginAlt:"none"    
@@ -291,6 +311,8 @@ app.post("/login", async (req,res)=>{
                 display2:"block", 
                 messageContents: "Please fill in all fields.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToLoginPrompt()",
                 loginAlt:"none"    
@@ -305,6 +327,8 @@ app.post("/login", async (req,res)=>{
                 display2:"block", 
                 messageContents: "Wrong username or password. Please try again.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 display:"none",
                 homeMsgFunc: "backToLoginPrompt()",
                 loginAlt:"none"    
@@ -321,6 +345,8 @@ app.post("/login", async (req,res)=>{
                     display2:"block", 
                     messageContents: "Wrong username or password. Please try again.", 
                     userMsgContVarialbeDisplay:"none",
+                    nameMsgDisplay:"none",
+                    emailMsgDisplay:"none",
                     display:"none",
                     homeMsgFunc: "backToLoginPrompt()",
                     loginAlt:"none"    
@@ -346,6 +372,8 @@ app.post("/login", async (req,res)=>{
                     display2:"block", 
                     messageContents: "Wrong username or password. Please try again.", 
                     userMsgContVarialbeDisplay:"none",
+                    nameMsgDisplay:"none",
+                    emailMsgDisplay:"none",
                     display:"none",
                     homeMsgFunc: "backToLoginPrompt()",
                     loginAlt:"none"    
@@ -369,6 +397,8 @@ app.post("/closeMsg", (req,res)=>{
             display2:"none", 
             messageContents: "", 
             userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
             display:"none",
             homeMsgFunc: "",
             loginAlt:"none"    
@@ -411,6 +441,8 @@ app.post("/closeMsg2", (req,res)=>{
      messageTitle:"", 
      messageContents: "", 
      userMsgContVarialbeDisplay:"none",
+     nameMsgDisplay:"none",
+     emailMsgDisplay:"none",
      msgbtn:""});
     
 });
@@ -461,6 +493,8 @@ if(userRecipes ==""){
                 messageTitle:"", 
                 messageContents: "", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 msgbtn:""
                 });
 
@@ -476,7 +510,7 @@ app.post("/submit_recipe",async (req,res)=>{
 var sessionuser = req.session.username;
 var recipenotes = req.body.notes;
 console.log(sessionuser);
-let userRecipeNotes = await Recipes.findOne({username: sessionuser});//check notes collection for username
+let userRecipeNotes = await Recipes.findOne({username: sessionuser});//check recipes collection for username
 
 if (userRecipeNotes){//if notes already exist***place for update
     console.log("notes already exist.");
@@ -549,6 +583,8 @@ app.post("/editUsername", async (req,res)=>{
          messageTitle:"Error...", 
          messageContents: "Please fill in all fields.", 
          userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
          msgbtn:"returnAccountPromptBox()"});
     }
 
@@ -591,6 +627,8 @@ app.post("/editUsername", async (req,res)=>{
          messageTitle:"Error...", 
          messageContents: "Username invalid. Please submit username without spaces using only characters a-z, A-Z and/or 0-9.", 
          userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
          msgbtn:"returnAccountPromptBox()"});
     }
     //search for current and pursued username
@@ -600,11 +638,12 @@ app.post("/editUsername", async (req,res)=>{
     console.log("specific user: " + specificUser);//check which user was located
     console.log("isMatch variable: " + isMatch);//check for password match
     //if user already exists and pursued username not the same as current username
-    if (newUsername !==""){
-        let pattern = new RegExp(specificUser.username, "ig");
-        let sameName = pattern.test(newUsername.username);
-        if (sameName == true){
-            console.log("Submitting same/similar username: " + newUsername);//display attempted username if it was already taken in the users collection
+    if (newUsername[0] !== undefined){
+        let pattern = new RegExp(specificUser.username, "i");
+        //let sameName = pattern.test(editedUserName);
+        let sameName = newUsername.username.replace(pattern,"");
+        if (sameName == ""){
+            console.log("Submitting same/similar username: " + newUsername);//log attempted username if it was already taken in the users collection
             
             //if the password doesn't match, return user to user page
             if(!isMatch){
@@ -644,12 +683,15 @@ app.post("/editUsername", async (req,res)=>{
                 messageTitle:"Error...", 
                 messageContents: "Password incorrect. Please try again.", 
                 userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
                 msgbtn:"returnAccountPromptBox()"
                 });
-            }
-            
-            //take the current username from users and notes collections and update it to the new entered username-------------        
-            let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in notes collection
+            }//end of if (newUsername[0] !== undefined):if (sameName == ""):if(!isMatch)
+            //if it is the same name and the password of the user is correct...
+            //take the current username from users and recipes collections and update it to the new entered username-------------        
+            let specificUserPublicRecipesUN = await PublicRecipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in public recipes collection
+            let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in recipes collection
             let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
     
             req.session.username = editedUserName;
@@ -692,11 +734,14 @@ app.post("/editUsername", async (req,res)=>{
              messageTitle:"Success!", 
              messageContents: "Updated username to ", 
              userMsgContVarialbeDisplay:"inline-block",
+             nameMsgDisplay:"inline-block",
+             emailMsgDisplay:"none",
              msgbtn:"closeMessage()"
             });  
-        }
+        }//end of if (newUsername[0] !== undefined):if (sameName == "")
+        //if username already exits and it is not the same as the current username
         else{
-            console.log("This username already taken in database: " + newUsername);//display attempted username if it was already taken in the users collection
+            console.log("This username already taken in database: " + newUsername);//log attempted username if it was already taken in the users collection
             return res.render("user.ejs", 
             {
             //-----------------USER INFO-----------------------
@@ -732,13 +777,14 @@ app.post("/editUsername", async (req,res)=>{
             messageTitle:"Error...", 
             messageContents: "Username already taken. Please try again.", 
             userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
             msgbtn:"returnAccountPromptBox()"});
-        }
-    }
+        }//end of else statement
+    }//end of if (newUsername[0] !== undefined)
 
-    // const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
-    // console.log("isMatch variable: " + isMatch);
-    //if the password doesn't match, return user to user page
+    //if the pursued username does not yet exsist...
+    //if the password doesn't match, return user to user page with error note
     if(!isMatch){
         console.log("Password does not match for user update");
         return res.render("user.ejs", 
@@ -776,14 +822,17 @@ app.post("/editUsername", async (req,res)=>{
          messageTitle:"Error...", 
          messageContents: "Password incorrect. Please try again.", 
          userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
          msgbtn:"returnAccountPromptBox()"
         });
-    }
+    }//end of if(!isMatch)
    
+    //if the password does match, return user to user page with success note
     console.log("new username not yet used in user database");
-    //take the current username from users and notes collections and update it to the new entered username-------------
-            
-    let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in notes collection
+    //take the current username from users and recipes collections and update it to the new entered username-------------
+    let specificUserPublicRecipesUN = await PublicRecipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in public recipes collection       
+    let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in recipes collection
     let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
 
     req.session.username = editedUserName;
@@ -826,10 +875,12 @@ app.post("/editUsername", async (req,res)=>{
          messageTitle:"Success!", 
          messageContents: "Updated username to ", 
          userMsgContVarialbeDisplay:"inline-block",
+         nameMsgDisplay:"inline-block",
+         emailMsgDisplay:"none",
          msgbtn:"closeMessage()"
         });
 
-});
+});//end of app.post("/editUsername",...)
     
 //======================UPDATE EMAIL===========================================
 app.post("/editEmail", async (req,res)=>{
@@ -840,41 +891,336 @@ app.post("/editEmail", async (req,res)=>{
 
     console.log(userEmail);//current user email
 
-    let specificUser = await User.find({email: userEmail});//find current user in database
-    let newEmail = await User.find({email: editedEmail});//find, if available, proposed new username in database
-
-    console.log("specific user: " + specificUser);//check which user was located
-    
-    const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
-
-    if(!isMatch){//if the password doesn't match, return user to user page**insert flash error here**
-        console.log("Password does not match for user update");
-        return res.redirect("/user");
+    if(editedEmail == "" || currentPW==''){
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Please fill in all fields.", 
+         userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"}); 
     }
 
-    else{
+    //if email invalid
+    var simplifiedEmail = editedEmail.replace(/[a-z\d@.]/ig, "");
+    if (/[a-z\d]/i.test(editedEmail) == false || simplifiedEmail !== "" || /com/.test(editedEmail) == false|| /[\s]/.test(editedEmail) == true){
+        //redirect to user page and display error message
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+         name: sessionuser,
+         email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+         publicRecipesModalDisplay: "none",
+         chef: "", 
+         publicRecipesTitle: "", 
+         publicRecipesIngredients: "", 
+         publicRecipesPreparation: "",
+         //-----------------RECIPE DOC 2--------------------
+         //chef: "", 
+         documentModalDisplay: "none",
+         //-------------MY RECIPES PROMPT BOX---------------
+         myRecipesModalDisplay: "none",
+         num:"",
+         recipes: [],
+         recipesTitle: "",
+         //-------------NEW RECIPE PROMPT BOX---------------
+         tempTitle: "", 
+         tempIng: "", 
+         tempPrep: "", 
+         //--------------RECIPE PROMPT BOX------------------
+         recipeModalDisplay: "none",
+         recipesTitle: "", 
+         recipesIngredients: "", 
+         recipesPreparation:"",  
+         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+         recipesTitle0:"",
+         //---------------MESSAGE PROMPT BOX-----------------
+         messageModalDisplay: "block",      
+         messageTitle:"Error...", 
+         messageContents: "Email invalid. Please try again.", 
+         userMsgContVarialbeDisplay:"none",
+         nameMsgDisplay:"none",
+         emailMsgDisplay:"none",
+         msgbtn:"returnAccountPromptBox()"});
+    }
 
-        if (newEmail ==""){//if new entered username does not yet exist in user collection, update username in user and notes collections (because all usernames from notes collections are inherited from users collection)
-            console.log("new username not yet used in user database");
-            //take the current user email from users collections and update it to the new entered email-------------
-            let specificUserUpdate = await User.findOneAndUpdate({email: userEmail}, { email: editedEmail });//update user email in users collection
-            //redefine email in session variable
-            req.session.userEmail = editedEmail;
+
+
+    let specificUser = await User.find({email: userEmail});//find current user in database
+    let newEmail = await User.find({email: editedEmail});//find, if available, proposed new username in database
+    const isMatch = await bcrypt.compare(currentPW, specificUser[0].password);//compares input password with hashed password
+
+    console.log("specific user: " + specificUser[0]);//check which user was located
+    console.log("user of pursued email: " + newEmail[0]);//check which user was located
+    //if user email already exists...
+    if (newEmail[0] !== undefined){
+        
+        let pattern = new RegExp(specificUser.email, "i");
+        let sameEmail = newEmail.email.replace(pattern,"");
+        if (sameEmail == ""){
+            console.log("Submitting same/similar email: " + editedEmail);//log attempted email if it was already taken in the users collection
+            
+            //if the password doesn't match, return user to user page
+            if(!isMatch){
+                console.log("Password does not match for user update");
+                return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Password incorrect. Please try again.", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnAccountPromptBox()"
+                });
+            }//end of if (sameEmail == ""), if(!isMatch)
+            
+            // if password does match and submitting same/similar email, take the current email from users collection and update it to the new entered email-------------        
+            let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { email: editedEmail });//update email in users collection
+    
+            req.session.email = editedEmail;
             //reload session to contain new username
             req.session.reload(function(err) {
                 console.log(err);
-              })
-            console.log("updated email: " + req.session.userEmail);
-            return res.redirect('/user');//stay on user page
-        }
+                })
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: sessionuser,
+             email: editedEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Updated email to ", 
+             userMsgContVarialbeDisplay:"inline-block",
+             nameMsgDisplay:"none",
+             emailMsgDisplay:"inline-block",
+             msgbtn:"closeMessage()"
+            });  
+        }//end of if (sameEmail == "")
         else{
-            console.log("This user email already taken in database: " + newEmail);//display attempted username if it was already taken in the users collection
-            return res.redirect('/user');//stay on user page
-        }
-        
+            console.log("This email already taken in database: " + newEmail);//log attempted username if it was already taken in the users collection
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+            name: sessionuser,
+            email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+            publicRecipesModalDisplay: "none",
+            chef: "", 
+            publicRecipesTitle: "", 
+            publicRecipesIngredients: "", 
+            publicRecipesPreparation: "",
+            //-----------------RECIPE DOC 2--------------------
+            //chef: "", 
+            documentModalDisplay: "none",
+            //-------------MY RECIPES PROMPT BOX---------------
+            myRecipesModalDisplay: "none",
+            num:"",
+            recipes: [],
+            recipesTitle: "",
+            //-------------NEW RECIPE PROMPT BOX---------------
+            tempTitle: "", 
+            tempIng: "", 
+            tempPrep: "", 
+            //--------------RECIPE PROMPT BOX------------------
+            recipeModalDisplay: "none",
+            recipesTitle: "", 
+            recipesIngredients: "", 
+            recipesPreparation:"",  
+            //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+            recipesTitle0:"",
+            //---------------MESSAGE PROMPT BOX-----------------
+            messageModalDisplay: "block",      
+            messageTitle:"Error...", 
+            messageContents: "Email already taken. Please try again.", 
+            userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
+            msgbtn:"returnAccountPromptBox()"});
+        }//end of else statement
+    }//end of if (newEmail[0] !== undefined")
+    //if new email does not exist...
+    if(!isMatch){//if the password doesn't match, return user to user page
+        console.log("Password does not match for user update");
+        console.log("Password does not match for user update");
+        return res.render("user.ejs", 
+        {
+        //-----------------USER INFO-----------------------
+        name: sessionuser,
+        email: userEmail,
+        //----------PUBLIC RECIPES PROMPT BOX---------------
+        publicRecipesModalDisplay: "none",
+        chef: "", 
+        publicRecipesTitle: "", 
+        publicRecipesIngredients: "", 
+        publicRecipesPreparation: "",
+        //-----------------RECIPE DOC 2--------------------
+        //chef: "", 
+        documentModalDisplay: "none",
+        //-------------MY RECIPES PROMPT BOX---------------
+        myRecipesModalDisplay: "none",
+        num:"",
+        recipes: [],
+        recipesTitle: "",
+        //-------------NEW RECIPE PROMPT BOX---------------
+        tempTitle: "", 
+        tempIng: "", 
+        tempPrep: "", 
+        //--------------RECIPE PROMPT BOX------------------
+        recipeModalDisplay: "none",
+        recipesTitle: "", 
+        recipesIngredients: "", 
+        recipesPreparation:"",  
+        //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+        recipesTitle0:"",
+        //---------------MESSAGE PROMPT BOX-----------------
+        messageModalDisplay: "block",      
+        messageTitle:"Error...", 
+        messageContents: "Password incorrect. Please try again.", 
+        userMsgContVarialbeDisplay:"none",
+        nameMsgDisplay:"none",
+        emailMsgDisplay:"none",
+        msgbtn:"returnAccountPromptBox()"
+        });
     }
 
-});
+    console.log("new username not yet used in user database");
+    //take the current user email from users collections and update it to the new entered email-------------
+    let specificUserUpdate = await User.findOneAndUpdate({email: userEmail}, { email: editedEmail });//update user email in users collection
+    //redefine email in session variable
+    req.session.userEmail = editedEmail;
+    //reload session to contain new username
+    req.session.reload(function(err) {
+        console.log(err);
+        })
+    console.log("updated email: " + req.session.userEmail);
+    return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: sessionuser,
+             email: editedEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Updated email to ", 
+             userMsgContVarialbeDisplay:"inline-block",
+             nameMsgDisplay:"none",
+             emailMsgDisplay:"inline-block",
+             msgbtn:"closeMessage()"
+            }); 
+});//end of app.post("/editEmail",...)
 
 
 //================UPDATE PASSWORD======================================
@@ -927,6 +1273,8 @@ app.get("/", (req,res) =>{
     display2:"none", 
     messageContents: "", 
     userMsgContVarialbeDisplay:"none",
+    nameMsgDisplay:"none",
+    emailMsgDisplay:"none",
     display:"none",
     homeMsgFunc: "",
     loginAlt:"none"    
@@ -977,6 +1325,8 @@ var userID = req.session.userID;//session user's ID
      messageTitle:"", 
      messageContents: "", 
      userMsgContVarialbeDisplay:"none",
+     nameMsgDisplay:"none",
+     emailMsgDisplay:"none",
      msgbtn:""});
     
 })
