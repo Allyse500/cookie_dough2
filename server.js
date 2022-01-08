@@ -406,6 +406,10 @@ app.post("/closeMsg", (req,res)=>{
 })
 
 app.post("/closeMsg2", (req,res)=>{
+    //declare session variables
+    var sessionuser = req.session.username;//session user's name
+    var userEmail = req.session.userEmail;//session user's emaillet sessionuser = req.session.user;
+
     return res.render("user.ejs", 
     {
     //-----------------USER INFO-----------------------
