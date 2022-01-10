@@ -282,17 +282,17 @@ app.post("/sign_up", async (req,res) => {
 
     await user.save();//save new user to DB
     //redirect to home page and display welcome message
-    res.render("home.ejs", 
-    {messageTitle:"Welcome!", 
-    display2:"block", 
-    messageContents: "Please log in to access your account.", 
-    userMsgContVarialbeDisplay:"none",
-    nameMsgDisplay:"none",
-    emailMsgDisplay:"none",
-    display:"none",
-    homeMsgFunc: "closeMsgPrompt()",
-    loginAlt:"none"    
-});
+    return res.render("home.ejs", 
+        {messageTitle:"Welcome!", 
+        display2:"block", 
+        messageContents: "Please log in to access your account.", 
+        userMsgContVarialbeDisplay:"none",
+        nameMsgDisplay:"none",
+        emailMsgDisplay:"none",
+        display:"none",
+        homeMsgFunc: "closeMsgPrompt()",
+        loginAlt:"none"    
+    });
 
 })
 //======================LOGIN FUNCTION========================================
@@ -407,47 +407,50 @@ app.post("/closeMsg", (req,res)=>{
 
 app.post("/closeMsg2", (req,res)=>{
     //declare session variables
-    var sessionuser = req.session.username;//session user's name
-    var userEmail = req.session.userEmail;//session user's emaillet sessionuser = req.session.user;
+    // var sessionuser = req.session.username;//session user's name
+    // var userEmail = req.session.userEmail;//session user's emaillet sessionuser = req.session.user;
 
-    return res.render("user.ejs", 
-    {
-    //-----------------USER INFO-----------------------
-     name: sessionuser,
-     email: userEmail,
-    //----------PUBLIC RECIPES PROMPT BOX---------------
-     publicRecipesModalDisplay: "none",
-     chef: "", 
-     publicRecipesTitle: "", 
-     publicRecipesIngredients: "", 
-     publicRecipesPreparation: "",
-     //-----------------RECIPE DOC 2--------------------
-     //chef: "", 
-     documentModalDisplay: "none",
-     //-------------MY RECIPES PROMPT BOX---------------
-     myRecipesModalDisplay: "none",
-     num:"",
-     recipes: [],
-     recipesTitle: "",
-     //-------------NEW RECIPE PROMPT BOX---------------
-     tempTitle: "", 
-     tempIng: "", 
-     tempPrep: "", 
-     //--------------RECIPE PROMPT BOX------------------
-     recipeModalDisplay: "none",
-     recipesTitle: "", 
-     recipesIngredients: "", 
-     recipesPreparation:"",  
-     //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
-     recipesTitle0:"",
-     //---------------MESSAGE PROMPT BOX-----------------
-     messageModalDisplay: "none",      
-     messageTitle:"", 
-     messageContents: "", 
-     userMsgContVarialbeDisplay:"none",
-     nameMsgDisplay:"none",
-     emailMsgDisplay:"none",
-     msgbtn:""});
+    // return res.render("user.ejs", 
+    // {
+    // //-----------------USER INFO-----------------------
+    //  name: sessionuser,
+    //  email: userEmail,
+    // //----------PUBLIC RECIPES PROMPT BOX---------------
+    //  publicRecipesModalDisplay: "none",
+    //  chef: "", 
+    //  publicRecipesTitle: "", 
+    //  publicRecipesIngredients: "", 
+    //  publicRecipesPreparation: "",
+    //  //-----------------RECIPE DOC 2--------------------
+    //  //chef: "", 
+    //  documentModalDisplay: "none",
+    //  //-------------MY RECIPES PROMPT BOX---------------
+    //  myRecipesModalDisplay: "none",
+    //  num:"",
+    //  recipes: [],
+    //  recipesTitle: "",
+    //  //-------------NEW RECIPE PROMPT BOX---------------
+    //  tempTitle: "", 
+    //  tempIng: "", 
+    //  tempPrep: "", 
+    //  //--------------RECIPE PROMPT BOX------------------
+    //  recipeModalDisplay: "none",
+    //  recipesTitle: "", 
+    //  recipesIngredients: "", 
+    //  recipesPreparation:"",  
+    //  //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+    //  recipesTitle0:"",
+    //  //---------------MESSAGE PROMPT BOX-----------------
+    //  messageModalDisplay: "none",      
+    //  messageTitle:"", 
+    //  messageContents: "", 
+    //  userMsgContVarialbeDisplay:"none",
+    //  nameMsgDisplay:"none",
+    //  emailMsgDisplay:"none",
+    //  msgCloseBtnDisplay2: "none",
+    //  msgbtn:""});
+
+    return res.redirect("/user");
     
 });
 
@@ -508,37 +511,6 @@ else{
 }
 
 })
-//==============================SUBMIT RECIPE NOTES TO DATABASE==============================
-app.post("/submit_recipe",async (req,res)=>{
-
-var sessionuser = req.session.username;
-var recipenotes = req.body.notes;
-console.log(sessionuser);
-let userRecipeNotes = await Recipes.findOne({username: sessionuser});//check recipes collection for username
-
-if (userRecipeNotes){//if notes already exist***place for update
-    console.log("notes already exist.");
-    //note new text and current session user as for entry-------------
-    userRecipeNotes.username = sessionuser;
-    userRecipeNotes.notes = recipenotes;
-
-    await userRecipeNotes.save();//save updated notes to DB
-    return res.redirect("/user");//stay on notes page
-}
-else{//if notes do not yet exist, prepare notes document
-
-    //encryption of notes is good but not in this method
-    //const hashedPW = await bcrypt.hash(password, 10);//hash password with salt of 10 times encryption
-    userRecipeNotes = new Recipes({
-        username: sessionuser,
-        notes: recipenotes
-    })
-
-    await userRecipeNotes.save();//save new notes to DB
-    res.redirect("/user");//stay on notes page
-}
-
-})
 
 //======================UPDATE ACCT INFORMATION===================================
 //======================UPDATE USERNAME===========================================
@@ -585,7 +557,7 @@ app.post("/editUsername", async (req,res)=>{
          //---------------MESSAGE PROMPT BOX-----------------
          messageModalDisplay: "block",      
          messageTitle:"Error...", 
-         messageContents: "Please fill in all fields.", 
+         messageContents: "Please fill in all fields", 
          userMsgContVarialbeDisplay:"none",
          nameMsgDisplay:"none",
          emailMsgDisplay:"none",
@@ -685,7 +657,7 @@ app.post("/editUsername", async (req,res)=>{
                 //---------------MESSAGE PROMPT BOX-----------------
                 messageModalDisplay: "block",      
                 messageTitle:"Error...", 
-                messageContents: "Password incorrect. Please try again.", 
+                messageContents: "Password incorrect. Please try again", 
                 userMsgContVarialbeDisplay:"none",
                 nameMsgDisplay:"none",
                 emailMsgDisplay:"none",
@@ -779,7 +751,7 @@ app.post("/editUsername", async (req,res)=>{
             //---------------MESSAGE PROMPT BOX-----------------
             messageModalDisplay: "block",      
             messageTitle:"Error...", 
-            messageContents: "Username already taken. Please try again.", 
+            messageContents: "Username already taken. Please try again", 
             userMsgContVarialbeDisplay:"none",
             nameMsgDisplay:"none",
             emailMsgDisplay:"none",
@@ -824,7 +796,7 @@ app.post("/editUsername", async (req,res)=>{
          //---------------MESSAGE PROMPT BOX-----------------
          messageModalDisplay: "block",      
          messageTitle:"Error...", 
-         messageContents: "Password incorrect. Please try again.", 
+         messageContents: "Password incorrect. Please try again", 
          userMsgContVarialbeDisplay:"none",
          nameMsgDisplay:"none",
          emailMsgDisplay:"none",
@@ -929,7 +901,7 @@ app.post("/editEmail", async (req,res)=>{
          //---------------MESSAGE PROMPT BOX-----------------
          messageModalDisplay: "block",      
          messageTitle:"Error...", 
-         messageContents: "Please fill in all fields.", 
+         messageContents: "Please fill in all fields", 
          userMsgContVarialbeDisplay:"none",
          nameMsgDisplay:"none",
          emailMsgDisplay:"none",
@@ -973,7 +945,7 @@ app.post("/editEmail", async (req,res)=>{
          //---------------MESSAGE PROMPT BOX-----------------
          messageModalDisplay: "block",      
          messageTitle:"Error...", 
-         messageContents: "Email invalid. Please try again.", 
+         messageContents: "Email invalid. Please try again", 
          userMsgContVarialbeDisplay:"none",
          nameMsgDisplay:"none",
          emailMsgDisplay:"none",
@@ -1032,7 +1004,7 @@ app.post("/editEmail", async (req,res)=>{
                 //---------------MESSAGE PROMPT BOX-----------------
                 messageModalDisplay: "block",      
                 messageTitle:"Error...", 
-                messageContents: "Password incorrect. Please try again.", 
+                messageContents: "Password incorrect. Please try again", 
                 userMsgContVarialbeDisplay:"none",
                 nameMsgDisplay:"none",
                 emailMsgDisplay:"none",
@@ -1123,7 +1095,7 @@ app.post("/editEmail", async (req,res)=>{
             //---------------MESSAGE PROMPT BOX-----------------
             messageModalDisplay: "block",      
             messageTitle:"Error...", 
-            messageContents: "Email already taken. Please try again.", 
+            messageContents: "Email already taken. Please try again", 
             userMsgContVarialbeDisplay:"none",
             nameMsgDisplay:"none",
             emailMsgDisplay:"none",
@@ -1166,7 +1138,7 @@ app.post("/editEmail", async (req,res)=>{
         //---------------MESSAGE PROMPT BOX-----------------
         messageModalDisplay: "block",      
         messageTitle:"Error...", 
-        messageContents: "Password incorrect. Please try again.", 
+        messageContents: "Password incorrect. Please try again", 
         userMsgContVarialbeDisplay:"none",
         nameMsgDisplay:"none",
         emailMsgDisplay:"none",
@@ -1229,7 +1201,7 @@ app.post("/editEmail", async (req,res)=>{
 //================UPDATE PASSWORD======================================
 app.post("/editPassword", async (req,res)=>{
     const sessionuser = req.session.username;//name of user for current session
-    const userEmail = req.session.userEmail;
+    const userEmail = req.session.userEmail;//email of current user for current session
     const oldPW = req.body.oldPassword;//what the user entered to be the current DB passowrd for their acct
     const newPW = req.body.newPassword;//what the user entered for new passoword
     const confirmNewPW = req.body.reEnteredNewPWD;//what the user re-entered for new passoword
@@ -1269,7 +1241,7 @@ app.post("/editPassword", async (req,res)=>{
          //---------------MESSAGE PROMPT BOX-----------------
          messageModalDisplay: "block",      
          messageTitle:"Error...", 
-         messageContents: "Please fill in all fields.", 
+         messageContents: "Please fill in all fields", 
          userMsgContVarialbeDisplay:"none",
          nameMsgDisplay:"none",
          emailMsgDisplay:"none",
@@ -1313,7 +1285,7 @@ app.post("/editPassword", async (req,res)=>{
         //---------------MESSAGE PROMPT BOX-----------------
         messageModalDisplay: "block",      
         messageTitle:"Error...", 
-        messageContents: "Password incorrect. Please try again.", 
+        messageContents: "Password incorrect. Please try again", 
         userMsgContVarialbeDisplay:"none",
         nameMsgDisplay:"none",
         emailMsgDisplay:"none",
@@ -1400,7 +1372,7 @@ app.post("/editPassword", async (req,res)=>{
             //---------------MESSAGE PROMPT BOX-----------------
             messageModalDisplay: "block",      
             messageTitle:"Error...", 
-            messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again.", 
+            messageContents: "'Password' and 'Confirm Password' fields did not match. Please try again", 
             userMsgContVarialbeDisplay:"none",
             nameMsgDisplay:"none",
             emailMsgDisplay:"none",
@@ -1409,6 +1381,584 @@ app.post("/editPassword", async (req,res)=>{
         }//end of else statement
     }//end of else if (isMatch) 
 })//app.post("/editPassword",...)
+
+//==================NEW RECIPE=========================================
+app.post("/newRecipe", async (req,res) =>{
+    //declare variables for submission
+    let sessionuser = req.session.username;//name of user for current session
+    let userEmail = req.session.userEmail;//email of current user for current session
+    let newRecipeTitle = req.body.newRecipeTitle;
+    let newRecipeTitleTrimmed = newRecipeTitle.trim();
+    let newIngredients = req.body.newIngredients;
+    let newPreparation = req.body.newPreparation;
+    let makePublic = req.body.makePublic;
+
+    console.log("makePublic: " + makePublic);
+
+    //----------------------------PUBLIC ENTRY SECTION--------------------------
+    if (makePublic == "on"){
+        console.log("makePublic detected 'on'");
+        //error handlers for public posting with new recipe
+
+        //if any fields are empty...
+        if(newRecipeTitle == "" || newIngredients =="" || newPreparation ==""){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Please fill in all fields", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(newRecipeTitle == "" || newIngredients =="" || newPreparation =="")
+
+        //if recipe title contains too much white space
+        let pattern = new RegExp("  ","g");
+        let excessWhiteSpace = pattern.test(newRecipeTitle);
+
+        if(excessWhiteSpace == true){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please remove excess spaces: '  '", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(excessWhiteSpace == true)
+        
+        //if recipe title is invalid
+        if(/[a-z]/i.test(newRecipeTitle) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(/[a-z]/i.test(newRecipeTitle) == false)
+
+        //if recipe ingredients field is invalid
+        if(/[a-z]/i.test(newIngredients) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe ingredients input invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(/[a-z]/i.test(newIngredients) == false)
+
+        //if recipe preparation field is invalid
+        if(/[a-z]/i.test(newPreparation) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe preparation input invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(/[a-z]/i.test(newPreparation) == false)
+
+        //check for if recipe title already exists for user in recipe collection
+        let recipe = await Recipes.findOne({username: sessionuser}, {recipe: newRecipeTitleTrimmed});
+
+        console.log("recipe located: " + recipe);
+        //if a recipe was located with the session user's name
+        if(recipe !== null){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe name taken. Please resubmit recipe with differnt title", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(recipe[0] !== undefined)
+
+    //if that recipe does not already exist for the user, add to public and private recipe list
+    personalRecipeLog = new Recipes({
+        username: sessionuser,
+        recipesTitle: newRecipeTitleTrimmed,
+        recipesIngredients: newIngredients,
+        recipesPreparation: newPreparation
+    })
+
+    publicRecipeLog = new PublicRecipes({
+        username: sessionuser,
+        publicRecipesTitle: newRecipeTitleTrimmed,
+        publicRecipesIngredients: newIngredients,
+        publicRecipesPreparation: newPreparation
+    })
+
+    await personalRecipeLog.save();//save new recipe to personal recipe collection
+    await publicRecipeLog.save();//save new recipe to public recipe collection
+
+    //redirect to home page and display welcome message
+    return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: sessionuser,
+             email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Recipe submitted", 
+             userMsgContVarialbeDisplay:"none",
+             nameMsgDisplay:"none",
+             emailMsgDisplay:"none",
+             msgbtn:"closeMessage()"
+        });
+
+    }//end of if(makePublic == "on")
+    //--------------------------PRIVATE ENTRY SECTION------------------------------
+    else{
+        console.log("makePublic detected undefined('off'): " + makePublic);
+        //if any fields are empty...
+        if(newRecipeTitle == ""){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Must submit title before submission", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(newRecipeTitle == "")  
+        
+        //if recipe title is invalid
+        if(/[a-z]/i.test(newRecipeTitle) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(/[a-z]/i.test(newRecipeTitle) == false)
+
+        //if recipe title contains too much white space
+        let pattern = new RegExp("  ","g");
+        let excessWhiteSpace = pattern.test(newRecipeTitle);
+
+        if(excessWhiteSpace == true){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please remove excess spaces: ' '", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(excessWhiteSpace == true)
+
+        //check for if recipe title already exists for user in recipe collection
+        let recipe = await Recipes.findOne({username: sessionuser}, {recipe: newRecipeTitleTrimmed});
+
+        console.log("recipe located2: " + recipe);
+        //if a recipe was located with the session user's name
+        if(recipe !== null){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: newRecipeTitleTrimmed, 
+                tempIng: newIngredients, 
+                tempPrep: newPreparation, 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe name taken. Please resubmit recipe with differnt title", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToNewRecipePrompt()"
+            });
+        }//end of if(recipe[0] !== undefined)
+
+    //if that recipe does not already exist for the user, add to private recipe list
+    personalRecipeLog = new Recipes({
+        username: sessionuser,
+        recipesTitle: newRecipeTitleTrimmed,
+        recipesIngredients: newIngredients,
+        recipesPreparation: newPreparation
+    })
+    await personalRecipeLog.save();//save new recipe to personal recipe collection
+    //redirect to user page and display success message
+    return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+             name: sessionuser,
+             email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+             publicRecipesModalDisplay: "none",
+             chef: "", 
+             publicRecipesTitle: "", 
+             publicRecipesIngredients: "", 
+             publicRecipesPreparation: "",
+             //-----------------RECIPE DOC 2--------------------
+             //chef: "", 
+             documentModalDisplay: "none",
+             //-------------MY RECIPES PROMPT BOX---------------
+             myRecipesModalDisplay: "none",
+             num:"",
+             recipes: [],
+             recipesTitle: "",
+             //-------------NEW RECIPE PROMPT BOX---------------
+             tempTitle: "", 
+             tempIng: "", 
+             tempPrep: "", 
+             //--------------RECIPE PROMPT BOX------------------
+             recipeModalDisplay: "none",
+             recipesTitle: "", 
+             recipesIngredients: "", 
+             recipesPreparation:"",  
+             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+             recipesTitle0:"",
+             //---------------MESSAGE PROMPT BOX-----------------
+             messageModalDisplay: "block",      
+             messageTitle:"Success!", 
+             messageContents: "Recipe submitted", 
+             userMsgContVarialbeDisplay:"none",
+             nameMsgDisplay:"none",
+             emailMsgDisplay:"none",
+             msgbtn:"closeMessage()"
+        });
+
+    }//end of else to if (makePublic == "on")
+
+})//end of app.post("/newRecipe",...)
 
 //===============LOGOUT FUNCTION========================================
 app.post("/logout", (req,res)=>{

@@ -1413,11 +1413,11 @@ background-color: orange;
                 </div><!--end of id="newRecipeHeaderGrid"-->
                 <label for="newRecipeTitle" class="newRecipeLabel">Title: </label><input id="newRecipeTitle" type="text" name="newRecipeTitle" value="<%=tempTitle%>">
                 <div id="newIngredientsTitle" class="newRecipeLabel">Ingredients:</div>
-                <textarea id="newIngredients" class="newRecipeInputs textarea" rows="7" cols="32" name="newIngredients">
+                <textarea id="newIngredients" class="newRecipeInputs textarea" rows="7" cols="32" name="newIngredients" onclick="removeSpacesN()">
                     <%=tempIng%>
                 </textarea>
                 <div id="newPreparationTitle" class="newRecipeLabel">Preparation:</div>
-                <textarea id="newPreparation" class="newRecipeInputs textarea" rows="8" cols="32" name="newPreparation">
+                <textarea id="newPreparation" class="newRecipeInputs textarea" rows="8" cols="32" name="newPreparation" onclick = "removeSpaces2N()">
                     <%=tempPrep%>
                 </textarea>
                 <br>
@@ -1441,11 +1441,11 @@ background-color: orange;
                 <label for="recipeTitle" class="recipeLabel">Title: </label>
                 <input id="recipeTitle" type="text" name="recipeName" value="<%=recipesTitle%>">
                 <div id="ingredientsTitle" class="recipeLabel">Ingredients:</div>
-                <textarea id="ingredients" name="recipeIngredients" class="recipeInputs textarea" rows="7" cols="32">
+                <textarea id="ingredients" name="recipeIngredients" class="recipeInputs textarea" rows="7" cols="32" onclick="removeSpaces()">
                     <%=recipesIngredients%>
                 </textarea>
                 <div id="preparationTitle" class="recipeLabel">Preparation:</div>
-                <textarea id="preparation" name="recipePreparation" class="recipeInputs textarea" rows="8" cols="32">
+                <textarea id="preparation" name="recipePreparation" class="recipeInputs textarea" rows="8" cols="32" onclick="removeSpaces2()">
                     <%=recipesPreparation%>
                 </textarea>
                 <br>
@@ -1673,6 +1673,54 @@ function newRecipeModalBackBtn(){
     document.getElementById("newRecipeModal").style.display = "none";
     document.getElementById("myRecipesModal").style.display ="block";  
 }
+
+function removeSpacesN(){
+//get value for non-trimmed content
+var value = document.getElementById("newIngredients").value;
+console.log("newIngredients variable: '" + value + "'");
+//trim the content
+var newValue = value.trim();
+//replace current content with trimmed content
+document.getElementById("newIngredients").value = newValue;
+}
+
+setTimeout(removeSpacesN, 0);
+
+function removeSpaces2N(){
+//get value for non-trimmed content
+var value = document.getElementById("newPreparation").value;
+console.log("newPreparation variable: '" + value + "'");
+//trim the content
+var newValue = value.trim();
+//replace current content with trimmed content
+document.getElementById("newPreparation").value = newValue;
+}
+
+setTimeout(removeSpaces2N, 0);
+
+function removeSpaces(){
+//get value for non-trimmed content
+var value = document.getElementById("ingredients").value;
+console.log("ingredients variable: '" + value + "'");
+//trim the content
+var newValue = value.trim();
+//replace current content with trimmed content
+document.getElementById("ingredients").value = newValue;
+}
+
+setTimeout(removeSpaces, 0);
+
+function removeSpaces2(){
+//get value for non-trimmed content
+var value = document.getElementById("preparation").value;
+console.log("preparation variable: '" + value + "'");
+//trim the content
+var newValue = value.trim();
+//replace current content with trimmed content
+document.getElementById("preparation").value = newValue;
+}
+
+setTimeout(removeSpaces2, 0);
 
 //========================RECIPE PROMPT BOX===========================================//      
 //display delete recipe confirmation prompt box--------------------------
