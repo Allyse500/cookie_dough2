@@ -575,6 +575,47 @@ app.post("/loadRecipe", async (req,res) =>{
                 recipeMatch.push(index);
                 console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
                 console.log("recipeMatch length: " + recipeMatch.length);
+
+                return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+    
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "block",
+                recipesTitle: index.recipesTitle, 
+                recipesIngredients: index.recipesIngredients, 
+                recipesPreparation: index.recipesPreparation,  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "none",      
+                messageTitle:"", 
+                messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:""
+                });
             }
         }//end of function titleSearch(index)
     res.redirect("/user");

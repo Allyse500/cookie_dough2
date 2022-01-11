@@ -1,16 +1,3 @@
-<?php
-session_start();
-
-if(!isset($_SESSION["userId"])){
-    header("location: index.php");
-    exit();
-}
-//make variables of not yet submitted recipe form inputs (so user won't need to start over after finding error)
-$tempTitle = $_SESSION["temporaryRecipeTitle"];
-$tempIng = $_SESSION["temporaryIngredients"];
-$tempPrep = $_SESSION["temporaryPreparation"];
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -1436,7 +1423,7 @@ background-color: orange;
         <div id="recipeSecondaryContainer">
             <form id="editRecipeForm" action="editRecipe.inc.php" method="POST">
                 <div id="recipeHeaderGrid">
-                    <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" <?php if($publicStatus == "public"){echo "checked='checked'";} ?>><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
+                    <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" ><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
                 </div><!--end of id="recipeHeaderGrid"-->
                 <label for="recipeTitle" class="recipeLabel">Title: </label>
                 <input id="recipeTitle" type="text" name="recipeName" value="<%=recipesTitle%>">
