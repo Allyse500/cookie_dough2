@@ -483,7 +483,7 @@ if(userRecipes ==""){
                 documentModalDisplay: "none",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "block",
-                num:"0",
+                num: "0",
                 recipes: [],
                 recipesTitle: "",
                 //-------------NEW RECIPE PROMPT BOX---------------
@@ -526,8 +526,8 @@ else{
                 documentModalDisplay: "none",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "block",
-                num:"0",
-                recipes: [],
+                num:userRecipes.length,
+                recipes: userRecipes,
                 recipesTitle: "",
                 //-------------NEW RECIPE PROMPT BOX---------------
                 tempTitle: "", 
