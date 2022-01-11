@@ -553,6 +553,33 @@ else{
 
 })
 
+app.post("/loadRecipe", async (req,res) =>{
+    //declare variables
+    var sessionuser = req.session.username;//session user's name
+    var userEmail = req.session.userEmail;//session user's email
+    var recipeSelection = req.body.recipeInputName;//selected recipe name
+
+    let recipesToLoad = await Recipes.find({username: sessionuser});
+    console.log("recipe to load: " + recipesToLoad);
+
+    let recipeMatch = [];
+    recipesToLoad.forEach(titleSearch);
+
+        function titleSearch(index){
+            console.log("index title: " + index.recipesTitle);
+
+            if(index.recipesTitle !== recipeSelection){//recipe title does not exist
+                console.log("index title not the same as selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
+            }
+            else{//recipe title does not exist
+                recipeMatch.push(index);
+                console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
+                console.log("recipeMatch length: " + recipeMatch.length);
+            }
+        }//end of function titleSearch(index)
+    res.redirect("/user");
+})
+
 //======================UPDATE ACCT INFORMATION===================================
 //======================UPDATE USERNAME===========================================
 app.post("/editUsername", async (req,res)=>{
@@ -1661,7 +1688,7 @@ app.post("/newRecipe", async (req,res) =>{
 
         //check for if recipe title already exists for user in recipe collection
         let recipe = await Recipes.find({username: sessionuser});
-        console.log("recipe located: " + recipe);
+        console.log("recipe(s) located: " + recipe);
 
         let recipeMatch = [];
         recipe.forEach(titleSearch);
@@ -1671,11 +1698,11 @@ app.post("/newRecipe", async (req,res) =>{
 
             if(index.recipesTitle !== newRecipeTitleTrimmed){//recipe title does not exist
                 console.log("index title not the same as entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
-                console.log("recipeMatch length: " + recipeMatch.length);
             }
             else{//recipe title does not exist
                 recipeMatch.push(index);
                 console.log("index title is the same as the submitted entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
+                console.log("recipeMatch length: " + recipeMatch.length);
             }
         }
                                 
