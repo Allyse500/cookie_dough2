@@ -463,6 +463,8 @@ var userID = req.session.userID;//session user's ID
 
 let userRecipes = await Recipes.find({username: sessionuser});
 console.log("userRecipes variable: " + userRecipes);
+console.log("userRecipes variable type: " + typeof userRecipes);
+console.log("userRecipes variable length: " + userRecipes.length);
 if(userRecipes ==""){
     return res.render("user.ejs", 
                 {
@@ -507,7 +509,46 @@ if(userRecipes ==""){
 
 }
 else{
-    return res.redirect("/user");
+    return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+    
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "block",
+                num:"0",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "none",      
+                messageTitle:"", 
+                messageContents: "", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:""
+                });
 }
 
 })
@@ -1395,7 +1436,7 @@ app.post("/newRecipe", async (req,res) =>{
 
     console.log("makePublic: " + makePublic);
 
-    //----------------------------PUBLIC ENTRY SECTION--------------------------
+    // //----------------------------PUBLIC ENTRY SECTION--------------------------
     if (makePublic == "on"){
         console.log("makePublic detected 'on'");
         //error handlers for public posting with new recipe
@@ -1619,11 +1660,31 @@ app.post("/newRecipe", async (req,res) =>{
         }//end of if(/[a-z]/i.test(newPreparation) == false)
 
         //check for if recipe title already exists for user in recipe collection
-        let recipe = await Recipes.findOne({username: sessionuser}, {recipe: newRecipeTitleTrimmed});
+        let recipe = await Recipes.find({username: sessionuser});
+        console.log("recipe located: " + recipe);
+
+        let recipeMatch = [];
+        recipe.forEach(titleSearch);
+
+        function titleSearch(index){
+            console.log("index title: " + index.recipesTitle);
+
+            if(index.recipesTitle !== newRecipeTitleTrimmed){//recipe title does not exist
+                console.log("index title not the same as entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
+                console.log("recipeMatch length: " + recipeMatch.length);
+            }
+            else{//recipe title does not exist
+                recipeMatch.push(index);
+                console.log("index title is the same as the submitted entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
+            }
+        }
+                                
 
         console.log("recipe located: " + recipe);
+        //console.log("recipe username located: " + recipe.username);
+
         //if a recipe was located with the session user's name
-        if(recipe !== null){
+        if(recipeMatch.length !== 0){
             return res.render("user.ejs", 
                 {
                 //-----------------USER INFO-----------------------
@@ -1663,7 +1724,7 @@ app.post("/newRecipe", async (req,res) =>{
                 emailMsgDisplay:"none",
                 msgbtn:"returnToNewRecipePrompt()"
             });
-        }//end of if(recipe[0] !== undefined)
+        }//end of if(recipeMatch.length !== 0)
 
     //if that recipe does not already exist for the user, add to public and private recipe list
     personalRecipeLog = new Recipes({
@@ -1861,11 +1922,27 @@ app.post("/newRecipe", async (req,res) =>{
         }//end of if(excessWhiteSpace == true)
 
         //check for if recipe title already exists for user in recipe collection
-        let recipe = await Recipes.findOne({username: sessionuser}, {recipe: newRecipeTitleTrimmed});
+        let recipe = await Recipes.find({username: sessionuser});
+
+        let recipeMatch = [];
+        recipe.forEach(titleSearch);
+
+        function titleSearch(index){
+            console.log("index title: " + index.recipesTitle);
+
+            if(index.recipesTitle !== newRecipeTitleTrimmed){//recipe title does not exist
+                console.log("index title not the same as entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
+                console.log("recipeMatch length2: " + recipeMatch.length);
+            }
+            else{//recipe title does not exist
+                recipeMatch.push(index);
+                console.log("index title is the same as the submitted entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
+            }
+        }
 
         console.log("recipe located2: " + recipe);
         //if a recipe was located with the session user's name
-        if(recipe !== null){
+        if(recipeMatch.length !== 0){
             return res.render("user.ejs", 
                 {
                 //-----------------USER INFO-----------------------
@@ -1905,7 +1982,7 @@ app.post("/newRecipe", async (req,res) =>{
                 emailMsgDisplay:"none",
                 msgbtn:"returnToNewRecipePrompt()"
             });
-        }//end of if(recipe[0] !== undefined)
+        }//end of if(recipeMatch.length !== 0)
 
     //if that recipe does not already exist for the user, add to private recipe list
     personalRecipeLog = new Recipes({
