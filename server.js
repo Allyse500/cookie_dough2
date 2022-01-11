@@ -171,6 +171,7 @@ app.post("/publicSearch2", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -438,7 +439,8 @@ app.post("/closeMsg2", (req,res)=>{
     //  recipesTitle: "", 
     //  recipesIngredients: "", 
     //  recipesPreparation:"",  
-    //  //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+    //  checked:"", 
+    //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
     //  recipesTitle0:"",
     //  //---------------MESSAGE PROMPT BOX-----------------
     //  messageModalDisplay: "none",      
@@ -495,6 +497,7 @@ if(userRecipes ==""){
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -538,6 +541,7 @@ else{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -560,64 +564,85 @@ app.post("/loadRecipe", async (req,res) =>{
     var recipeSelection = req.body.recipeInputName;//selected recipe name
 
     let recipesToLoad = await Recipes.find({username: sessionuser});
+    let inPublicList = await PublicRecipes.find({username: sessionuser});
     console.log("recipe to load: " + recipesToLoad);
 
     let recipeMatch = [];
+    let publicRecipeMatch = [];
+
+    //search for title with username in public listing
+    inPublicList.forEach(publicTitleSearch);
+    function publicTitleSearch(index){
+        console.log("public index title: " + index.publicRecipesTitle);
+
+        if(index.publicRecipesTitle !== recipeSelection){//recipe title does not exist
+            console.log("index title not the same as selection. Public Selection: " + recipeSelection + " Index title: " + index.publicRecipesTitle);
+        }
+        else{//recipe title does not exist
+            publicRecipeMatch.push(index);
+            console.log("index title is the same as the submitted selection. Public Selection: " + recipeSelection + " Index title: " + index.publicRecipesTitle);
+            console.log("recipeMatch length: " + publicRecipeMatch.length);
+        }
+    }  
+
+    var checkValue =  (publicRecipeMatch.length > 0)? "checked='checked'":"";
+    console.log("check value " + checkValue);
+    //search for username with recipe title in personal listing
     recipesToLoad.forEach(titleSearch);
+    function titleSearch(index){
+        console.log("index title: " + index.recipesTitle);
 
-        function titleSearch(index){
-            console.log("index title: " + index.recipesTitle);
-
-            if(index.recipesTitle !== recipeSelection){//recipe title does not exist
+        if(index.recipesTitle !== recipeSelection){//recipe title does not exist
                 console.log("index title not the same as selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
-            }
-            else{//recipe title does not exist
-                recipeMatch.push(index);
-                console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
-                console.log("recipeMatch length: " + recipeMatch.length);
+        }
+        else{//recipe title does not exist
+            recipeMatch.push(index);
+            console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
+            console.log("recipeMatch length: " + recipeMatch.length);
 
-                return res.render("user.ejs", 
-                {
-                //-----------------USER INFO-----------------------
-                name: sessionuser,
-                email: userEmail,
-    
-                //----------PUBLIC RECIPES PROMPT BOX---------------
-                publicRecipesModalDisplay: "none",
-                chef: "", 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
-                //-----------------RECIPE DOC 2--------------------
-                //chef: "", 
-                documentModalDisplay: "none",
-                //-------------MY RECIPES PROMPT BOX---------------
-                myRecipesModalDisplay: "none",
-                num:"",
-                recipes: [],
-                recipesTitle: "",
-                //-------------NEW RECIPE PROMPT BOX---------------
-                tempTitle: "", 
-                tempIng: "", 
-                tempPrep: "", 
-                //--------------RECIPE PROMPT BOX------------------
-                recipeModalDisplay: "block",
-                recipesTitle: index.recipesTitle, 
-                recipesIngredients: index.recipesIngredients, 
-                recipesPreparation: index.recipesPreparation,  
-                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
-                recipesTitle0:"",
-                //---------------MESSAGE PROMPT BOX-----------------
-                messageModalDisplay: "none",      
-                messageTitle:"", 
-                messageContents: "", 
-                userMsgContVarialbeDisplay:"none",
-                nameMsgDisplay:"none",
-                emailMsgDisplay:"none",
-                msgbtn:""
-                });
-            }
-        }//end of function titleSearch(index)
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+            name: sessionuser,
+            email: userEmail,
+
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+            publicRecipesModalDisplay: "none",
+            chef: "", 
+            publicRecipesTitle: "", 
+            publicRecipesIngredients: "", 
+            publicRecipesPreparation: "",
+            //-----------------RECIPE DOC 2--------------------
+            //chef: "", 
+            documentModalDisplay: "none",
+            //-------------MY RECIPES PROMPT BOX---------------
+            myRecipesModalDisplay: "none",
+            num:"",
+            recipes: [],
+            recipesTitle: "",
+            //-------------NEW RECIPE PROMPT BOX---------------
+            tempTitle: "", 
+            tempIng: "", 
+            tempPrep: "", 
+            //--------------RECIPE PROMPT BOX------------------
+            recipeModalDisplay: "block",
+            recipesTitle: index.recipesTitle, 
+            recipesIngredients: index.recipesIngredients, 
+            recipesPreparation: index.recipesPreparation,  
+            checked:checkValue,
+            //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+            recipesTitle0:"",
+            //---------------MESSAGE PROMPT BOX-----------------
+            messageModalDisplay: "none",      
+            messageTitle:"", 
+            messageContents: "", 
+            userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
+            msgbtn:""
+            });
+        }
+    }//end of function titleSearch(index)
     res.redirect("/user");
 })
 
@@ -661,6 +686,7 @@ app.post("/editUsername", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -705,6 +731,7 @@ app.post("/editUsername", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -761,6 +788,7 @@ app.post("/editUsername", async (req,res)=>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -812,6 +840,7 @@ app.post("/editUsername", async (req,res)=>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -855,6 +884,7 @@ app.post("/editUsername", async (req,res)=>{
             recipesTitle: "", 
             recipesIngredients: "", 
             recipesPreparation:"",  
+            checked:"",
             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
             recipesTitle0:"",
             //---------------MESSAGE PROMPT BOX-----------------
@@ -900,6 +930,7 @@ app.post("/editUsername", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -953,6 +984,7 @@ app.post("/editUsername", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -1005,6 +1037,7 @@ app.post("/editEmail", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -1049,6 +1082,7 @@ app.post("/editEmail", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -1108,6 +1142,7 @@ app.post("/editEmail", async (req,res)=>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1157,6 +1192,7 @@ app.post("/editEmail", async (req,res)=>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -1199,6 +1235,7 @@ app.post("/editEmail", async (req,res)=>{
             recipesTitle: "", 
             recipesIngredients: "", 
             recipesPreparation:"",  
+            checked:"",
             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
             recipesTitle0:"",
             //---------------MESSAGE PROMPT BOX-----------------
@@ -1242,6 +1279,7 @@ app.post("/editEmail", async (req,res)=>{
         recipesTitle: "", 
         recipesIngredients: "", 
         recipesPreparation:"",  
+        checked:"",
         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
         recipesTitle0:"",
         //---------------MESSAGE PROMPT BOX-----------------
@@ -1293,6 +1331,7 @@ app.post("/editEmail", async (req,res)=>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -1345,6 +1384,7 @@ app.post("/editPassword", async (req,res)=>{
          recipesTitle: "", 
          recipesIngredients: "", 
          recipesPreparation:"",  
+         checked:"",
          //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
          recipesTitle0:"",
          //---------------MESSAGE PROMPT BOX-----------------
@@ -1389,6 +1429,7 @@ app.post("/editPassword", async (req,res)=>{
         recipesTitle: "", 
         recipesIngredients: "", 
         recipesPreparation:"",  
+        checked:"",
         //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
         recipesTitle0:"",
         //---------------MESSAGE PROMPT BOX-----------------
@@ -1434,6 +1475,7 @@ app.post("/editPassword", async (req,res)=>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -1476,6 +1518,7 @@ app.post("/editPassword", async (req,res)=>{
             recipesTitle: "", 
             recipesIngredients: "", 
             recipesPreparation:"",  
+            checked:"",
             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
             recipesTitle0:"",
             //---------------MESSAGE PROMPT BOX-----------------
@@ -1539,6 +1582,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1585,6 +1629,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1628,6 +1673,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1671,6 +1717,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1714,6 +1761,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1781,6 +1829,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1841,6 +1890,7 @@ app.post("/newRecipe", async (req,res) =>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -1887,6 +1937,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1930,6 +1981,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -1976,6 +2028,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -2039,6 +2092,7 @@ app.post("/newRecipe", async (req,res) =>{
                 recipesTitle: "", 
                 recipesIngredients: "", 
                 recipesPreparation:"",  
+                checked:"",
                 //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
                 recipesTitle0:"",
                 //---------------MESSAGE PROMPT BOX-----------------
@@ -2089,6 +2143,7 @@ app.post("/newRecipe", async (req,res) =>{
              recipesTitle: "", 
              recipesIngredients: "", 
              recipesPreparation:"",  
+             checked:"",
              //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
              recipesTitle0:"",
              //---------------MESSAGE PROMPT BOX-----------------
@@ -2170,6 +2225,7 @@ var userID = req.session.userID;//session user's ID
      recipesTitle: "", 
      recipesIngredients: "", 
      recipesPreparation:"",  
+     checked:"",
      //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
      recipesTitle0:"",
      //---------------MESSAGE PROMPT BOX-----------------

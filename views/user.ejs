@@ -1423,7 +1423,7 @@ background-color: orange;
         <div id="recipeSecondaryContainer">
             <form id="editRecipeForm" action="editRecipe.inc.php" method="POST">
                 <div id="recipeHeaderGrid">
-                    <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" ><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
+                    <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" <%=checked%>><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
                 </div><!--end of id="recipeHeaderGrid"-->
                 <label for="recipeTitle" class="recipeLabel">Title: </label>
                 <input id="recipeTitle" type="text" name="recipeName" value="<%=recipesTitle%>">
