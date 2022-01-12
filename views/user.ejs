@@ -1262,10 +1262,12 @@ background-color: orange;
             <div id="publicRecipesListTitle">Public Recipes</div>
             <div id="publicRecipesList">
               <div id="numLoggedPublicRecipesMsg">
-                <span style='color:orange; font-weight:bold;'>0</span> recipes located. 
+                <span style='color:orange; font-weight:bold;'><%=pubNum%></span> recipes located. 
               </div>
               <div id="publicRecipesInputContents">
-                <!-- <form class='recipeOpt' action='includes/loadPublicRecipe.inc.php' method='POST'><input style='display:none;' id='recipeInputName' name ='publicRecipeInput' value='" . $value["publicRecipeID"] . "'><button name='loadRecipe' class='recipeOptBtn'>". $value["publicRecipesUserName"] . ": ". $value["publicRecipesTitle"] . "</button></form>"; -->
+                <% publicRecipes.forEach(function(item){ %>
+                    <form class='recipeOpt' action='/loadPublicRecipe' method='POST'><input style='display:none;' id='publicRecipeId' name ='publicRecipeId' value='<%=item._id%>'><button name='loadPublicRecipe' class='recipeOptBtn'><%=item.username%>: <%=item.publicRecipesTitle%></button></form>
+                <% }); %>
               </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
               <br>
               <form action="/closeMsg2" method="POST">
@@ -1377,7 +1379,6 @@ background-color: orange;
                     <% recipes.forEach(function(item){ %>
                         <form class='recipeOpt' action='/loadRecipe' method='POST'><input style='display:none;' id='recipeInputName' name ='recipeInputName' value='<%=item.recipesTitle%>'><button name='loadRecipe' class='recipeOptBtn'><%=item.recipesTitle%></button></form>
                     <% }); %>
-                
                 </div><!--end of id="myRecipesInputContents", empty array of recipes -->
                 <br>
                 <div id="myRecipesBtnsGrid">
