@@ -1423,7 +1423,7 @@ background-color: orange;
         <div id="recipeSecondaryContainer">
             <form id="editRecipeForm" method="POST">
                 <div id="recipeHeaderGrid">
-                    <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" <%=checked%>><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
+                    <button id="recipeModalBackBtn" name="recipeModalBackBtn" formaction="/getRecipeList">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" <%=checked%>><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
                 </div><!--end of id="recipeHeaderGrid"-->
                 <label for="recipeTitle" class="recipeLabel">Title: </label>
                 <input id="recipeTitle" type="text" name="recipeName" value="<%=recipesTitle%>">
@@ -1454,7 +1454,7 @@ background-color: orange;
                 Are you sure you would like to delete this recipe?
             </div><!--end of id="drcContents"-->
             <div id="drcDelBtnsGrid">
-                <form id="drcDelBtnForm" action="includes/delRecipe.inc.php" method="POST"><button id="drcDelBtn" class="drcBtns" name="drcDelBtn">Delete</button></form><div id="drcCancelButton" class="drcBtns drcBtnsDiv" onclick="canceldrc()">Cancel</div>
+                <form id="drcDelBtnForm" action="/delRecipe" method="POST"><button id="drcDelBtn" class="drcBtns" name="drcDelBtn">Delete</button></form><div id="drcCancelButton" class="drcBtns drcBtnsDiv" onclick="canceldrc()">Cancel</div>
             </div><!--end of id="drcDelBtnsGrid"-->
         </div><!--end of id="drcSecondaryContainer-->
     </div><!--end of id="drcContainer"-->
@@ -1725,6 +1725,7 @@ function returnToRecipePromptBox(){
     document.getElementById("messageModal").style.display ="none";
     document.getElementById("recipeModal").style.display ="block";
 }
+
 //==========================MESSAGE PROMPT BOX====================================//
 //close message prompt box-------------------------------------------------------------
 function closeMessage(){

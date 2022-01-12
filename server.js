@@ -409,6 +409,8 @@ app.post("/closeMsg", (req,res)=>{
 app.post("/closeMsg2", (req,res)=>{
     //clear saved original recipe title name from loaded recipe if it was loaded
     req.session.recipeTitle= "";
+    req.session.personalRecipeID = "";
+    req.session.publicRecipeID = "";
     return res.redirect("/user");
     
 });
@@ -542,6 +544,7 @@ app.post("/loadRecipe", async (req,res) =>{
             publicRecipeMatch.push(index);
             console.log("index title is the same as the submitted selection. Public Selection: " + recipeSelection + " Index title: " + index.publicRecipesTitle);
             console.log("recipeMatch length: " + publicRecipeMatch.length);
+            req.session.publicRecipeID = index._id;
         }
     }  
     //make conditional definition for 'checked' EJS variable
@@ -559,8 +562,9 @@ app.post("/loadRecipe", async (req,res) =>{
             recipeMatch.push(index);
             console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
             console.log("recipeMatch length: " + recipeMatch.length);
-            //make variable of original recipe title if any editions made
+            //make variables of original recipe title and id if any editions made
             req.session.recipeTitle = index.recipesTitle;
+            req.session.personalRecipeID = index._id;
             //load user page with recipe info----------------------------
             return res.render("user.ejs", 
             {
@@ -1351,6 +1355,60 @@ var recipePreparation = req.body.recipePreparation;
 
     }//end of else statement: if makePublic checkbox is off
 });//end of app.post("/editRecipe",...);
+
+//================================DELETE RECIPE===================================
+app.post("/delRecipe", async (req,res)=>{
+    var sessionuser = req.session.username;//session user's name
+    var userEmail = req.session.userEmail;//session user's email
+    let personalRecipe = req.session.personalRecipeID;//personal recipe id
+    let publicRecipe = req.session.publicRecipeID;//public recipe id
+
+    let deletedPublicRecipe = await Recipes.findOneAndDelete({_id: personalRecipe});
+    let deletedPersonalRecipe = await PublicRecipes.findOneAndDelete({_id: publicRecipe});
+
+    return res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+    name: sessionuser,
+    email: userEmail,
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+    publicRecipesModalDisplay: "none",
+    chef: "", 
+    publicRecipesTitle: "", 
+    publicRecipesIngredients: "", 
+    publicRecipesPreparation: "",
+    //-----------------RECIPE DOC 2--------------------
+    //chef: "", 
+    documentModalDisplay: "none",
+    //-------------MY RECIPES PROMPT BOX---------------
+    myRecipesModalDisplay: "none",
+    num:"",
+    recipes: [],
+    recipesTitle: "",
+    //-------------NEW RECIPE PROMPT BOX---------------
+    tempTitle: "", 
+    tempIng: "", 
+    tempPrep: "", 
+    //--------------RECIPE PROMPT BOX------------------
+    recipeModalDisplay: "none",
+    recipesTitle: "", 
+    recipesIngredients: "", 
+    recipesPreparation:"",  
+    checked:"",
+    //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+    recipesTitle0:"",
+    //---------------MESSAGE PROMPT BOX-----------------
+    messageModalDisplay: "block",      
+    messageTitle:"Success!", 
+    messageContents: "Recipe deleted", 
+    userMsgContVarialbeDisplay:"none",
+    nameMsgDisplay:"none",
+    emailMsgDisplay:"none",
+    msgbtn:"closeMessage()"
+    });
+
+});//end of app.post("/delRecipe",...);
+
 
 //======================UPDATE ACCT INFORMATION===================================
 //======================UPDATE USERNAME===========================================
