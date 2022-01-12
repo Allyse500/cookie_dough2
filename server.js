@@ -664,12 +664,15 @@ var recipePreparation = req.body.recipePreparation;
 //search for report in public recipe listing (if exits and makepublic chekcbox is checked, update public recipe; if it doesn't yet exist add it to public recipe; if it does exist and makepublic checkbox is off, remove from public recipe collection)
     //define variable for public recipe if it exsists
     let publicRecipe = await PublicRecipes.find({username: sessionuser});
+    
     let publicRecipeMatch = [];
-    publicRecipe.forEach(originalTitleSearch);
 
+    publicRecipe.forEach(originalTitleSearch);
+    console.log("publicRecipeMatch from above originalTitleSearch: " + publicRecipeMatch.length);
     function originalTitleSearch(index){
         if(index.publicRecipesTitle !== originalRecipeName){//recipe title does not exist
             console.log("index title not the same as selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+            // publicRecipeNonMatch.push(index);
         }
         else{//recipe title does exist
             publicRecipeMatch.push(index);
@@ -998,36 +1001,38 @@ var recipePreparation = req.body.recipePreparation;
         }//end of updateOriginalTitle(index)
     
         //-------------------PUBLIC RECIPE COLLECTION--------------------// 
+        //2.1A PUBLIC RECIPE COLLECTION: RECIPE DOES NOT EXIST: Insert recipe to public recipe collection
+        if(publicRecipeMatch.length == 0){
+            
+            publicRecipeLog = new PublicRecipes({
+                username: sessionuser,
+                publicRecipesTitle: trimmedRecipeName,
+                publicRecipesIngredients: recipeIngredients,
+                publicRecipesPreparation: recipePreparation
+            })
 
+            await publicRecipeLog.save();//save new recipe to public recipe collection
+
+        }//end of if(publicRecipeMatch.length == 0)
+        //2.1B PUBLIC RECIPE COLLECTION: RECIPE ALREADY EXISTS: Update recipe in public recipe collection
         publicRecipe.forEach(updateOriginalTitle2);
-
         async function updateOriginalTitle2(index){
             //recipe title does not match recipe to be updated
             if(index.publicRecipesTitle !== originalRecipeName){
-                console.log("index title not the same as selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+                console.log("index title not the same as original title. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
             }
-            //2.1A PUBLIC RECIPE COLLECTION: RECIPE DOES NOT EXIST: Insert recipe to public recipe collection
-            else if(index.publicRecipesTitle == null || index.publicRecipesTitle == undefined || index.publicRecipesTitle == ""){
-                publicRecipeLog = new PublicRecipes({
-                    username: sessionuser,
-                    publicRecipesTitle: trimmedRecipeName,
-                    publicRecipesIngredients: recipeIngredients,
-                    publicRecipesPreparation: recipePreparation
-                })
-
-                await publicRecipeLog.save();//save new recipe to public recipe collection
-
-            }//end of else if(index.publicRecipesTitle == null || index.publicRecipesTitle == undefined || index.publicRecipesTitle == "")
-            //2.1B PUBLIC RECIPE COLLECTION: RECIPE ALREADY EXISTS: Update recipe in public recipe collection
-            else {//recipe title does exist in public recipe collection
+            //recipe title matches recipe to be updated
+            else {
                 console.log("index title is the same as the submitted selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
                 console.log("publicRecipeMatch length: " + publicRecipeMatch.length);
+                console.log("index.publicRecipesTitle from else" + index.publicRecipesTitle);
 
                 let updatedPublicRecipeName = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesTitle: trimmedRecipeName});
                 let updatedPublicRecipeIngredients = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesIngredients: recipeIngredients});
                 let updatedPublicRecipePreparation = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesPreparation: recipePreparation});
                 
-            }//end of 2.1B
+                console.log("index.publicRecipesTitle from else2" + index.publicRecipesTitle);
+            }
         }//end of updateOriginalTitle2(index)
 
         return res.render("user.ejs", 
