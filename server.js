@@ -144,7 +144,7 @@ app.post("/publicSearch", async (req,res) =>{
             });
     }
 
-})
+})//end of app.post("/publicSearch",...);
 //---------------------------USER PAGE-------------------------------------//
 app.post("/publicSearch2", async (req,res) =>{
     const searchInput = req.body.searchInput;
@@ -299,6 +299,36 @@ app.post("/publicSearch2", async (req,res) =>{
 })//end of app.post("/publicSearch2",...);
 
 //==========================LOAD PUBLIC RECIPE=====================================
+//-------------------------HOME PAGE----------------------------------//
+app.post("/loadPublicRecipe", async (req,res)=>{
+    //declare variables needed
+    let publicRecipeId = req.body.publicRecipeId;//recipe selected
+    console.log("public recipe ID: " + publicRecipeId);
+
+    let recipeToLoad = await PublicRecipes.findById(publicRecipeId);
+    console.log("recipe to load: " + recipeToLoad);
+
+    return res.render("home.ejs", 
+            {
+            //------------MESSAGE PROMPT BOX----------//
+            messageTitle:"", 
+            display2:"none", 
+            messageContents: "", 
+            homeMsgFunc: "",
+            loginAlt:"none",
+            //--------PUBLIC RECIPE PROMPT BOX--------//
+            display:"none",
+            homePubNum:"",
+            publicRecipes: [],
+            //-------------RECIPE DOC------------------//
+            documentModalDisplay:"block",
+            chef: recipeToLoad.username,
+            publicRecipesTitle: recipeToLoad.publicRecipesTitle,
+            publicRecipesIngredients: recipeToLoad.publicRecipesIngredients,
+            publicRecipesPreparation: recipeToLoad.publicRecipesPreparation
+            });
+})//end of app.post("/loadPublicRecipe",...);
+//-----------------------USER PAGE-------------------------------------//
 app.post("/loadPublicRecipe2", async (req,res)=>{
     //declare variables needed
     let sessionuser = req.body.newUsername;//username inserted to form
