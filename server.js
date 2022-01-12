@@ -407,56 +407,14 @@ app.post("/closeMsg", (req,res)=>{
 })
 
 app.post("/closeMsg2", (req,res)=>{
-    //declare session variables
-    // var sessionuser = req.session.username;//session user's name
-    // var userEmail = req.session.userEmail;//session user's emaillet sessionuser = req.session.user;
-
-    // return res.render("user.ejs", 
-    // {
-    // //-----------------USER INFO-----------------------
-    //  name: sessionuser,
-    //  email: userEmail,
-    // //----------PUBLIC RECIPES PROMPT BOX---------------
-    //  publicRecipesModalDisplay: "none",
-    //  chef: "", 
-    //  publicRecipesTitle: "", 
-    //  publicRecipesIngredients: "", 
-    //  publicRecipesPreparation: "",
-    //  //-----------------RECIPE DOC 2--------------------
-    //  //chef: "", 
-    //  documentModalDisplay: "none",
-    //  //-------------MY RECIPES PROMPT BOX---------------
-    //  myRecipesModalDisplay: "none",
-    //  num:"",
-    //  recipes: [],
-    //  recipesTitle: "",
-    //  //-------------NEW RECIPE PROMPT BOX---------------
-    //  tempTitle: "", 
-    //  tempIng: "", 
-    //  tempPrep: "", 
-    //  //--------------RECIPE PROMPT BOX------------------
-    //  recipeModalDisplay: "none",
-    //  recipesTitle: "", 
-    //  recipesIngredients: "", 
-    //  recipesPreparation:"",  
-    //  checked:"", 
-    //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
-    //  recipesTitle0:"",
-    //  //---------------MESSAGE PROMPT BOX-----------------
-    //  messageModalDisplay: "none",      
-    //  messageTitle:"", 
-    //  messageContents: "", 
-    //  userMsgContVarialbeDisplay:"none",
-    //  nameMsgDisplay:"none",
-    //  emailMsgDisplay:"none",
-    //  msgCloseBtnDisplay2: "none",
-    //  msgbtn:""});
-
+    //clear saved original recipe title name from loaded recipe if it was loaded
+    req.session.recipeTitle= "";
     return res.redirect("/user");
     
 });
 
 //==============================USER PAGE====================================================
+//================MY RECIPES PROMPT BOX: GET USER RECIPES===============================
 app.post("/getRecipeList", async (req,res)=>{
 
 var sessionuser = req.session.username;//session user's name
@@ -553,10 +511,11 @@ else{
                 emailMsgDisplay:"none",
                 msgbtn:""
                 });
-}
+}//end of else to if(userRecipes =="")
 
-})
+})//end of app.post("/getRecipeList",...);
 
+//=====================RECIPE PROMPT BOX:LOAD RECIPE=======================
 app.post("/loadRecipe", async (req,res) =>{
     //declare variables
     var sessionuser = req.session.username;//session user's name
@@ -567,6 +526,7 @@ app.post("/loadRecipe", async (req,res) =>{
     let inPublicList = await PublicRecipes.find({username: sessionuser});
     console.log("recipe to load: " + recipesToLoad);
 
+    //make empty arrays to catch matches of title searches
     let recipeMatch = [];
     let publicRecipeMatch = [];
 
@@ -578,13 +538,13 @@ app.post("/loadRecipe", async (req,res) =>{
         if(index.publicRecipesTitle !== recipeSelection){//recipe title does not exist
             console.log("index title not the same as selection. Public Selection: " + recipeSelection + " Index title: " + index.publicRecipesTitle);
         }
-        else{//recipe title does not exist
+        else{//recipe title does exist
             publicRecipeMatch.push(index);
             console.log("index title is the same as the submitted selection. Public Selection: " + recipeSelection + " Index title: " + index.publicRecipesTitle);
             console.log("recipeMatch length: " + publicRecipeMatch.length);
         }
     }  
-
+    //make conditional definition for 'checked' EJS variable
     var checkValue =  (publicRecipeMatch.length > 0)? "checked='checked'":"";
     console.log("check value " + checkValue);
     //search for username with recipe title in personal listing
@@ -593,13 +553,15 @@ app.post("/loadRecipe", async (req,res) =>{
         console.log("index title: " + index.recipesTitle);
 
         if(index.recipesTitle !== recipeSelection){//recipe title does not exist
-                console.log("index title not the same as selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
+            console.log("index title not the same as selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
         }
-        else{//recipe title does not exist
+        else{//recipe title does exist
             recipeMatch.push(index);
             console.log("index title is the same as the submitted selection. Selection: " + recipeSelection + " Index title: " + index.recipesTitle);
             console.log("recipeMatch length: " + recipeMatch.length);
-
+            //make variable of original recipe title if any editions made
+            req.session.recipeTitle = index.recipesTitle;
+            //load user page with recipe info----------------------------
             return res.render("user.ejs", 
             {
             //-----------------USER INFO-----------------------
@@ -631,7 +593,7 @@ app.post("/loadRecipe", async (req,res) =>{
             recipesPreparation: index.recipesPreparation,  
             checked:checkValue,
             //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
-            recipesTitle0:"",
+            recipesTitle0:index.recipesTitle,
             //---------------MESSAGE PROMPT BOX-----------------
             messageModalDisplay: "none",      
             messageTitle:"", 
@@ -641,10 +603,494 @@ app.post("/loadRecipe", async (req,res) =>{
             emailMsgDisplay:"none",
             msgbtn:""
             });
-        }
+        }//end of else to if(index.recipesTitle !== recipeSelection)
     }//end of function titleSearch(index)
-    res.redirect("/user");
-})
+    //this section should never occur per user only selecting options visible, note error message if selection of non-option
+    return res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+    name: sessionuser,
+    email: userEmail,
+
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+    publicRecipesModalDisplay: "none",
+    chef: "", 
+    publicRecipesTitle: "", 
+    publicRecipesIngredients: "", 
+    publicRecipesPreparation: "",
+    //-----------------RECIPE DOC 2--------------------
+    //chef: "", 
+    documentModalDisplay: "none",
+    //-------------MY RECIPES PROMPT BOX---------------
+    myRecipesModalDisplay: "none",
+    num:"",
+    recipes: [],
+    recipesTitle: "",
+    //-------------NEW RECIPE PROMPT BOX---------------
+    tempTitle: "", 
+    tempIng: "", 
+    tempPrep: "", 
+    //--------------RECIPE PROMPT BOX------------------
+    recipeModalDisplay: "none",
+    recipesTitle: "", 
+    recipesIngredients: "", 
+    recipesPreparation: "",  
+    checked:"",
+    //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+    recipesTitle0:"",
+    //---------------MESSAGE PROMPT BOX-----------------
+    messageModalDisplay: "block",      
+    messageTitle:"Error...", 
+    messageContents: "Something went wrong. Please try again", 
+    userMsgContVarialbeDisplay:"none",
+    nameMsgDisplay:"none",
+    emailMsgDisplay:"none",
+    msgbtn:"closeMessage()"
+    });
+})//end of app.post("/loadRecipe",...);
+
+//======================UPDATE RECIPE============================================
+app.post("/editRecipe", async (req,res)=>{
+//declare variables to be used
+var sessionuser = req.session.username;
+var userEmail = req.session.userEmail;
+var makePublic = req.body.makePublic;
+var recipeName = req.body.recipeName;
+var trimmedRecipeName = recipeName.trim();
+var originalRecipeName = req.session.recipeTitle;
+var recipeIngredients = req.body.recipeIngredients;
+var recipePreparation = req.body.recipePreparation;
+
+//search for report in public recipe listing (if exits and makepublic chekcbox is checked, update public recipe; if it doesn't yet exist add it to public recipe; if it does exist and makepublic checkbox is off, remove from public recipe collection)
+    //define variable for public recipe if it exsists
+    let publicRecipe = await PublicRecipes.find({username: sessionuser});
+    let publicRecipeMatch = [];
+    publicRecipe.forEach(originalTitleSearch);
+
+    function originalTitleSearch(index){
+        if(index.publicRecipesTitle !== originalRecipeName){//recipe title does not exist
+            console.log("index title not the same as selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+        }
+        else{//recipe title does exist
+            publicRecipeMatch.push(index);
+            console.log("index title is the same as the submitted selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+            console.log("publicRecipeMatch length: " + publicRecipeMatch.length);
+        }
+    }//end of originalTitleSearch(index)
+    //define variable for located recipe from recipe collection
+    let personalRecipe = await Recipes.find({username: sessionuser});
+    let recipeMatch = [];
+    let editedTitleMatch = [];
+    personalRecipe.forEach(originalTitleSearch2);
+
+    function originalTitleSearch2(index){
+        if(index.recipesTitle !== originalRecipeName){//recipe title does not exist
+            console.log("index title not the same as selection. Personal recipe title: " + originalRecipeName + " Index title: " + index.recipesTitle);
+        }
+        else if(index.recipesTitle == trimmedRecipeName){
+            editedTitleMatch.push(index);
+            console.log("pursued recipe title already taken: "+ index.recipesTitle);
+        }
+        else if(index.recipesTitle == originalRecipeName){//recipe title does exist
+            recipeMatch.push(index);
+            console.log("index title is the same as the submitted selection. Personal recipe title: " + originalRecipeName + " Index title: " + index.recipesTitle);
+            console.log("recipeMatch length: " + recipeMatch.length);
+        }
+    }//end of originalTitleSearch2(index)
+    
+    //make conditional definition for 'checked' EJS variable
+    var checkValue =  (publicRecipeMatch.length > 0)? "checked='checked'":"";
+    console.log("Edit recipe: load check value " + checkValue);
+
+    //if makePublic checkbox is on
+    if(makePublic == "on"){
+        console.log("make public note detected 'on'");
+
+        //--------PERSONAL RECIPE COLLECTION: UPDATE RECIPE--------------//
+        //1. Error handlers: 
+        //1.1: Are any fields empty?
+        if(trimmedRecipeName=="" ||recipeIngredients =="" || recipePreparation==""){
+            return res.render("user.ejs", 
+            {
+            //-----------------USER INFO-----------------------
+            name: sessionuser,
+            email: userEmail,
+            //----------PUBLIC RECIPES PROMPT BOX---------------
+            publicRecipesModalDisplay: "none",
+            chef: "", 
+            publicRecipesTitle: "", 
+            publicRecipesIngredients: "", 
+            publicRecipesPreparation: "",
+            //-----------------RECIPE DOC 2--------------------
+            //chef: "", 
+            documentModalDisplay: "none",
+            //-------------MY RECIPES PROMPT BOX---------------
+            myRecipesModalDisplay: "none",
+            num:"",
+            recipes: [],
+            recipesTitle: "",
+            //-------------NEW RECIPE PROMPT BOX---------------
+            tempTitle: "", 
+            tempIng: "", 
+            tempPrep: "", 
+            //--------------RECIPE PROMPT BOX------------------
+            recipeModalDisplay: "none",
+            recipesTitle: trimmedRecipeName, 
+            recipesIngredients: recipeIngredients, 
+            recipesPreparation:recipePreparation,  
+            checked:checkValue,
+            //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+            recipesTitle0:originalRecipeName,
+            //---------------MESSAGE PROMPT BOX-----------------
+            messageModalDisplay: "block",      
+            messageTitle:"Error...", 
+            messageContents: "Please fill in all fields", 
+            userMsgContVarialbeDisplay:"none",
+            nameMsgDisplay:"none",
+            emailMsgDisplay:"none",
+            msgbtn:"returnToRecipePromptBox()"
+            });
+        }//end of if(trimmedRecipeName=="" ||recipeIngredients =="" || recipePreparation=="")
+
+        //1.2: Is the pursued recipe name/ingredients list/preparation notes invalid?
+        //if recipe title contains too much white space
+        let pattern = new RegExp("  ","g");
+        let excessWhiteSpace = pattern.test(recipeName);
+
+        if(excessWhiteSpace == true){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: trimmedRecipeName, 
+                recipesIngredients: recipeIngredients, 
+                recipesPreparation:recipePreparation,  
+                checked:checkValue,
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:originalRecipeName,
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please remove excess spaces: ' '", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToRecipePromptBox()"
+            });
+        }//end of if(excessWhiteSpace == true)
+
+        //if recipe title is invalid
+        if(/[a-z]/i.test(trimmedRecipeName) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: trimmedRecipeName, 
+                recipesIngredients: recipeIngredients, 
+                recipesPreparation:recipePreparation,  
+                checked:checkValue,
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:originalRecipeName,
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe title invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToRecipePromptBox()"
+            });
+        }//end of if(/[a-z]/i.test(trimmedRecipeName) == false)
+
+        //if recipe ingredients field is invalid
+        if(/[a-z]/i.test(recipeIngredients) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: trimmedRecipeName, 
+                recipesIngredients: recipeIngredients, 
+                recipesPreparation:recipePreparation,  
+                checked:checkValue,
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:originalRecipeName,
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe ingredients input invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToRecipePromptBox()"
+            });
+        }//end of if(/[a-z]/i.test(recipeIngredients) == false)
+
+        //if recipe preparation field is invalid
+        if(/[a-z]/i.test(recipePreparation) == false){
+            return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: trimmedRecipeName, 
+                recipesIngredients: recipeIngredients, 
+                recipesPreparation:recipePreparation,  
+                checked:checkValue,
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:originalRecipeName,
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe preparation input invalid. Please resubmit using at least characters A-Z, a-z", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToRecipePromptBox()"
+            });
+        }//end of if(/[a-z]/i.test(recipePreparation) == false)
+
+        //1.3: Is the pursued recipe name already taken in personal recipe collection and the pursued title is not the same as the original?
+        if(editedTitleMatch.length > 0){//if recipe name submitted is the same as the current recipe name
+            if(trimmedRecipeName !== originalRecipeName){//if the pursued name is not the same as the origial name and a recipe was found with that title, give error message noting recipe name taken
+                return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: trimmedRecipeName, 
+                recipesIngredients: recipeIngredients, 
+                recipesPreparation:recipePreparation,  
+                checked:checkValue,
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:originalRecipeName,
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Error...", 
+                messageContents: "Recipe name taken. Please resubmit recipe with differnt title", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"returnToRecipePromptBox()"
+                });
+            }//end of if(trimmedRecipeName !== originalRecipeName)
+        }//end of if(editedTitleMatch.length > 0)
+        //2. Update recipe in personal recipe collection
+
+        personalRecipe.forEach(updateOriginalTitle);
+
+        async function updateOriginalTitle(index){
+            if(index.recipesTitle !== originalRecipeName){//recipe title does not exist
+                console.log("index title not the same as selection. Personal recipe title: " + originalRecipeName + " Index title: " + index.recipesTitle);
+            }
+            else{//recipe title does exist
+                console.log("index title is the same as the submitted selection. Personal recipe title: " + originalRecipeName + " Index title: " + index.recipesTitle);
+                console.log("recipeMatch length: " + recipeMatch.length);
+                console.log("id of located recipe: " + index._id);
+
+                let updatedTitle = await Recipes.findOneAndUpdate({_id: index._id}, {recipesTitle: trimmedRecipeName});
+                let updatedIngredients = await Recipes.findOneAndUpdate({_id: index._id}, {recipesIngredients: recipeIngredients});
+                let updatedPreparation = await Recipes.findOneAndUpdate({_id: index._id}, {recipesPreparation: recipePreparation});
+                
+            }
+        }//end of updateOriginalTitle(index)
+    
+        //-------------------PUBLIC RECIPE COLLECTION--------------------// 
+
+        publicRecipe.forEach(updateOriginalTitle2);
+
+        async function updateOriginalTitle2(index){
+            //recipe title does not match recipe to be updated
+            if(index.publicRecipesTitle !== originalRecipeName){
+                console.log("index title not the same as selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+            }
+            //2.1A PUBLIC RECIPE COLLECTION: RECIPE DOES NOT EXIST: Insert recipe to public recipe collection
+            else if(index.publicRecipesTitle == null || index.publicRecipesTitle == undefined || index.publicRecipesTitle == ""){
+                publicRecipeLog = new PublicRecipes({
+                    username: sessionuser,
+                    publicRecipesTitle: trimmedRecipeName,
+                    publicRecipesIngredients: recipeIngredients,
+                    publicRecipesPreparation: recipePreparation
+                })
+
+                await publicRecipeLog.save();//save new recipe to public recipe collection
+
+            }//end of else if(index.publicRecipesTitle == null || index.publicRecipesTitle == undefined || index.publicRecipesTitle == "")
+            //2.1B PUBLIC RECIPE COLLECTION: RECIPE ALREADY EXISTS: Update recipe in public recipe collection
+            else {//recipe title does exist in public recipe collection
+                console.log("index title is the same as the submitted selection. Public Selection: " + originalRecipeName + " Index title: " + index.publicRecipesTitle);
+                console.log("publicRecipeMatch length: " + publicRecipeMatch.length);
+
+                let updatedPublicRecipeName = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesTitle: trimmedRecipeName});
+                let updatedPublicRecipeIngredients = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesIngredients: recipeIngredients});
+                let updatedPublicRecipePreparation = await PublicRecipes.findOneAndUpdate({_id: index._id}, {publicRecipesPreparation: recipePreparation});
+                
+            }//end of 2.1B
+        }//end of updateOriginalTitle2(index)
+
+        return res.render("user.ejs", 
+                {
+                //-----------------USER INFO-----------------------
+                name: sessionuser,
+                email: userEmail,
+                //----------PUBLIC RECIPES PROMPT BOX---------------
+                publicRecipesModalDisplay: "none",
+                chef: "", 
+                publicRecipesTitle: "", 
+                publicRecipesIngredients: "", 
+                publicRecipesPreparation: "",
+                //-----------------RECIPE DOC 2--------------------
+                //chef: "", 
+                documentModalDisplay: "none",
+                //-------------MY RECIPES PROMPT BOX---------------
+                myRecipesModalDisplay: "none",
+                num:"",
+                recipes: [],
+                recipesTitle: "",
+                //-------------NEW RECIPE PROMPT BOX---------------
+                tempTitle: "", 
+                tempIng: "", 
+                tempPrep: "", 
+                //--------------RECIPE PROMPT BOX------------------
+                recipeModalDisplay: "none",
+                recipesTitle: "", 
+                recipesIngredients: "", 
+                recipesPreparation:"",  
+                checked:"",
+                //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+                recipesTitle0:"",
+                //---------------MESSAGE PROMPT BOX-----------------
+                messageModalDisplay: "block",      
+                messageTitle:"Success!", 
+                messageContents: "Recipe updated", 
+                userMsgContVarialbeDisplay:"none",
+                nameMsgDisplay:"none",
+                emailMsgDisplay:"none",
+                msgbtn:"closeMessage()"
+                });
+
+    }//end of if(makePublic == "on")
+
+    //if makePublic checkbox is off
+    else{
+        console.log("make public note detected 'off'");
+
+        //--------PERSONAL RECIPE COLLECTION: UPDATE RECIPE--------------//
+        //1. Error handlers: 
+        //1.1: Is the title field empty?
+        //1.2: Is the pursued recipe name invalid?
+        //1.3: Is the pursued recipe name already taken in personal recipe collection and the pursued title is not the same as the original?
+        //2. Update recipe in personal recipe collection
+        //-------------------PUBLIC RECIPE COLLECTION--------------------// 
+        //--------PUBLIC RECIPE COLLECTION: RECIPE ALREADY EXISTS--------//
+        //2.1A Remove recipe from public recipe collection
+        //--------PUBLIC RECIPE COLLECTION: RECIPE DOES NOT EXIST--------//
+        //2.1B No action needed
+
+    }//end of else statement: if makePublic checkbox is off
+});//end of app.post("/editRecipe",...);
 
 //======================UPDATE ACCT INFORMATION===================================
 //======================UPDATE USERNAME===========================================
@@ -1553,7 +1999,7 @@ app.post("/newRecipe", async (req,res) =>{
         //error handlers for public posting with new recipe
 
         //if any fields are empty...
-        if(newRecipeTitle == "" || newIngredients =="" || newPreparation ==""){
+        if(newRecipeTitleTrimmed == "" || newIngredients =="" || newPreparation ==""){
             return res.render("user.ejs", 
                 {
                 //-----------------USER INFO-----------------------
@@ -1594,7 +2040,7 @@ app.post("/newRecipe", async (req,res) =>{
                 emailMsgDisplay:"none",
                 msgbtn:"returnToNewRecipePrompt()"
             });
-        }//end of if(newRecipeTitle == "" || newIngredients =="" || newPreparation =="")
+        }//end of if(newRecipeTitleTrimmed == "" || newIngredients =="" || newPreparation =="")
 
         //if recipe title contains too much white space
         let pattern = new RegExp("  ","g");
@@ -1635,7 +2081,7 @@ app.post("/newRecipe", async (req,res) =>{
                 //---------------MESSAGE PROMPT BOX-----------------
                 messageModalDisplay: "block",      
                 messageTitle:"Error...", 
-                messageContents: "Recipe title invalid. Please remove excess spaces: '  '", 
+                messageContents: "Recipe title invalid. Please remove excess spaces: ' '", 
                 userMsgContVarialbeDisplay:"none",
                 nameMsgDisplay:"none",
                 emailMsgDisplay:"none",
@@ -1788,7 +2234,7 @@ app.post("/newRecipe", async (req,res) =>{
             if(index.recipesTitle !== newRecipeTitleTrimmed){//recipe title does not exist
                 console.log("index title not the same as entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
             }
-            else{//recipe title does not exist
+            else{//recipe title does exist
                 recipeMatch.push(index);
                 console.log("index title is the same as the submitted entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
                 console.log("recipeMatch length: " + recipeMatch.length);
@@ -1861,7 +2307,7 @@ app.post("/newRecipe", async (req,res) =>{
     await personalRecipeLog.save();//save new recipe to personal recipe collection
     await publicRecipeLog.save();//save new recipe to public recipe collection
 
-    //redirect to home page and display welcome message
+    //redirect to user page and display success message
     return res.render("user.ejs", 
             {
             //-----------------USER INFO-----------------------
@@ -2055,7 +2501,7 @@ app.post("/newRecipe", async (req,res) =>{
                 console.log("index title not the same as entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
                 console.log("recipeMatch length2: " + recipeMatch.length);
             }
-            else{//recipe title does not exist
+            else{//recipe title does exist
                 recipeMatch.push(index);
                 console.log("index title is the same as the submitted entry. Entry: " + newRecipeTitleTrimmed + " Index title: " + index.recipesTitle);
             }

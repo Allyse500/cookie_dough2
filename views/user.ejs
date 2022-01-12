@@ -1421,7 +1421,7 @@ background-color: orange;
 <div id="recipeModal" style='display:<%=recipeModalDisplay%>;'>
     <div id="recipeContainer">
         <div id="recipeSecondaryContainer">
-            <form id="editRecipeForm" action="editRecipe.inc.php" method="POST">
+            <form id="editRecipeForm" method="POST">
                 <div id="recipeHeaderGrid">
                     <button id="recipeModalBackBtn" name="recipeModalBackBtn">&larr;</button><div id="recipeFormTitle">Recipe</div><div><input type="checkbox" id="makePublic" name="makePublic" <%=checked%>><label for="makePublic" class="publicCheckBoxLabel">public</label></div>
                 </div><!--end of id="recipeHeaderGrid"-->
@@ -1437,7 +1437,7 @@ background-color: orange;
                 </textarea>
                 <br>
                 <div id="recipeBtnsGrid">
-                    <div id="delRecipe" class="recipeBtn recipeBtnDiv" onclick="drcModal()">Delete</div><button id="saveRecipe" class="recipeBtn" name="saveRecipe">Save</button><button id="recipeCloseButton" name="recipeCloseButton" class="recipeBtn recipeBtnDiv">Close</button>
+                    <div id="delRecipe" class="recipeBtn recipeBtnDiv" onclick="drcModal()">Delete</div><button id="saveRecipe" class="recipeBtn" name="saveRecipe" formaction="/editRecipe">Save</button><button id="recipeCloseButton" name="recipeCloseButton" class="recipeBtn recipeBtnDiv" formaction="/closeMsg2">Close</button>
                 </div><!-- end of id="recipeBtnsGrid" -->
             </form><!-- end of id="editRecipeForm" -->
         </div><!--end of id="recipeSecondaryContainer-->
@@ -1721,6 +1721,10 @@ function canceldrc(){
     document.getElementById("drcModal").style.display ="none";
 }
 
+function returnToRecipePromptBox(){
+    document.getElementById("messageModal").style.display ="none";
+    document.getElementById("recipeModal").style.display ="block";
+}
 //==========================MESSAGE PROMPT BOX====================================//
 //close message prompt box-------------------------------------------------------------
 function closeMessage(){
@@ -1733,6 +1737,7 @@ function returnAccountPromptBox(){
     document.getElementById("messageModal").style.display ="none";
 }//end of returnAccountPromptBox()
 
+//return to new recipe prompt box-----------------------------------------------------------
 function returnToNewRecipePrompt(){
     document.getElementById("messageModal").style.display ="none";
     document.getElementById("newRecipeModal").style.display ="block";
