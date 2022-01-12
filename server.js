@@ -135,17 +135,16 @@ app.post("/publicSearch2", async (req,res) =>{
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
                 email: userEmail,
-    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "block",
                 pubNum: recipe.length,
                 publicRecipes: recipe, 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -183,17 +182,16 @@ app.post("/publicSearch2", async (req,res) =>{
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
                 email: userEmail,
-    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "block",
                 pubNum: chef.length,
                 publicRecipes: chef, 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -234,17 +232,16 @@ app.post("/publicSearch2", async (req,res) =>{
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
                 email: userEmail,
-    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "block",
                 pubNum: 0,
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -272,9 +269,64 @@ app.post("/publicSearch2", async (req,res) =>{
                 msgbtn:""
                 });
 
-    }
+    }//end of else statement
 
-})
+})//end of app.post("/publicSearch2",...);
+
+//==========================LOAD PUBLIC RECIPE=====================================
+app.post("/loadPublicRecipe", async (req,res)=>{
+    //declare variables needed
+    let sessionuser = req.body.newUsername;//username inserted to form
+    let userEmail = req.body.newUserEmail;//email inserted to form
+    let publicRecipeId = req.body.publicRecipeId;//recipe selected
+    console.log("public recipe ID: " + publicRecipeId);
+
+    let recipeToLoad = await PublicRecipes.findById(publicRecipeId);
+    console.log("recipe to load: " + recipeToLoad);
+
+    return res.render("user.ejs", 
+    {
+    //-----------------USER INFO-----------------------
+    name: sessionuser,
+    email: userEmail,
+    //----------PUBLIC RECIPES PROMPT BOX---------------
+    publicRecipesModalDisplay: "none",
+    pubNum: "",
+    publicRecipes: [], 
+    //-----------------RECIPE DOC 2--------------------
+    chef: recipeToLoad.username, 
+    documentModalDisplay: "block",
+    publicRecipesTitle: recipeToLoad.publicRecipesTitle,
+    publicRecipesIngredients: recipeToLoad.publicRecipesIngredients,
+    publicRecipesPreparation: recipeToLoad.publicRecipesPreparation,
+    //-------------MY RECIPES PROMPT BOX---------------
+    myRecipesModalDisplay: "none",
+    num:"",
+    recipes: [],
+    recipesTitle: "",
+    //-------------NEW RECIPE PROMPT BOX---------------
+    tempTitle: "", 
+    tempIng: "", 
+    tempPrep: "", 
+    //--------------RECIPE PROMPT BOX------------------
+    recipeModalDisplay: "none",
+    recipesTitle: "", 
+    recipesIngredients: "", 
+    recipesPreparation:"",  
+    checked:"",
+    //-----DELETE RECIPE CONFIRMATION PROMPT BOX-------
+    recipesTitle0:"",
+    //---------------MESSAGE PROMPT BOX-----------------
+    messageModalDisplay: "none",      
+    messageTitle:"", 
+    messageContents: "", 
+    userMsgContVarialbeDisplay:"none",
+    nameMsgDisplay:"none",
+    emailMsgDisplay:"none",
+    msgbtn:""
+    });
+
+})//end of app.post("/loadPublicRecipe",...);
 
 //===================SIGN UP FUNCTION===============================================
 app.post("/sign_up", async (req,res) => {
@@ -521,17 +573,16 @@ if(userRecipes ==""){
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
                 email: userEmail,
-    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "block",
                 num: "0",
@@ -566,17 +617,16 @@ else{
                 //-----------------USER INFO-----------------------
                 name: sessionuser,
                 email: userEmail,
-    
                 //----------PUBLIC RECIPES PROMPT BOX---------------
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "block",
                 num:userRecipes.length,
@@ -661,17 +711,16 @@ app.post("/loadRecipe", async (req,res) =>{
             //-----------------USER INFO-----------------------
             name: sessionuser,
             email: userEmail,
-
             //----------PUBLIC RECIPES PROMPT BOX---------------
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -706,17 +755,16 @@ app.post("/loadRecipe", async (req,res) =>{
     //-----------------USER INFO-----------------------
     name: sessionuser,
     email: userEmail,
-
     //----------PUBLIC RECIPES PROMPT BOX---------------
     publicRecipesModalDisplay: "none",
     pubNum: "",
     publicRecipes: [], 
-    publicRecipesTitle: "", 
-    publicRecipesIngredients: "", 
-    publicRecipesPreparation: "",
     //-----------------RECIPE DOC 2--------------------
     chef: "", 
     documentModalDisplay: "none",
+    publicRecipesTitle: "",
+    publicRecipesIngredients: "",
+    publicRecipesPreparation: "",
     //-------------MY RECIPES PROMPT BOX---------------
     myRecipesModalDisplay: "none",
     num:"",
@@ -818,12 +866,12 @@ var recipePreparation = req.body.recipePreparation;
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -867,12 +915,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -912,12 +960,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -957,12 +1005,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1002,12 +1050,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1048,12 +1096,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1146,12 +1194,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1198,12 +1246,12 @@ var recipePreparation = req.body.recipePreparation;
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -1244,12 +1292,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1292,12 +1340,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1338,12 +1386,12 @@ var recipePreparation = req.body.recipePreparation;
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1424,12 +1472,13 @@ var recipePreparation = req.body.recipePreparation;
         publicRecipesModalDisplay: "none",
         pubNum: "",
         publicRecipes: [], 
-        publicRecipesTitle: "", 
-        publicRecipesIngredients: "", 
-        publicRecipesPreparation: "",
+
         //-----------------RECIPE DOC 2--------------------
         chef: "", 
         documentModalDisplay: "none",
+        publicRecipesTitle: "",
+        publicRecipesIngredients: "",
+        publicRecipesPreparation: "",
         //-------------MY RECIPES PROMPT BOX---------------
         myRecipesModalDisplay: "none",
         num:"",
@@ -1479,12 +1528,12 @@ app.post("/delRecipe", async (req,res)=>{
     publicRecipesModalDisplay: "none",
     pubNum: "",
     publicRecipes: [], 
-    publicRecipesTitle: "", 
-    publicRecipesIngredients: "", 
-    publicRecipesPreparation: "",
     //-----------------RECIPE DOC 2--------------------
     chef: "", 
     documentModalDisplay: "none",
+    publicRecipesTitle: "",
+    publicRecipesIngredients: "",
+    publicRecipesPreparation: "",
     //-------------MY RECIPES PROMPT BOX---------------
     myRecipesModalDisplay: "none",
     num:"",
@@ -1536,12 +1585,12 @@ app.post("/editUsername", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -1582,12 +1631,12 @@ app.post("/editUsername", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -1640,12 +1689,12 @@ app.post("/editUsername", async (req,res)=>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -1693,12 +1742,12 @@ app.post("/editUsername", async (req,res)=>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -1738,12 +1787,12 @@ app.post("/editUsername", async (req,res)=>{
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -1785,12 +1834,12 @@ app.post("/editUsername", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -1840,12 +1889,12 @@ app.post("/editUsername", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -1894,12 +1943,12 @@ app.post("/editEmail", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -1940,12 +1989,12 @@ app.post("/editEmail", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -2001,12 +2050,12 @@ app.post("/editEmail", async (req,res)=>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2052,12 +2101,12 @@ app.post("/editEmail", async (req,res)=>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -2096,12 +2145,12 @@ app.post("/editEmail", async (req,res)=>{
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -2141,12 +2190,12 @@ app.post("/editEmail", async (req,res)=>{
         publicRecipesModalDisplay: "none",
         pubNum: "",
         publicRecipes: [], 
-        publicRecipesTitle: "", 
-        publicRecipesIngredients: "", 
-        publicRecipesPreparation: "",
         //-----------------RECIPE DOC 2--------------------
         chef: "", 
         documentModalDisplay: "none",
+        publicRecipesTitle: "",
+        publicRecipesIngredients: "",
+        publicRecipesPreparation: "",
         //-------------MY RECIPES PROMPT BOX---------------
         myRecipesModalDisplay: "none",
         num:"",
@@ -2194,12 +2243,12 @@ app.post("/editEmail", async (req,res)=>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -2248,12 +2297,12 @@ app.post("/editPassword", async (req,res)=>{
          publicRecipesModalDisplay: "none",
          pubNum: "",
          publicRecipes: [], 
-         publicRecipesTitle: "", 
-         publicRecipesIngredients: "", 
-         publicRecipesPreparation: "",
          //-----------------RECIPE DOC 2--------------------
          chef: "", 
          documentModalDisplay: "none",
+         publicRecipesTitle: "",
+         publicRecipesIngredients: "",
+         publicRecipesPreparation: "",
          //-------------MY RECIPES PROMPT BOX---------------
          myRecipesModalDisplay: "none",
          num:"",
@@ -2294,12 +2343,12 @@ app.post("/editPassword", async (req,res)=>{
         publicRecipesModalDisplay: "none",
         pubNum: "",
         publicRecipes: [], 
-        publicRecipesTitle: "", 
-        publicRecipesIngredients: "", 
-        publicRecipesPreparation: "",
         //-----------------RECIPE DOC 2--------------------
         chef: "", 
         documentModalDisplay: "none",
+        publicRecipesTitle: "",
+        publicRecipesIngredients: "",
+        publicRecipesPreparation: "",
         //-------------MY RECIPES PROMPT BOX---------------
         myRecipesModalDisplay: "none",
         num:"",
@@ -2341,12 +2390,12 @@ app.post("/editPassword", async (req,res)=>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -2385,12 +2434,12 @@ app.post("/editPassword", async (req,res)=>{
             publicRecipesModalDisplay: "none",
             pubNum: "",
             publicRecipes: [], 
-            publicRecipesTitle: "", 
-            publicRecipesIngredients: "", 
-            publicRecipesPreparation: "",
             //-----------------RECIPE DOC 2--------------------
             chef: "", 
             documentModalDisplay: "none",
+            publicRecipesTitle: "",
+            publicRecipesIngredients: "",
+            publicRecipesPreparation: "",
             //-------------MY RECIPES PROMPT BOX---------------
             myRecipesModalDisplay: "none",
             num:"",
@@ -2450,12 +2499,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2498,12 +2547,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2543,12 +2592,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2588,12 +2637,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2633,12 +2682,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2702,12 +2751,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2764,12 +2813,12 @@ app.post("/newRecipe", async (req,res) =>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -2812,12 +2861,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2857,12 +2906,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2905,12 +2954,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -2970,12 +3019,12 @@ app.post("/newRecipe", async (req,res) =>{
                 publicRecipesModalDisplay: "none",
                 pubNum: "",
                 publicRecipes: [], 
-                publicRecipesTitle: "", 
-                publicRecipesIngredients: "", 
-                publicRecipesPreparation: "",
                 //-----------------RECIPE DOC 2--------------------
                 chef: "", 
                 documentModalDisplay: "none",
+                publicRecipesTitle: "",
+                publicRecipesIngredients: "",
+                publicRecipesPreparation: "",
                 //-------------MY RECIPES PROMPT BOX---------------
                 myRecipesModalDisplay: "none",
                 num:"",
@@ -3022,12 +3071,12 @@ app.post("/newRecipe", async (req,res) =>{
              publicRecipesModalDisplay: "none",
              pubNum: "",
              publicRecipes: [], 
-             publicRecipesTitle: "", 
-             publicRecipesIngredients: "", 
-             publicRecipesPreparation: "",
              //-----------------RECIPE DOC 2--------------------
              chef: "", 
              documentModalDisplay: "none",
+             publicRecipesTitle: "",
+             publicRecipesIngredients: "",
+             publicRecipesPreparation: "",
              //-------------MY RECIPES PROMPT BOX---------------
              myRecipesModalDisplay: "none",
              num:"",
@@ -3105,12 +3154,12 @@ var userID = req.session.userID;//session user's ID
      publicRecipesModalDisplay: "none",
      pubNum: "",
      publicRecipes: [], 
-     publicRecipesTitle: "", 
-     publicRecipesIngredients: "", 
-     publicRecipesPreparation: "",
      //-----------------RECIPE DOC 2--------------------
      chef: "", 
      documentModalDisplay: "none",
+     publicRecipesTitle: "",
+     publicRecipesIngredients: "",
+     publicRecipesPreparation: "",
      //-------------MY RECIPES PROMPT BOX---------------
      myRecipesModalDisplay: "none",
      num:"",
