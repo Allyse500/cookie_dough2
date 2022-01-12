@@ -56,7 +56,7 @@ const isAuth = (req, res, next) => {
         next()
     }
     else{//direct to root route
-        res.rendirect("/");
+        res.redirect("/");
         console.log("logged in: " + req.session.isAuth);
     }
 }
