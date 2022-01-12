@@ -1868,7 +1868,7 @@ app.post("/editUsername", async (req,res)=>{
             //if it is the same name and the password of the user is correct...
             //take the current username from users and recipes collections and update it to the new entered username-------------        
             let specificUserPublicRecipesUN = await PublicRecipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in public recipes collection
-            let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in recipes collection
+            let specificUserRecipeUN = await Recipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in recipes collection
             let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
     
             req.session.username = editedUserName;
@@ -2015,7 +2015,7 @@ app.post("/editUsername", async (req,res)=>{
     console.log("new username not yet used in user database");
     //take the current username from users and recipes collections and update it to the new entered username-------------
     let specificUserPublicRecipesUN = await PublicRecipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in public recipes collection       
-    let specificUserRecipeUN = await Recipes.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in recipes collection
+    let specificUserRecipeUN = await Recipes.updateMany({username: sessionuser}, { username: editedUserName });//update username in recipes collection
     let specificUserUpdate = await User.findOneAndUpdate({username: sessionuser}, { username: editedUserName });//update username in users collection
 
     req.session.username = editedUserName;
@@ -3374,7 +3374,8 @@ const isMatch = await bcrypt.compare(password, user.password);//compares input p
     else if(isMatch){//if the password does match, check for matching re-entered passwords
             console.log("user to be deleted: " + user);
             await User.findOneAndDelete({username: username});
-            await Recipes.findOneAndDelete({username: username});
+            await Recipes.deleteMany({username: username});
+            await PublicRecipes.deleteMany({username: username})
             req.session.destroy((err)=>{
                 if(err){
                     console.log("Error: " + err);
