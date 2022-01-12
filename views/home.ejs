@@ -137,7 +137,7 @@ display: block;
 -webkit-text-stroke: 1px rgb(255, 255, 255);
 }
 
-/*=========================PUBLIC RECIPES PROMPT BOX===============================*/
+/*=========================PUBLIC RECIPE PROMPT BOX===============================*/
 #publicRecipesModal{
   display: none;
   position: fixed; 
@@ -249,7 +249,7 @@ color: orange;
     text-align: right;
 }
 
-/*==========================RECIPE DOC 2======================================*/
+/*==========================RECIPE DOC======================================*/
 
 #documentModal{
   display: block;
@@ -673,19 +673,13 @@ margin-top: 5%;
   }
 
   #searchBar{
-    /* margin-left: 30%; */
     display: grid;
     grid-template-columns: 15% 30% 15% 15%;
-    /* width: 600px;
-    height: 30px; */
     width: 500px;
-    /* width: 75vw; */
-    /* height: 40px; */
     height: 6vh;
 }
   .dropbtn {
     color: white;
-    /* font-size: 250%; */
     font-size: 5vh;
     width: fit-content;
     font-family: Arial, Helvetica, sans-serif;
@@ -703,7 +697,6 @@ margin-top: 5%;
   }
   
   .dropdown {
-    /* position: relative; */
     display: inline-block;
   }
   
@@ -752,14 +745,7 @@ margin-top: 5%;
     background-color: rgb(255, 255, 255, .8);
     padding-top: 2vh;
   }
-  /* .dropdown-content {
-        position: absolute;
-        min-width: 160px;
-        overflow: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        margin-left: -16.5vw;
-    } */
+
 }
 
 /*=================SPECIFY CSS AT 500 PX=============================*/
@@ -818,10 +804,12 @@ margin-top: 5%;
             <div id="publicRecipesListTitle">Public Recipes</div>
             <div id="publicRecipesList">
               <div id="numLoggedPublicRecipesMsg">
-                <span style='color:orange; font-weight:bold;'>0</span> recipes located. 
+                <span style='color:orange; font-weight:bold;'><%=homePubNum%></span> recipes located. 
               </div>
               <div id="publicRecipesInputContents">
-                <!-- <form class='recipeOpt' action='includes/loadPublicRecipe.inc.php' method='POST'><input style='display:none;' id='recipeInputName' name ='publicRecipeInput' value='" . $value["publicRecipeID"] . "'><button name='loadRecipe' class='recipeOptBtn'>". $value["publicRecipesUserName"] . ": ". $value["publicRecipesTitle"] . "</button></form>"; -->
+                <% publicRecipes.forEach(function(item){ %>
+                  <form class='recipeOpt' action='/loadPublicRecipe' method='POST'><input style='display:none;' id='publicRecipeId' name ='publicRecipeId' value='<%=item._id%>'><button name='loadPublicRecipe' class='recipeOptBtn'><%=item.username%>: <%=item.publicRecipesTitle%></button></form>
+                <% }); %>
               </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
               <br>
               <form action="/closeMsg" method="POST">
@@ -831,6 +819,28 @@ margin-top: 5%;
         </div><!--end of id="publicRecipesListSecondaryContainer-->
     </div><!--end of id="publicRecipesListContainer"-->
 </div><!--end of id="publicRecipesModal"-->
+
+<!--==========================RECIPE DOC======================================-->
+
+<div id="documentModal" style='display:<%=documentModalDisplay%>;'>
+  <div id="documentGrid">
+      <div id="document">
+          <div id="documentContents">
+              <div class="recipeDocTitle"><%=chef%>: <span style='color:green;'><%=publicRecipesTitle%></span></div>
+              <div class="recipeDocLabel">Ingredients: </div>
+              <div class="docContents">
+                  <%=publicRecipesIngredients%>
+              </div>
+              <div class="recipeDocLabel">Preparation: </div>
+              <div class="docContents">
+                  <%=publicRecipesPreparation%>
+              </div>    
+          </div><!--end of id="documentContents"-->
+      </div><!--end of id="document"-->
+      <div id="closeRead" onclick="closeRead()">Close</div>
+  </div><!--end of id="documentGrid"-->
+</div><!--end of id="documentModal"-->
+
 
 <!--=======================ABOUT===============================================-->
 <div id="aboutModal">
@@ -906,7 +916,15 @@ margin-top: 5%;
         
 
 <!--========================ALL JAVASCRIPT FUNCTIONS BELOW===========================================-->
-<script>      
+<script>
+//===============================PUBLIC RECIPES PROMPT BOX==================================
+// function closePublicRecipes(){
+//     document.getElementById("publicRecipesModal").style.display="none";
+// }
+//===============================RECIPE DOC 2===========================================//
+function closeRead(){
+    document.getElementById("documentModal").style.display="none";
+}
 //==========================ABOUT PROMPT BOX====================================//
 //display about prompt box-------------------------------------------------------------
 function aboutPromptBox(){

@@ -1265,8 +1265,8 @@ background-color: orange;
                 <span style='color:orange; font-weight:bold;'><%=pubNum%></span> recipes located. 
               </div>
               <div id="publicRecipesInputContents">
-                <% publicRecipes.forEach(function(item){ %>
-                    <form class='recipeOpt' action='/loadPublicRecipe' method='POST'><input style='display:none;' id='publicRecipeId' name ='publicRecipeId' value='<%=item._id%>'><button name='loadPublicRecipe' class='recipeOptBtn'><%=item.username%>: <%=item.publicRecipesTitle%></button></form>
+                <% publicRecipes2.forEach(function(item){ %>
+                    <form class='recipeOpt' action='/loadPublicRecipe2' method='POST'><input style='display:none;' id='publicRecipeId' name ='publicRecipeId' value='<%=item._id%>'><button name='loadPublicRecipe' class='recipeOptBtn'><%=item.username%>: <%=item.publicRecipesTitle%></button></form>
                 <% }); %>
               </div><!--end of id="publicRecipesInputContents", empty array of recipes -->
               <br>
