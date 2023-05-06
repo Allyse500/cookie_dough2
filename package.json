@@ -1,5 +1,5 @@
 {
-  "name": "notepadMongo",
+  "name": "cookie_dough2",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -9,26 +9,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Allyse500/notepadMongo.git"
+    "url": "git+https://github.com/Allyse500/cookie_dough2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Allyse500/notepadMongo/issues"
+    "url": "https://github.com/Allyse500/cookie_dough2/issues"
   },
-  "homepage": "https://github.com/Allyse500/notepadMongo#readme",
+  "homepage": "https://github.com/Allyse500/cookie_dough2#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongodb-session": "^3.1.1",
     "consolidate": "^0.16.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "express-session": "^1.17.2",
-    "mongoose": "^6.0.12",
+    "mongoose": "^6.11.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.22",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
     "path": "^0.12.7",
